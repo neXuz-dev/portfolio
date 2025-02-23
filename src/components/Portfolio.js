@@ -111,7 +111,7 @@ const Portfolio = () => {
       <nav className="fixed top-0 w-full bg-gray-800 shadow-lg z-10">
         <div className="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
           <a href="/" className="text-xl font-bold text-gray-100 hover:text-blue-400 transition-colors">
-            Rémi Job-Dorge
+            neXuz-dev
           </a>
           <div className="flex gap-6">
             <a href="#skills" className="text-gray-300 hover:text-blue-400 transition-colors">
@@ -130,13 +130,13 @@ const Portfolio = () => {
       {/* Header */}
       <header className="max-w-4xl mx-auto px-4 pt-24 pb-12">
         <div className="bg-gray-800 rounded-lg shadow-xl p-8 border border-gray-700">
-          <h1 className="text-4xl font-bold text-gray-100">Rémi Job-Dorge</h1>
+          <h1 className="text-4xl font-bold text-gray-100">neXuz-dev</h1>
           <p className="text-xl text-gray-300 mt-2">Expert Software Developer & Technical Analyst</p>
           
           <div className="mt-4 flex gap-4 flex-wrap">
-            <a href="mailto:jobdorge@gmail.com" className="flex items-center text-gray-300 hover:text-blue-400 transition-colors">
+            <a href="mailto:jobdorge.pro@gmail.com" className="flex items-center text-gray-300 hover:text-blue-400 transition-colors">
               <Mail className="w-5 h-5 mr-2" />
-              jobdorge@gmail.com
+              jobdorge.pro@gmail.com
             </a>
             <a href="https://github.com/neXuz-dev" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-300 hover:text-blue-400 transition-colors">
               <Github className="w-5 h-5 mr-2" />
@@ -394,7 +394,7 @@ const Portfolio = () => {
 
       {/* Footer */}
       <footer className="max-w-4xl mx-auto mt-8 px-4 py-6 text-center text-gray-400">
-        <p>© Rémi Job-Dorge, February 23, 2025. All rights reserved.</p>
+        <p>© neXuz-dev, February 23, 2025. All rights reserved.</p>
       </footer>
     </div>
   );
