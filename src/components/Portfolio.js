@@ -14,51 +14,87 @@ const Portfolio = () => {
     }
   };
 
-  const projects = [
-    {
-      title: "Age of Empires Online AI Assistant",
-      description: "An automation tool demonstrating advanced memory manipulation and external library integration.",
-      tags: ["AutoIt", "Memory Manipulation", "API Integration", "Automation"],
-      highlights: [
-        "Direct memory interaction using custom KDMemory.au3 library",
-        "Integration with FastFind.dll for optimized pixel detection",
-        "Event-driven programming with hotkey implementation",
-        "Clean, modular code structure with thorough documentation"
-      ]
-    },
-    {
-      title: "Assetto Corsa Smart Shift Optimizer",
-      description: "A sophisticated real-time gear optimization tool built in C#.",
-      tags: ["C#", ".NET", "Windows API", "Memory Manipulation"],
-      highlights: [
-        "Advanced process introspection and memory management",
-        "Dynamic memory address calculation",
-        "External process control via input simulation",
-        "Reverse engineering capabilities"
-      ]
-    },
+  // Featured Projects
+  const featuredProjects = [
     {
       title: "Rz Asset Control Center",
-      description: "A robust web application for cryptocurrency asset management and automated trading.",
-      tags: ["ASP.NET Core", "Entity Framework", "KuCoin API", "Real-time Data"],
+      description: "A robust web application for cryptocurrency asset management and automated trading with KuCoin integration.",
+      tags: ["ASP.NET Core", "Entity Framework", "KuCoin API", "WebSocket", "PostgreSQL"],
       highlights: [
-        "Secure user authentication with 2FA",
-        "Real-time WebSocket data handling",
-        "Automated trading bot implementation",
-        "PostgreSQL database integration"
+        "Secure authentication with 2FA implementation",
+        "Real-time data updates via WebSocket",
+        "Automated Dollar-Cost Averaging (DCA) trading bot",
+        "Dynamic UI with homemade HTML generation"
       ]
     },
     {
       title: "RziRTool - iRacing Telemetry Overlay",
-      description: "A sophisticated real-time telemetry visualization tool using ImGui.NET and Veldrid.",
-      tags: ["C#", "ImGui.NET", "Veldrid", "Real-time Data"],
+      description: "A real-time telemetry visualization tool for iRacing using advanced graphics rendering.",
+      tags: ["C#", "ImGui.NET", "Veldrid", "MVVM", "Async Programming"],
       highlights: [
-        "Real-time data visualization with customizable UI",
-        "Advanced graphics rendering",
-        "Asynchronous programming",
-        "MVVM architecture"
+        "Customizable real-time RPM and tire temperature displays",
+        "Advanced DirectX rendering with layered windows",
+        "MVVM architecture for maintainability",
+        "Hotkey-toggleable overlay with persistent settings"
+      ]
+    },
+    {
+      title: "Assetto Corsa Smart Shift Optimizer",
+      description: "A real-time gear shifting optimization tool enhancing racing performance.",
+      tags: ["C#", ".NET", "Windows API", "Memory Manipulation"],
+      highlights: [
+        "Dynamic memory address resolution",
+        "Real-time data extraction and analysis",
+        "Automated gear shifting with input simulation",
+        "Configurable via external INI files"
+      ]
+    },
+    {
+      title: "Age of Empires Online AI Assistant",
+      description: "A tool for in-game task management using memory manipulation.",
+      tags: ["AutoIt", "Memory Manipulation", "FastFind.dll", "Automation"],
+      highlights: [
+        "Custom memory interaction library (KDMemory.au3)",
+        "Pixel detection via FastFind.dll integration",
+        "Resource monitoring alerts and villager creation alerts",
+        "Event-driven hotkey system"
+      ]
+    },
+    {
+      title: "Soleo Tech Manager",
+      description: "A desktop app for internal management with Google API integration.",
+      tags: ["C#", "Windows Forms", "Google API", "Data Management"],
+      highlights: [
+        "Google Calendar and Sheets integration",
+        "Event scheduling and data visualization",
+        "Windows Registry manipulation for UAC",
+        "Backup and restore functionality"
+      ]
+    },
+    {
+      title: "Path of Exile Awareness Tool",
+      description: "A tool for improving awareness through memory monitoring.",
+      tags: ["C#", "Windows API", "Input Simulation", "Memory Manipulation"],
+      highlights: [
+        "Dynamic memory address tracking",
+        "Real-time health monitoring",
+        "Automated potion alert with timing control",
+        "TCP connection management for safety"
       ]
     }
+  ];
+
+  // Additional Notable Projects
+  const additionalProjects = [
+    { title: "Aimlab Copilot", description: "Pixel-perfect copilot with behavior analysis with FastFind.dll." },
+    { title: "LastWarBot", description: "Advanced pixel analysis for gameplay automation in C#." },
+    { title: "Orchestra License Dumper", description: "Reverse-engineered license extraction tool." },
+    { title: "Rocket League Memory Analysis", description: "C++ memory analysis of Unreal Engine structures." },
+    { title: "SOT Sail Alerts", description: "OCR-based sailing alerts for Sea of Thieves." },
+    { title: "TradingView Structure Indicator", description: "Pine Script tool for market structure analysis." },
+    { title: "Intelligent Image Upscaling Bot", description: "Discord bot using ESRGAN for image enhancement." },
+    { title: "GearAI (Forza Horizon 5)", description: "Smart gear optimizer with memory manipulation." },
+    { title: "For Honor Helper AI", description: "Image recognition-based combat behavior helper." }
   ];
 
   return (
@@ -72,25 +108,29 @@ const Portfolio = () => {
           <div className="mt-4 flex gap-4">
             <a href="mailto:jobdorge@gmail.com" className="flex items-center text-gray-300 hover:text-blue-400 transition-colors">
               <Mail className="w-5 h-5 mr-2" />
-              Contact
+              jobdorge.pro@gmail.com
             </a>
-            <a href="#" className="flex items-center text-gray-300 hover:text-blue-400 transition-colors">
-              <Globe className="w-5 h-5 mr-2" />
-              Portfolio
+            <a href="https://github.com/neXuz-dev" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-300 hover:text-blue-400 transition-colors">
+              <Github className="w-5 h-5 mr-2" />
+              GitHub
+            </a>
+            <a href="https://linkedin.com/in/rémi-j-977b33213/" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-300 hover:text-blue-400 transition-colors">
+              <Linkedin className="w-5 h-5 mr-2" />
+              LinkedIn
             </a>
           </div>
 
           <div className="mt-6">
             <p className="text-gray-300">
-              Passionate developer with expertise in automation, reverse engineering, and system-level programming.
-              Committed to continuous learning and solving complex technical challenges.
+              Expert in software development with a focus on automation, reverse engineering, and system optimization. 
+              Based in Villeneuve-Loubet, France, with over 6 years of professional experience in technical solutions.
             </p>
           </div>
         </div>
       </header>
 
       {/* Skills Section */}
-      <section className="max-w-4xl mx-auto mt-8 px-4">
+      <section className="max-w-4xl mx-auto mt-8 px-4 scroll-mt-12" id="skills">
         <div className="bg-gray-800 rounded-lg shadow-xl p-8 border border-gray-700">
           <h2 className="text-2xl font-bold text-gray-100 mb-4">Technical Expertise</h2>
           
@@ -143,12 +183,13 @@ const Portfolio = () => {
       </section>
 
       {/* Projects Section */}
-      <section className="max-w-4xl mx-auto mt-8 px-4">
+      <section className="max-w-4xl mx-auto mt-8 px-4 scroll-mt-12" id="projects">
         <div className="bg-gray-800 rounded-lg shadow-xl p-8 border border-gray-700">
           <h2 className="text-2xl font-bold text-gray-100 mb-6">Featured Projects</h2>
           
+          {/* Featured Projects */}
           <div className="space-y-6">
-            {projects.map((project, index) => (
+            {featuredProjects.map((project, index) => (
               <div key={index} className="border border-gray-600 rounded-lg p-4 bg-gray-800/50 hover:bg-gray-800/80 transition-colors">
                 <div 
                   className="flex justify-between items-center cursor-pointer"
@@ -193,34 +234,52 @@ const Portfolio = () => {
               </div>
             ))}
           </div>
+
+          {/* Additional Notable Projects */}
+          <div className="mt-8">
+            <h3 className="text-xl font-semibold text-gray-100 mb-4">Additional Notable Projects</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {additionalProjects.map((project, index) => (
+                <div key={index} className="bg-gray-800/50 p-4 rounded-lg border border-gray-600">
+                  <h4 className="text-lg font-medium text-gray-100">{project.title}</h4>
+                  <p className="text-gray-400 text-sm mt-1">{project.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
       {/* About Section */}
-      <section className="max-w-4xl mx-auto mt-8 px-4">
+      <section className="max-w-4xl mx-auto mt-8 px-4 scroll-mt-12" id="about">
         <div className="bg-gray-800 rounded-lg shadow-xl p-8 border border-gray-700">
           <h2 className="text-2xl font-bold text-gray-100 mb-4">About Me</h2>
           
           <div className="text-gray-300 space-y-4">
             <p>
-              With a background in competitive gaming and a passion for technology, I've developed
-              a unique approach to software development that combines deep technical knowledge with
-              practical problem-solving skills.
+              Based in Villeneuve-Loubet, France, I bring over 6 years of experience as a Technician 
+              at SARL Soleo Tech (2017-2023), where I developed expertise in software development, 
+              system optimization, and technical support.
             </p>
             <p>
-              My experience ranges from low-level system programming to full-stack web development,
-              with a particular focus on automation and performance optimization. I'm constantly
-              learning and exploring new technologies, driven by a desire to understand how things
-              work at their core.
+              My passion for technology stems from a background in competitive gaming, where I 
+              achieved multiple world records in simulation racing since 2015. This drive for 
+              excellence translates into my work, focusing on automation, reverse engineering, 
+              and creating efficient solutions.
             </p>
             <p>
-              Beyond coding, I'm an enthusiast of astronomy, music, and competitive gaming,
-              bringing a well-rounded perspective to my technical work. My approach is guided by
-              principles of pragmatism, continuous learning, and attention to detail.
+              Outside of coding, I enjoy astronomy, music, and exploring mythology—interests that 
+              fuel my curiosity and problem-solving skills. I’m an autodidact committed to 
+              continuous learning and delivering impactful technical solutions.
             </p>
           </div>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="max-w-4xl mx-auto mt-8 px-4 py-6 text-center text-gray-400">
+        <p>&copy; Rémi Job-Dorge, February 23, 2025. All rights reserved.</p>
+      </footer>
     </div>
   );
 };
