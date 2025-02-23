@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Github, Linkedin, Mail, Globe, ChevronDown, ChevronUp } from 'lucide-react';
+import { Github, Linkedin, Mail, Globe, ChevronDown, ChevronUp, Download } from 'lucide-react';
 
 const Portfolio = () => {
   const [expandedProject, setExpandedProject] = useState(null);
@@ -40,24 +40,24 @@ const Portfolio = () => {
     },
     {
       title: "Assetto Corsa Smart Shift Optimizer",
-      description: "A real-time gear shifting optimization tool enhancing racing performance.",
+      description: "A tool for analyzing and optimizing gear shifting patterns in Assetto Corsa, built to study real-time data processing.",
       tags: ["C#", ".NET", "Windows API", "Memory Manipulation"],
       highlights: [
-        "Dynamic memory address resolution",
-        "Real-time data extraction and analysis",
-        "Automated gear shifting with input simulation",
-        "Configurable via external INI files"
+        "Dynamic memory address resolution for data analysis",
+        "Real-time extraction of RPM and gear data",
+        "Simulation of optimal shift points for learning purposes",
+        "Configurable settings via external INI files"
       ]
     },
     {
       title: "Age of Empires Online AI Assistant",
-      description: "A tool for in-game task management using memory manipulation.",
-      tags: ["AutoIt", "Memory Manipulation", "FastFind.dll", "Automation"],
+      description: "A tool providing real-time alerts for resource management and villager activity in Age of Empires Online.",
+      tags: ["AutoIt", "Memory Manipulation", "FastFind.dll", "System Interaction"],
       highlights: [
         "Custom memory interaction library (KDMemory.au3)",
-        "Pixel detection via FastFind.dll integration",
-        "Resource monitoring alerts and villager creation alerts",
-        "Event-driven hotkey system"
+        "Pixel detection for on-screen element monitoring",
+        "Alerts for resource levels and villager status",
+        "Event-driven system with hotkey support"
       ]
     },
     {
@@ -72,51 +72,75 @@ const Portfolio = () => {
       ]
     },
     {
-      title: "Path of Exile Awareness Tool",
-      description: "A tool for improving awareness through memory monitoring.",
-      tags: ["C#", "Windows API", "Input Simulation", "Memory Manipulation"],
+      title: "Path of Exile Data Monitor",
+      description: "A utility for monitoring in-game data in Path of Exile to study memory structures and system interaction.",
+      tags: ["C#", "Windows API", "Input Simulation", "Memory Analysis"],
       highlights: [
-        "Dynamic memory address tracking",
-        "Real-time health monitoring",
-        "Automated potion alert with timing control",
-        "TCP connection management for safety"
+        "Dynamic memory address tracking for data insights",
+        "Real-time health value monitoring",
+        "Experimental input simulation for timing studies",
+        "TCP connection analysis for network behavior"
       ]
     }
   ];
 
   // Additional Notable Projects
   const additionalProjects = [
-    { title: "Aimlab Copilot", description: "Pixel-perfect copilot with behavior analysis with FastFind.dll." },
-    { title: "LastWarBot", description: "Advanced pixel analysis for gameplay automation in C#." },
-    { title: "Orchestra License Dumper", description: "Reverse-engineered license extraction tool." },
-    { title: "Rocket League Memory Analysis", description: "C++ memory analysis of Unreal Engine structures." },
-    { title: "SOT Sail Alerts", description: "OCR-based sailing alerts for Sea of Thieves." },
+    { title: "Aimlab Performance Analyzer", description: "Tool for studying aim training performance with pixel detection." },
+    { title: "LastWarBot", description: "Pixel analysis system for gameplay data exploration in C#." },
+    { title: "Orchestra License Dumper", description: "Reverse-engineered tool for license data extraction." },
+    { title: "Rocket League Memory Analysis", description: "C++ tool for analyzing Unreal Engine memory structures." },
+    { title: "Sloop Auto-Sail", description: "OCR-based tool for studying sailing mechanics in Sea of Thieves." },
     { title: "TradingView Structure Indicator", description: "Pine Script tool for market structure analysis." },
     { title: "Intelligent Image Upscaling Bot", description: "Discord bot using ESRGAN for image enhancement." },
-    { title: "GearAI (Forza Horizon 5)", description: "Smart gear optimizer with memory manipulation." },
-    { title: "For Honor Helper AI", description: "Image recognition-based combat behavior helper." }
+    { title: "GearAI (Forza Horizon 5)", description: "Gear shifting analysis tool with memory insights." },
+    { title: "For Honor Combat Analyzer", description: "Image recognition tool for studying combat patterns." }
   ];
 
   return (
-    <div className="min-h-screen bg-gray-900 py-12 text-gray-100">
+    <div className="min-h-screen bg-gray-900 text-gray-100">
+      {/* Navigation Bar */}
+      <nav className="fixed top-0 w-full bg-gray-800 shadow-lg z-10">
+        <div className="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+          <a href="/" className="text-xl font-bold text-gray-100 hover:text-blue-400 transition-colors">
+            Rémi Job-Dorge
+          </a>
+          <div className="flex gap-6">
+            <a href="#skills" className="text-gray-300 hover:text-blue-400 transition-colors">
+              Skills
+            </a>
+            <a href="#projects" className="text-gray-300 hover:text-blue-400 transition-colors">
+              Projects
+            </a>
+            <a href="#about" className="text-gray-300 hover:text-blue-400 transition-colors">
+              About
+            </a>
+          </div>
+        </div>
+      </nav>
+
       {/* Header */}
-      <header className="max-w-4xl mx-auto px-4">
+      <header className="max-w-4xl mx-auto px-4 pt-24 pb-12">
         <div className="bg-gray-800 rounded-lg shadow-xl p-8 border border-gray-700">
           <h1 className="text-4xl font-bold text-gray-100">Rémi Job-Dorge</h1>
           <p className="text-xl text-gray-300 mt-2">Expert Software Developer & Technical Analyst</p>
           
-          <div className="mt-4 flex gap-4">
+          <div className="mt-4 flex gap-4 flex-wrap">
             <a href="mailto:jobdorge@gmail.com" className="flex items-center text-gray-300 hover:text-blue-400 transition-colors">
               <Mail className="w-5 h-5 mr-2" />
-              jobdorge.pro@gmail.com
+              jobdorge@gmail.com
             </a>
-            <a href="https://github.com/neXuz-dev" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-300 hover:text-blue-400 transition-colors">
+            <a href="https://github.com/YOUR_GITHUB_USERNAME" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-300 hover:text-blue-400 transition-colors">
               <Github className="w-5 h-5 mr-2" />
               GitHub
             </a>
-            <a href="https://linkedin.com/in/rémi-j-977b33213/" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-300 hover:text-blue-400 transition-colors">
+            <a href="https://linkedin.com/in/YOUR_LINKEDIN_PROFILE" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-300 hover:text-blue-400 transition-colors">
               <Linkedin className="w-5 h-5 mr-2" />
               LinkedIn
+            </a>
+            <a href="/Remi_Job-Dorge_CV.pdf" download className="flex items-center text-gray-300 hover:text-blue-400 transition-colors">
+              <Download className="w-5 h-5 mr-2" />
+              Download CV
             </a>
           </div>
 
@@ -278,7 +302,7 @@ const Portfolio = () => {
 
       {/* Footer */}
       <footer className="max-w-4xl mx-auto mt-8 px-4 py-6 text-center text-gray-400">
-        <p>&copy; Rémi Job-Dorge, February 23, 2025. All rights reserved.</p>
+        <p>© Rémi Job-Dorge, February 23, 2025. All rights reserved.</p>
       </footer>
     </div>
   );
