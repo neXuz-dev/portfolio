@@ -90,7 +90,7 @@ const Portfolio = () => {
     { title: "LastWarBot", description: "Pixel analysis system for gameplay data exploration in C#." },
     { title: "Orchestra License Dumper", description: "Reverse-engineered tool for license data extraction." },
     { title: "Rocket League Memory Analysis", description: "C++ tool for analyzing Unreal Engine memory structures." },
-    { title: "Sloop Sail Alerts", description: "OCR-based tool for studying sailing mechanics in Sea of Thieves." },
+    { title: "Sloop Auto-Sail", description: "OCR-based tool for studying sailing mechanics in Sea of Thieves." },
     { title: "TradingView Structure Indicator", description: "Pine Script tool for market structure analysis." },
     { title: "Intelligent Image Upscaling Bot", description: "Discord bot using ESRGAN for image enhancement." },
     { title: "GearAI (Forza Horizon 5)", description: "Gear shifting analysis tool with memory insights." },
@@ -130,15 +130,15 @@ const Portfolio = () => {
               <Mail className="w-5 h-5 mr-2" />
               jobdorge@gmail.com
             </a>
-            <a href="https://github.com/YOUR_GITHUB_USERNAME" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-300 hover:text-blue-400 transition-colors">
+            <a href="https://github.com/neXuz-dev" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-300 hover:text-blue-400 transition-colors">
               <Github className="w-5 h-5 mr-2" />
               GitHub
             </a>
-            <a href="https://linkedin.com/in/YOUR_LINKEDIN_PROFILE" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-300 hover:text-blue-400 transition-colors">
+            <a href="https://www.linkedin.com/in/r%C3%A9mi-j-977b33213/" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-300 hover:text-blue-400 transition-colors">
               <Linkedin className="w-5 h-5 mr-2" />
               LinkedIn
             </a>
-            <a href="/Remi_Job-Dorge_CV.pdf" download className="flex items-center text-gray-300 hover:text-blue-400 transition-colors">
+            <a href="https://github.com/neXuz-dev/portfolio/blob/main/public/CV_Job-Dorge_2024.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-300 hover:text-blue-400 transition-colors">
               <Download className="w-5 h-5 mr-2" />
               Download CV
             </a>
