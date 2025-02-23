@@ -1,36 +1,20 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# neXuz-dev Portfolio Website
 
-## Getting Started
+This repository contains the source code for my personal portfolio website. The site is a comprehensive showcase of my work as an expert software developer and technical analyst based in Villeneuve-Loubet, France.
 
-First, run the development server:
+## Live Site
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Experience the website live: [https://nexuz-dev.vercel.app/](https://nexuz-dev.vercel.app/)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Overview
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+I'm a software developer with over 6 years of experience in low-level system programming, reverse engineering, and process automation. My portfolio highlights a diverse range of projects that reflect my expertise in developing efficient, cutting-edge technical solutions.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## What You'll Find
 
-## Learn More
+- **Project Showcases:** Detailed insights into projects spanning gaming performance analyzers, telemetry overlays, and innovative automation tools.
+- **Technical Expertise:** A deep dive into my core skills, including memory manipulation, low-level programming, and system optimization.
+- **Professional Background:** Information about my career journey, emphasizing my passion for technology, problem-solving, and continuous learning.
+- **Contact Information:** Direct links to my GitHub, LinkedIn, and email for professional inquiries.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+© neXuz-dev, February 23, 2025. All rights reserved.

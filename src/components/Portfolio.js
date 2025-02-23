@@ -1506,7 +1506,7 @@ Focuses on 3D modeling, texturing, and game engine skills, delivering an immersi
 
       {/* Footer */}
       <footer className="max-w-4xl mx-auto mt-8 px-4 py-6 text-center text-gray-400">
-        <p>© Rémi Job-Dorge, February 23, 2025. All rights reserved.</p>
+        <p>© neXuz-dev, February 23, 2025. All rights reserved.</p>
       </footer>
     </div>
   );
