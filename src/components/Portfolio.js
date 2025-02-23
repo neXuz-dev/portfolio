@@ -138,7 +138,7 @@ const Portfolio = () => {
               <Linkedin className="w-5 h-5 mr-2" />
               LinkedIn
             </a>
-            <a href="https://github.com/neXuz-dev/portfolio/blob/main/public/CV_Job-Dorge_2024.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-300 hover:text-blue-400 transition-colors">
+            <a href="https://raw.githubusercontent.com/neXuz-dev/portfolio/main/public/CV_Job-Dorge_2024.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-300 hover:text-blue-400 transition-colors">
               <Download className="w-5 h-5 mr-2" />
               Download CV
             </a>
