@@ -90,7 +90,7 @@ const Portfolio = () => {
     { title: "LastWarBot", description: "Pixel analysis system for gameplay data exploration in C#." },
     { title: "Orchestra License Dumper", description: "Reverse-engineered tool for license data extraction." },
     { title: "Rocket League Memory Analysis", description: "C++ tool for analyzing Unreal Engine memory structures." },
-    { title: "Sloop Auto-Sail", description: "OCR-based tool for studying sailing mechanics in Sea of Thieves." },
+    { title: "Sloop Sail Alerts", description: "OCR-based tool for studying sailing mechanics in Sea of Thieves." },
     { title: "TradingView Structure Indicator", description: "Pine Script tool for market structure analysis." },
     { title: "Intelligent Image Upscaling Bot", description: "Discord bot using ESRGAN for image enhancement." },
     { title: "GearAI (Forza Horizon 5)", description: "Gear shifting analysis tool with memory insights." },
