@@ -43,6 +43,7 @@ import corpusPuzzleSolverStudy from './corpusPuzzleSolverStudy';
 import woLongCheatTableAnalyzer from './woLongCheatTableAnalyzer';
 import automatedGameplayAssistantLostWarBot from './automatedGameplayAssistantLostWarBot';
 import portfolioWebsite from './portfolioWebsite';
+import rlbotAutoSwitcher from './rlbotAutoSwitcher';
 
 export default [
   ageOfEmpiresOnlineAIAssistant,
@@ -90,4 +91,5 @@ export default [
   woLongCheatTableAnalyzer,
   automatedGameplayAssistantLostWarBot,
   portfolioWebsite,
+  rlbotAutoSwitcher,
 ];
