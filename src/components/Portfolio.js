@@ -131,7 +131,7 @@ const Portfolio = () => {
       {/* Header */}
       <header className="max-w-4xl mx-auto px-4 pt-24 pb-12">
         <div className="bg-gray-800 rounded-lg shadow-xl p-8 border border-gray-700">
-          <h1 className="text-4xl font-bold text-gray-100">neXuz-dev</h1>
+          <h1 className="text-4xl font-bold text-gray-100">Rémi Job-Dorge</h1>
           <p className="text-xl text-gray-300 mt-2">
             {language === 'fr' ? 'Expert en Développement Logiciel & Analyste Technique' : 'Expert Software Developer & Technical Analyst'}
           </p>
@@ -166,6 +166,7 @@ const Portfolio = () => {
         </div>
       </header>
 
+      {/* At a Glance Section */}
       <section className="max-w-4xl mx-auto mt-8 px-4">
         <div className="bg-gray-800 rounded-lg shadow-xl p-6 border border-gray-700">
           <h2 className="text-2xl font-bold text-gray-100 mb-4">
@@ -238,6 +239,65 @@ const Portfolio = () => {
         </div>
       </section>
 
+      {/* Skills Section */}
+      <section className="max-w-4xl mx-auto mt-8 px-4 scroll-mt-12" id="skills">
+        <div className="bg-gray-800 rounded-lg shadow-xl p-8 border border-gray-700">
+          <h2 className="text-2xl font-bold text-gray-100 mb-4">
+            {language === 'fr' ? 'Expertise Technique' : 'Technical Expertise'}
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-200 mb-2">
+                {language === 'fr' ? 'Compétences Principales' : 'Core Skills'}
+              </h3>
+              <ul className="space-y-2">
+                <li className="flex items-center text-gray-300">
+                  <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                  {language === 'fr' ? 'Programmation Système Bas Niveau' : 'Low-level System Programming'}
+                </li>
+                <li className="flex items-center text-gray-300">
+                  <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                  {language === 'fr' ? 'Manipulation et Analyse de Mémoire' : 'Memory Manipulation & Analysis'}
+                </li>
+                <li className="flex items-center text-gray-300">
+                  <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                  {language === 'fr' ? 'Rétro-Ingénierie' : 'Reverse Engineering'}
+                </li>
+                <li className="flex items-center text-gray-300">
+                  <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                  {language === 'fr' ? 'Automatisation de Processus' : 'Process Automation'}
+                </li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 className="text-lg font-semibold text-gray-200 mb-2">
+                {language === 'fr' ? 'Technologies' : 'Technologies'}
+              </h3>
+              <ul className="space-y-2">
+                <li className="flex items-center text-gray-300">
+                  <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                  C++, C#, AutoIt, Python, ASM
+                </li>
+                <li className="flex items-center text-gray-300">
+                  <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                  JavaScript, PHP, Pine Script
+                </li>
+                <li className="flex items-center text-gray-300">
+                  <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                  .NET, Next.js, React, Tailwind CSS
+                </li>
+                <li className="flex items-center text-gray-300">
+                  <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                  Windows API, Unreal Engine 5
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Projects Section */}
       <section className="max-w-4xl mx-auto mt-8 px-4" id="projects">
         <div className="bg-gray-800 rounded-lg shadow-xl p-8 border border-gray-700">
@@ -259,40 +319,47 @@ const Portfolio = () => {
             {language === 'fr' ? (
               <>
                 <p>
-                  Basé à Villeneuve-Loubet, France, j'apporte plus de 6 ans d'expérience en tant que 
-                  Technicien chez SARL Soleo Tech (2017-2023), où j'ai développé une expertise en 
-                  développement logiciel, optimisation système et support technique.
+                  Basé à Villeneuve-Loubet, France, j'ai 17 ans d'expérience en développement polyvalent et plus de 6 ans d'expérience 
+                  en tant que Technicien chez SARL Soleo Tech (2017-2023), où j'ai développé une expertise en développement logiciel, 
+                  optimisation système, automatisation et rétro-ingénierie.
                 </p>
                 <p>
-                  Ma passion pour la technologie découle de mon parcours dans le gaming compétitif, 
-                  où j'ai établi plusieurs records mondiaux en simulation automobile depuis 2015. 
-                  Cette quête d'excellence se traduit dans mon travail, axé sur l'automatisation, 
-                  la rétro-ingénierie et la création de solutions efficaces.
+                  Ma passion pour la technologie découle de mon parcours dans le gaming compétitif, notamment en 
+                  tant qu'ancien joueur professionnel de Counter-Strike (2014-2016) et détenteur de plusieurs records 
+                  mondiaux en simulation automobile depuis 2015. Cette quête de performance et d'efficacité se reflète 
+                  dans mon travail, axé sur la recherche de solutions optimales et l'exploitation des systèmes existants.
                 </p>
                 <p>
-                  En dehors du code, je m'intéresse à l'astronomie, la musique et la mythologie—des 
-                  centres d'intérêt qui nourrissent ma curiosité et mes capacités de résolution de 
-                  problèmes. Je suis un autodidacte engagé dans l'apprentissage continu et la 
-                  création de solutions techniques impactantes.
+                  Je me spécialise dans le développement en C#, C++ et Python, ainsi que dans la conception 3D (Unity, 
+                  Unreal Engine 5, Blender). Mon approche analytique et logique me permet de résoudre des problèmes 
+                  en les déconstruisant méthodiquement.
+                </p>
+                <p>
+                  En dehors du code, je m'intéresse à l'astronomie, la science-fiction et la mythologie. 
+                  Je suis motivé par la quête de compréhension de l'univers et par la contribution à 
+                  l'émergence d'une super-intelligence dédiée à une cause supérieure et à la révélation de ses secrets.
                 </p>
               </>
             ) : (
               <>
                 <p>
-                  Based in Villeneuve-Loubet, France, I bring over 6 years of experience as a Technician 
-                  at SARL Soleo Tech (2017-2023), where I developed expertise in software development, 
-                  system optimization, and technical support.
+                  Based in Villeneuve-Loubet, France, I have 17 years of experience in versatile development and over six years of experience 
+                  as a Technician at SARL Soleo Tech (2017-2023), where I developed expertise in software development, 
+                  system optimization, automation, and reverse engineering.
                 </p>
                 <p>
-                  My passion for technology stems from a background in competitive gaming, where I 
-                  achieved multiple world records in simulation racing since 2015. This drive for 
-                  excellence translates into my work, focusing on automation, reverse engineering, 
-                  and creating efficient solutions.
+                  My passion for technology stems from my background in competitive gaming, notably as a former professional Counter-Strike player 
+                  (2014-2016) and a holder of multiple world records in racing simulation since 2015. This pursuit of performance and efficiency 
+                  is reflected in my work, which focuses on finding optimal solutions and leveraging existing systems.
                 </p>
                 <p>
-                  Outside of coding, I enjoy astronomy, music, and exploring mythology—interests that 
-                  fuel my curiosity and problem-solving skills. I'm an autodidact committed to 
-                  continuous learning and delivering impactful technical solutions.
+                  I specialize in development with C#, C++, and Python, as well as 3D design (Unity, Unreal Engine 5, Blender). 
+                  My analytical and logical approach allows me to solve problems by methodically breaking them down.
+                </p>
+                <p>
+                  Beyond coding, I have a strong interest in astronomy, science fiction, and mythology. 
+                  I am driven by the quest to understand the universe and to contribute to the emergence of a super-intelligence 
+                  dedicated to a greater cause and the revelation of its secrets.
                 </p>
               </>
             )}

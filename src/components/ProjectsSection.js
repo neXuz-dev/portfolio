@@ -3,36 +3,9 @@ import { ChevronDown, ChevronUp, Filter } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
 const ProjectsSection = ({ projects, language }) => {
-  const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedLanguage, setSelectedLanguage] = useState('All');
   const [expandedProject, setExpandedProject] = useState(null);
   const [expandedDetails, setExpandedDetails] = useState(null);
-
-  // Define categories based on logical grouping (unchanged)
-  const categories = {
-    'Analyzers': {
-      matcher: (title) => [
-        'Age of Empires Online AI Assistant',
-        'Aimlab Performance Analyzer',
-        'For Honor Combat Analyzer',
-        'Forza Horizon 4 Gear Analyzer',
-        'GearAI (Forza Horizon 5) Analyzer',
-        'Genshin Impact Memory Analyzer',
-        'Halo MCC Gameplay Analyzer',
-        'LastWarBot Gameplay Analyzer',
-        'NanoTrigger Input Analyzer',
-        'Ninja Gaiden 2 Mechanics Analyzer',
-        'Path of Exile Data Monitor',
-        'RLTool Gameplay Analyzer',
-        'Rocket League Memory Analyzer',
-        'Rz Asset Control Center',
-        'Wo Long Cheat Table Analyzer',
-        'Wo Long Interaction Analyzer'
-      ].includes(title),
-      color: 'blue'
-    },
-    // ... (other categories remain unchanged)
-  };
 
   const languages = [
     { name: 'All', count: projects.length },
@@ -49,16 +22,12 @@ const ProjectsSection = ({ projects, language }) => {
   const filteredProjects = useMemo(() => {
     let result = projects;
 
-    if (selectedCategory !== 'All') {
-      result = result.filter(project => categories[selectedCategory].matcher(project.content.en.title));
-    }
-
     if (selectedLanguage !== 'All') {
       result = result.filter(project => project.tags.includes(selectedLanguage));
     }
 
     return result;
-  }, [selectedCategory, selectedLanguage, projects]);
+  }, [selectedLanguage, projects]);
 
   const toggleProject = (index) => {
     setExpandedProject(expandedProject === index ? null : index);
@@ -71,47 +40,20 @@ const ProjectsSection = ({ projects, language }) => {
 
   return (
     <div className="space-y-6">
-      {/* Filters */}
-      <div className="flex flex-col gap-4 mb-6">
-        <div className="flex flex-wrap gap-3 items-center">
-          <Filter className="w-5 h-5 text-gray-400" />
-          <span className="text-gray-300 font-medium">{language === 'fr' ? 'Catégorie :' : 'Category:'}</span>
+      {/* Language Filter */}
+      <div className="flex flex-wrap gap-3 items-center mb-6">
+        <Filter className="w-5 h-5 text-gray-400" />
+        <span className="text-gray-300 font-medium">{language === 'fr' ? 'Langage :' : 'Language:'}</span>
+        {languages.map((lang) => (
           <button
-            onClick={() => setSelectedCategory('All')}
+            key={lang.name}
+            onClick={() => setSelectedLanguage(lang.name)}
             className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors
-              ${selectedCategory === 'All' ? 'bg-gray-700 text-white' : 'bg-gray-800 text-gray-400 hover:bg-gray-700'}`}
+              ${selectedLanguage === lang.name ? 'bg-blue-900/50 text-blue-300 border border-blue-700' : 'bg-gray-800 text-gray-400 hover:bg-gray-700'}`}
           >
-            {language === 'fr' ? 'Toutes Catégories' : 'All Categories'} ({projects.length})
+            {lang.name} ({lang.count})
           </button>
-          {Object.entries(categories).map(([category, { color }]) => {
-            const count = projects.filter(project => categories[category].matcher(project.content.en.title)).length;
-            return (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors
-                  ${selectedCategory === category ? `bg-${color}-900/50 text-${color}-300 border border-${color}-700` : 'bg-gray-800 text-gray-400 hover:bg-gray-700'}`}
-              >
-                {category} ({count})
-              </button>
-            );
-          })}
-        </div>
-
-        <div className="flex flex-wrap gap-3 items-center">
-          <Filter className="w-5 h-5 text-gray-400" />
-          <span className="text-gray-300 font-medium">{language === 'fr' ? 'Langage :' : 'Language:'}</span>
-          {languages.map((lang) => (
-            <button
-              key={lang.name}
-              onClick={() => setSelectedLanguage(lang.name)}
-              className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors
-                ${selectedLanguage === lang.name ? 'bg-blue-900/50 text-blue-300 border border-blue-700' : 'bg-gray-800 text-gray-400 hover:bg-gray-700'}`}
-            >
-              {lang.name} ({lang.count})
-            </button>
-          ))}
-        </div>
+        ))}
       </div>
 
       {/* Projects Grid */}
@@ -127,19 +69,6 @@ const ProjectsSection = ({ projects, language }) => {
                   {project.content[language].title}
                 </h3>
                 <p className="text-gray-300 mt-2">{project.content[language].description}</p>
-
-                <div className="flex flex-wrap gap-2 mt-3">
-                  {Object.entries(categories).map(([category, { matcher, color }]) =>
-                    matcher(project.content.en.title) && (
-                      <span
-                        key={category}
-                        className={`bg-${color}-900/30 text-${color}-300 text-sm px-2 py-1 rounded border border-${color}-800`}
-                      >
-                        {category}
-                      </span>
-                    )
-                  )}
-                </div>
 
                 <div className="flex flex-wrap gap-2 mt-2">
                   {project.tags.map((tag, tagIndex) => (

@@ -8,7 +8,7 @@ Experience the website live: [https://nexuz-dev.vercel.app/](https://nexuz-dev.v
 
 ## Overview
 
-I'm a software developer with over 6 years of experience in low-level system programming, reverse engineering, and process automation. My portfolio highlights a diverse range of projects that reflect my expertise in developing efficient, cutting-edge technical solutions.
+I'm a software developer with over 17 years of experience in low-level system programming, reverse engineering, and process automation. My portfolio highlights a diverse range of projects that reflect my expertise in developing efficient, cutting-edge technical solutions.
 
 ## What You'll Find
 
