@@ -1,10 +1,14 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Github, Linkedin, Mail, Globe, ChevronDown, ChevronUp, Download, Filter } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import allProjects from '../projects';
 import ProjectsSection from './ProjectsSection';
+import CustomCursor from './CustomCursor';
+
+// Import enhanced smooth scroll utility
+import { initSmoothScroll } from '../utils/smoothScroll';
 
 const LOC_ESTIMATES = {
   "Age of Empires Online AI Assistant": 1000,
@@ -88,6 +92,7 @@ const Portfolio = () => {
     { code: 'en', name: 'English', flag: '🇬🇧' },
     { code: 'fr', name: 'Français', flag: '🇫🇷' }
   ];
+  
   const stats = {
     totalProjects: 46,
     uniqueTechnologies: 31,
@@ -110,11 +115,33 @@ const Portfolio = () => {
     ]
   };
 
+  // Initialize smooth scrolling when component mounts
+  useEffect(() => {
+    // Hide default cursor
+    document.body.classList.add('cursor-none');
+    
+    // Initialize smooth scroll and get cleanup function
+    const cleanupScrollListeners = initSmoothScroll();
+    
+    // Cleanup when component unmounts
+    return () => {
+      document.body.classList.remove('cursor-none');
+      // Clean up scroll event listeners
+      if (typeof cleanupScrollListeners === 'function') {
+        cleanupScrollListeners();
+      }
+      // Remove any other event listeners
+      window.removeEventListener('scroll', () => {});
+    };
+  }, []);
+
   return (
     <div className="min-h-screen text-gray-100 relative overflow-x-hidden">
+      {/* Custom Cursor */}
+      <CustomCursor />
+      
       {/* Multi-Step Gradient Background with Rain Effect */}
       <div className="fixed inset-0 z-0" style={{
-        backgroundImage: '-webkit-linear-gradient(to right, #1A232D, #2E2531)', 
         backgroundImage: 'linear-gradient(to right, #1A232D, #2E2531)'
       }}>
         {/* Rain Effect */}
@@ -135,7 +162,7 @@ const Portfolio = () => {
       </div>
 
       {/* Navigation Bar */}
-      <nav className="fixed top-0 w-full bg-gray-800/70 shadow-lg z-20">
+      <nav className="fixed top-0 w-full bg-gray-800/70 backdrop-blur-sm shadow-lg z-20">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3 animate-fade-in">
             <img 
@@ -190,7 +217,7 @@ const Portfolio = () => {
 
       {/* Header */}
       <header className="max-w-4xl mx-auto px-4 pt-32 pb-12 relative z-10">
-        <div className="bg-gray-800/60 rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-fade-in-up">
+        <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-fade-in-up">
           <h1 className="text-4xl font-bold text-gray-100 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Rémi Job-Dorge</h1>
           <p className="text-xl text-gray-300 mt-2 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             {language === 'fr' ? 'Expert en Développement Logiciel & Analyste Technique' : 'Expert Software Developer & Technical Analyst'}
@@ -228,7 +255,7 @@ const Portfolio = () => {
 
       {/* At a Glance Section */}
       <section className="max-w-4xl mx-auto mt-8 px-4 relative z-10">
-        <div className="bg-gray-800/60 rounded-lg shadow-2xl p-6 border border-gray-700/50 animate-fade-in-up">
+        <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl p-6 border border-gray-700/50 animate-on-scroll opacity-0">
           <h2 className="text-2xl font-bold text-gray-100 mb-4">
             {language === 'fr' ? 'En bref' : 'At a Glance'}
           </h2>
@@ -245,14 +272,14 @@ const Portfolio = () => {
               { value: stats.guiDrivenProjects, text: language === 'fr' ? 'Projets GUI' : 'GUI Projects' },
               { value: stats.reverseEngineeringTasks, text: language === 'fr' ? 'Tâches Rétro-Ingénierie' : 'Reverse Eng. Tasks' }
             ].map((item, index) => (
-              <div key={index} className="text-center animate-fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
+              <div key={index} className="text-center animate-on-scroll opacity-0" style={{ animationDelay: `${index * 0.1}s` }}>
                 <p className="text-3xl font-semibold text-blue-300 transform hover:scale-110 transition-transform duration-300">{item.value}</p>
                 <p className="text-gray-300">{item.text}</p>
               </div>
             ))}
           </div>
 
-          <div className="mt-6 animate-fade-in-up" style={{ animationDelay: '0.9s' }}>
+          <div className="mt-6 animate-on-scroll opacity-0">
             <h3 className="text-lg font-semibold text-gray-200 mb-4">
               {language === 'fr' ? 'Distribution des langages' : 'Language Distribution'}
             </h3>
@@ -268,7 +295,7 @@ const Portfolio = () => {
               </div>
               <div className="flex flex-wrap gap-4">
                 {stats.languages.map((lang, index) => (
-                  <div key={index} className="flex items-center animate-fade-in-up" style={{ animationDelay: `${index * 0.1 + 0.5}s` }}>
+                  <div key={index} className="flex items-center animate-on-scroll opacity-0" style={{ animationDelay: `${index * 0.1 + 0.5}s` }}>
                     <span className={`w-3 h-3 ${lang.color} rounded-full mr-2 transform hover:scale-125 transition-transform duration-300`}></span>
                     <span className="text-gray-300">{lang.name}</span>
                   </div>
@@ -281,7 +308,7 @@ const Portfolio = () => {
 
       {/* Skills Section */}
       <section className="max-w-4xl mx-auto mt-8 px-4 scroll-mt-12 relative z-10" id="skills">
-        <div className="bg-gray-800/60 rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-fade-in-up">
+        <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-on-scroll opacity-0">
           <h2 className="text-2xl font-bold text-gray-100 mb-4">
             {language === 'fr' ? 'Expertise Technique' : 'Technical Expertise'}
           </h2>
@@ -292,19 +319,19 @@ const Portfolio = () => {
                 {language === 'fr' ? 'Compétences Principales' : 'Core Skills'}
               </h3>
               <ul className="space-y-2">
-                <li className="flex items-center text-gray-300 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                <li className="flex items-center text-gray-300 animate-on-scroll opacity-0" style={{ animationDelay: '0.2s' }}>
                   <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
                   {language === 'fr' ? 'Programmation Système Bas Niveau' : 'Low-level System Programming'}
                 </li>
-                <li className="flex items-center text-gray-300 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+                <li className="flex items-center text-gray-300 animate-on-scroll opacity-0" style={{ animationDelay: '0.3s' }}>
                   <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
                   {language === 'fr' ? 'Manipulation et Analyse de Mémoire' : 'Memory Manipulation & Analysis'}
                 </li>
-                <li className="flex items-center text-gray-300 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+                <li className="flex items-center text-gray-300 animate-on-scroll opacity-0" style={{ animationDelay: '0.4s' }}>
                   <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
                   {language === 'fr' ? 'Rétro-Ingénierie' : 'Reverse Engineering'}
                 </li>
-                <li className="flex items-center text-gray-300 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+                <li className="flex items-center text-gray-300 animate-on-scroll opacity-0" style={{ animationDelay: '0.5s' }}>
                   <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
                   {language === 'fr' ? 'Automatisation de Processus' : 'Process Automation'}
                 </li>
@@ -316,19 +343,19 @@ const Portfolio = () => {
                 {language === 'fr' ? 'Technologies' : 'Technologies'}
               </h3>
               <ul className="space-y-2">
-                <li className="flex items-center text-gray-300 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                <li className="flex items-center text-gray-300 animate-on-scroll opacity-0" style={{ animationDelay: '0.2s' }}>
                   <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
                   C++, C#, AutoIt, Python, ASM
                 </li>
-                <li className="flex items-center text-gray-300 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+                <li className="flex items-center text-gray-300 animate-on-scroll opacity-0" style={{ animationDelay: '0.3s' }}>
                   <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
                   JavaScript, PHP, Pine Script
                 </li>
-                <li className="flex items-center text-gray-300 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+                <li className="flex items-center text-gray-300 animate-on-scroll opacity-0" style={{ animationDelay: '0.4s' }}>
                   <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
                   .NET, Next.js, React, Tailwind CSS
                 </li>
-                <li className="flex items-center text-gray-300 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+                <li className="flex items-center text-gray-300 animate-on-scroll opacity-0" style={{ animationDelay: '0.5s' }}>
                   <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
                   Windows API, Unreal Engine 5
                 </li>
@@ -340,7 +367,7 @@ const Portfolio = () => {
 
       {/* Projects Section */}
       <section className="max-w-4xl mx-auto mt-8 px-4 relative z-10" id="projects">
-        <div className="bg-gray-800/60 rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-fade-in-up">
+        <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-on-scroll opacity-0">
           <h2 className="text-2xl font-bold text-gray-100 mb-6">
             {language === 'fr' ? 'Projets' : 'Projects'}
           </h2>
@@ -350,7 +377,7 @@ const Portfolio = () => {
 
       {/* About Section */}
       <section className="max-w-4xl mx-auto mt-8 px-4 relative z-10" id="about">
-        <div className="bg-gray-800/60 rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-fade-in-up">
+        <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-on-scroll opacity-0">
           <h2 className="text-2xl font-bold text-gray-100 mb-4">
             {language === 'fr' ? 'À propos de moi' : 'About Me'}
           </h2>
@@ -358,23 +385,23 @@ const Portfolio = () => {
           <div className="text-gray-300 space-y-4">
             {language === 'fr' ? (
               <>
-                <p className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                <p className="animate-on-scroll opacity-0" style={{ animationDelay: '0.2s' }}>
                   Basé à Villeneuve-Loubet, France, j'ai 17 ans d'expérience en développement polyvalent et plus de 6 ans d'expérience 
                   en tant que Technicien chez SARL Soleo Tech (2017-2023), où j'ai développé une expertise en développement logiciel, 
                   optimisation système, automatisation et rétro-ingénierie.
                 </p>
-                <p className="animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+                <p className="animate-on-scroll opacity-0" style={{ animationDelay: '0.3s' }}>
                   Ma passion pour la technologie découle de mon parcours dans le gaming compétitif, notamment en 
                   tant qu'ancien joueur professionnel de Counter-Strike (2014-2016) et détenteur de plusieurs records 
                   mondiaux en simulation automobile depuis 2015. Cette quête de performance et d'efficacité se reflète 
                   dans mon travail, axé sur la recherche de solutions optimales et l'exploitation des systèmes existants.
                 </p>
-                <p className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+                <p className="animate-on-scroll opacity-0" style={{ animationDelay: '0.4s' }}>
                   Je me spécialise dans le développement en C#, C++ et Python, ainsi que dans la conception 3D (Unity, 
                   Unreal Engine 5, Blender). Mon approche analytique et logique me permet de résoudre des problèmes 
                   en les déconstruisant méthodiquement.
                 </p>
-                <p className="animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+                <p className="animate-on-scroll opacity-0" style={{ animationDelay: '0.5s' }}>
                   En dehors du code, je m'intéresse à l'astronomie, la science-fiction et la mythologie. 
                   Je suis motivé par la quête de compréhension de l'univers et par la contribution à 
                   l'émergence d'une super-intelligence dédiée à une cause supérieure et à la révélation de ses secrets.
@@ -382,21 +409,21 @@ const Portfolio = () => {
               </>
             ) : (
               <>
-                <p className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                <p className="animate-on-scroll opacity-0" style={{ animationDelay: '0.2s' }}>
                   Based in Villeneuve-Loubet, France, I have 17 years of experience in versatile development and over six years of experience 
                   as a Technician at SARL Soleo Tech (2017-2023), where I developed expertise in software development, 
                   system optimization, automation, and reverse engineering.
                 </p>
-                <p className="animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+                <p className="animate-on-scroll opacity-0" style={{ animationDelay: '0.3s' }}>
                   My passion for technology stems from my background in competitive gaming, notably as a former professional Counter-Strike player 
                   (2014-2016) and a holder of multiple world records in racing simulation since 2015. This pursuit of performance and efficiency 
                   is reflected in my work, which focuses on finding optimal solutions and leveraging existing systems.
                 </p>
-                <p className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+                <p className="animate-on-scroll opacity-0" style={{ animationDelay: '0.4s' }}>
                   I specialize in development with C#, C++, and Python, as well as 3D design (Unity, Unreal Engine 5, Blender). 
                   My analytical and logical approach allows me to solve problems by methodically breaking them down.
                 </p>
-                <p className="animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+                <p className="animate-on-scroll opacity-0" style={{ animationDelay: '0.5s' }}>
                   Beyond coding, I have a strong interest in astronomy, science fiction, and mythology. 
                   I am driven by the quest to understand the universe and to contribute to the emergence of a super-intelligence 
                   dedicated to a greater cause and the revelation of its secrets.
@@ -408,7 +435,7 @@ const Portfolio = () => {
       </section>
 
       {/* Footer */}
-      <footer className="max-w-4xl mx-auto mt-8 px-4 py-6 text-center text-gray-400 bg-gray-800/60 rounded-lg shadow-2xl border border-gray-700/50 relative z-10 animate-fade-in-up">
+      <footer className="max-w-4xl mx-auto mt-8 mb-8 px-4 py-6 text-center text-gray-400 bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl border border-gray-700/50 relative z-10 animate-on-scroll opacity-0">
         <p>© neXuz-dev, {new Date().getFullYear()}. {language === 'fr' ? 'Tous droits réservés.' : 'All rights reserved.'}</p>
       </footer>
     </div>

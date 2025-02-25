@@ -9,6 +9,8 @@ html {
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --cursor-color: #3b82f6;
+  --cursor-color-hover: #60a5fa;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,6 +26,37 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Hide default cursor when custom cursor is active */
+.cursor-none {
+  cursor: none !important;
+}
+
+.cursor-none a, 
+.cursor-none button,
+.cursor-none [role="button"],
+.cursor-none input,
+.cursor-none select,
+.cursor-none textarea,
+.cursor-none label {
+  cursor: none !important;
+}
+
+/* Ensure scrollbar doesn't interfere with cursor */
+::-webkit-scrollbar {
+  width: 8px;
+  background-color: rgba(17, 24, 39, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(59, 130, 246, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(59, 130, 246, 0.7);
+}
+
+/* Basic animations */
 @keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -44,6 +77,23 @@ body {
   100% { transform: translateY(100vh); opacity: 0.3; }
 }
 
+/* Cursor animations */
+@keyframes cursor-ping {
+  0% { transform: scale(1); opacity: 1; }
+  75%, 100% { transform: scale(1.5); opacity: 0; }
+}
+
+@keyframes cursor-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes cursor-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Animation utilities */
 .animate-fade-in {
   animation: fade-in 1s ease-out forwards;
 }
@@ -58,4 +108,62 @@ body {
 
 .animate-rain {
   animation: rain linear infinite;
+}
+
+.animate-cursor-ping {
+  animation: cursor-ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.animate-cursor-pulse {
+  animation: cursor-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-cursor-spin {
+  animation: cursor-spin 1s linear infinite;
+}
+
+/* Additional scroll animations */
+.animate-on-scroll {
+  opacity: 0;
+  transition: all 0.5s ease-out;
+}
+
+.animate-on-scroll.animate-fade-in-up {
+  opacity: 1;
+}
+
+/* Smoother transitions for interactive elements */
+a, button, select, [role="button"] {
+  transition: all 0.3s ease;
+  will-change: transform, color, background-color;
+}
+
+/* Enhanced box shadows */
+.shadow-blue {
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+}
+
+.shadow-purple {
+  box-shadow: 0 0 15px rgba(147, 51, 234, 0.5);
+}
+
+/* Gradient text utility */
+.gradient-text {
+  @apply bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent;
+}
+
+/* Glass morphism effect */
+.glass {
+  backdrop-filter: blur(10px);
+  background: rgba(17, 24, 39, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Scale animation on hover */
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
 }
