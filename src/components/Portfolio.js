@@ -151,21 +151,7 @@ const Portfolio = () => {
         <ParticleBackground />
         
         {/* Optional: Keep the rain effect alongside particles */}
-        <div className="absolute inset-0 opacity-30"> {/* Changed from opacity-20 to opacity-30 */}
-  {RAINDROP_STYLES.map((style, i) => (
-    <div
-      key={i}
-      className="absolute bg-blue-400/30 w-0.5 animate-rain"
-      style={{
-        left: style.left,
-        height: style.height,
-        animationDuration: style.animationDuration,
-        animationDelay: style.animationDelay,
-      }}
-    />
-  ))}
-</div>
-      </div>
+        </div>
 
       {/* Navigation Bar */}
       <nav className="fixed top-0 w-full bg-gray-800/70 backdrop-blur-sm shadow-lg z-20">

@@ -1,21 +1,27 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 const ParticleBackground = () => {
   const canvasRef = useRef(null);
-  const [sunClicks, setSunClicks] = useState(0);
-  const [blackHoleActive, setBlackHoleActive] = useState(false);
-  const [blackHole, setBlackHole] = useState(null);
-  
+  const blackHoleActiveRef = useRef(false);
+  const blackHoleRef = useRef(null);
+  let konamiProgress = 0;
+
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     let animationFrameId;
-    const G = 3.0; // Increased from 1.5 for stronger gravity
+    const G = 3.0;
     const TIME_STEP = 0.5;
     const GRAVITY_RANGE = 300;
     const MIN_PARTICLES = 40;
     const INITIAL_PARTICLE_COUNT = Math.min(50, window.innerWidth / 30);
-    const BLACK_HOLE_MASS = 1000;
+    const BLACK_HOLE_MASS = 2000;
+
+    const konamiCode = [
+      'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
+      'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight',
+      'KeyB', 'KeyQ'
+    ];
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
@@ -70,6 +76,8 @@ const ParticleBackground = () => {
       }
       
       update(particles, blackHole) {
+        if (this.isCentral && !blackHoleActiveRef.current) return;
+        
         let totalForceX = 0;
         let totalForceY = 0;
         
@@ -98,7 +106,7 @@ const ParticleBackground = () => {
           if (distance < blackHole.size) {
             this.markForRemoval = true;
           } else {
-            const force = (G * this.mass * BLACK_HOLE_MASS) / (distance * distance);
+            const force = (G * this.mass * blackHole.mass) / (distance * distance);
             const angle = Math.atan2(dy, dx);
             totalForceX += force * Math.cos(angle);
             totalForceY += force * Math.sin(angle);
@@ -184,20 +192,22 @@ const ParticleBackground = () => {
         this.y = y;
         this.size = 20;
         this.mass = BLACK_HOLE_MASS;
-        this.growthRate = 0.1;
+        this.growthRate = 0.005; // Slower initial growth
       }
       
       update() {
         this.size += this.growthRate;
+        this.growthRate *= 1.0001; // Slower exponential growth
+        this.mass += this.growthRate * 2; // Slower mass increase
       }
       
       draw() {
-        ctx.fillStyle = 'rgba(0, 0, 0, 1)';
+        ctx.fillStyle = 'rgb(0, 0, 0)'; // Pitch black
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
-        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)'; // Very bright glow
+        ctx.lineWidth = 4; // Thicker glow
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size + 5, 0, Math.PI * 2);
         ctx.stroke();
@@ -230,34 +240,36 @@ const ParticleBackground = () => {
       }
     }
     
-    const handleClick = (e) => {
-      if (blackHoleActive) return; // No clicks after black hole
+    const handleKeyDown = (e) => {
+      if (blackHoleActiveRef.current) return;
       
-      const sun = particles.find(p => p.isCentral);
-      if (sun) {
-        const dx = e.clientX - sun.x;
-        const dy = e.clientY - sun.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        if (distance < sun.size * 2) { // Increased clickable area (20px radius)
-          setSunClicks(prev => {
-            const newClicks = prev + 1;
-            console.log(`Sun clicked: ${newClicks}/5`); // Debug log
-            if (newClicks >= 5) {
-              setBlackHoleActive(true);
-              setBlackHole(new BlackHole(sun.x, sun.y));
-              particles = particles.filter(p => !p.isCentral); // Remove sun
-              return 0; // Reset clicks
-            }
-            return newClicks;
-          });
+      const key = e.code;
+      console.log(`Key pressed: ${key}, Expected: ${konamiCode[konamiProgress]}`);
+      
+      if (key === konamiCode[konamiProgress]) {
+        konamiProgress++;
+        console.log(`Konami step: ${konamiProgress}/${konamiCode.length}`);
+        
+        if (konamiProgress === konamiCode.length) {
+          const sun = particles.find(p => p.isCentral);
+          if (sun) {
+            blackHoleActiveRef.current = true;
+            blackHoleRef.current = new BlackHole(sun.x, sun.y);
+            particles = particles.filter(p => !p.isCentral);
+            console.log("Black hole activated");
+          }
+          konamiProgress = 0;
         }
+      } else {
+        konamiProgress = 0;
+        console.log("Konami reset");
       }
     };
     
-    canvas.addEventListener('click', handleClick);
+    document.addEventListener('keydown', handleKeyDown);
 
     const animate = () => {
-      if (blackHoleActive) {
+      if (blackHoleActiveRef.current) {
         ctx.fillStyle = 'rgba(10, 10, 25, 0.5)';
       } else {
         ctx.fillStyle = 'rgba(10, 10, 25, 0.3)';
@@ -265,17 +277,17 @@ const ParticleBackground = () => {
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       
       particles.forEach(particle => {
-        particle.update(particles, blackHole);
+        particle.update(particles, blackHoleRef.current);
         particle.draw();
       });
       
-      if (blackHole) {
-        blackHole.update();
-        blackHole.draw();
+      if (blackHoleRef.current) {
+        blackHoleRef.current.update();
+        blackHoleRef.current.draw();
       }
       
       particles = particles.filter(p => !p.markForRemoval);
-      while (particles.length < MIN_PARTICLES + (blackHoleActive ? 0 : 1)) {
+      while (particles.length < MIN_PARTICLES + (blackHoleActiveRef.current ? 0 : 1)) {
         particles.push(new Particle());
       }
       
@@ -288,7 +300,7 @@ const ParticleBackground = () => {
     
     return () => {
       window.removeEventListener('resize', resizeCanvas);
-      canvas.removeEventListener('click', handleClick);
+      document.removeEventListener('keydown', handleKeyDown);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
