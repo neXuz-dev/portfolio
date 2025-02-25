@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-const ParticleBackground = () => {
+const ParticleBackground = ({ onBlackHoleFullScreen }) => {
   const canvasRef = useRef(null);
   const blackHoleActiveRef = useRef(false);
   const blackHoleRef = useRef(null);
@@ -192,22 +192,22 @@ const ParticleBackground = () => {
         this.y = y;
         this.size = 20;
         this.mass = BLACK_HOLE_MASS;
-        this.growthRate = 0.005; // Slower initial growth
+        this.growthRate = 0.005;
       }
       
       update() {
         this.size += this.growthRate;
-        this.growthRate *= 1.0001; // Slower exponential growth
-        this.mass += this.growthRate * 2; // Slower mass increase
+        this.growthRate *= 1.0001;
+        this.mass += this.growthRate * 2;
       }
       
       draw() {
-        ctx.fillStyle = 'rgb(0, 0, 0)'; // Pitch black
+        ctx.fillStyle = 'rgb(0, 0, 0)';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)'; // Very bright glow
-        ctx.lineWidth = 4; // Thicker glow
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.lineWidth = 4;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size + 5, 0, Math.PI * 2);
         ctx.stroke();
@@ -269,10 +269,18 @@ const ParticleBackground = () => {
     document.addEventListener('keydown', handleKeyDown);
 
     const animate = () => {
-      if (blackHoleActiveRef.current) {
-        ctx.fillStyle = 'rgba(10, 10, 25, 0.5)';
+      if (blackHoleActiveRef.current && blackHoleRef.current) {
+        const diagonal = Math.sqrt(canvas.width * canvas.width + canvas.height * canvas.height);
+        if (blackHoleRef.current.size * 2 >= diagonal) {
+          ctx.fillStyle = 'rgb(0, 0, 0)'; // Pure black when full screen
+          if (onBlackHoleFullScreen) onBlackHoleFullScreen(true); // Notify parent
+        } else {
+          ctx.fillStyle = 'rgba(10, 10, 25, 0.5)';
+          if (onBlackHoleFullScreen) onBlackHoleFullScreen(false);
+        }
       } else {
         ctx.fillStyle = 'rgba(10, 10, 25, 0.3)';
+        if (onBlackHoleFullScreen) onBlackHoleFullScreen(false);
       }
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       

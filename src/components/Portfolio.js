@@ -64,32 +64,9 @@ const LOC_ESTIMATES = {
 
 const TOTAL_LOC = Object.values(LOC_ESTIMATES).reduce((sum, loc) => sum + loc, 0);
 
-// Fixed raindrop styles for consistency
-const RAINDROP_STYLES = [
-  { left: '5%', animationDuration: '2s', animationDelay: '0s', height: '10px' },
-  { left: '10%', animationDuration: '1.8s', animationDelay: '0.2s', height: '12px' },
-  { left: '15%', animationDuration: '2.2s', animationDelay: '0.4s', height: '8px' },
-  { left: '20%', animationDuration: '1.9s', animationDelay: '0.6s', height: '11px' },
-  { left: '25%', animationDuration: '2.1s', animationDelay: '0.8s', height: '9px' },
-  { left: '30%', animationDuration: '2s', animationDelay: '1s', height: '10px' },
-  { left: '35%', animationDuration: '1.7s', animationDelay: '1.2s', height: '12px' },
-  { left: '40%', animationDuration: '2.3s', animationDelay: '1.4s', height: '8px' },
-  { left: '45%', animationDuration: '2s', animationDelay: '1.6s', height: '11px' },
-  { left: '50%', animationDuration: '1.8s', animationDelay: '1.8s', height: '9px' },
-  { left: '55%', animationDuration: '2.2s', animationDelay: '0.1s', height: '10px' },
-  { left: '60%', animationDuration: '1.9s', animationDelay: '0.3s', height: '12px' },
-  { left: '65%', animationDuration: '2.1s', animationDelay: '0.5s', height: '8px' },
-  { left: '70%', animationDuration: '2s', animationDelay: '0.7s', height: '11px' },
-  { left: '75%', animationDuration: '1.7s', animationDelay: '0.9s', height: '9px' },
-  { left: '80%', animationDuration: '2.3s', animationDelay: '1.1s', height: '10px' },
-  { left: '85%', animationDuration: '2s', animationDelay: '1.3s', height: '12px' },
-  { left: '90%', animationDuration: '1.8s', animationDelay: '1.5s', height: '8px' },
-  { left: '95%', animationDuration: '2.2s', animationDelay: '1.7s', height: '11px' },
-  { left: '15%', animationDuration: '1.9s', animationDelay: '1.9s', height: '9px' },
-];
-
 const Portfolio = () => {
   const [language, setLanguage] = useState('en');
+  const [isBlackHoleFullScreen, setIsBlackHoleFullScreen] = useState(false);
   
   const languages = [
     { code: 'en', name: 'English', flag: '🇬🇧' },
@@ -118,22 +95,14 @@ const Portfolio = () => {
     ]
   };
 
-  // Initialize smooth scrolling when component mounts
   useEffect(() => {
-    // Hide default cursor
     document.body.classList.add('cursor-none');
-    
-    // Initialize smooth scroll and get cleanup function
     const cleanupScrollListeners = initSmoothScroll();
-    
-    // Cleanup when component unmounts
     return () => {
       document.body.classList.remove('cursor-none');
-      // Clean up scroll event listeners
       if (typeof cleanupScrollListeners === 'function') {
         cleanupScrollListeners();
       }
-      // Remove any other event listeners
       window.removeEventListener('scroll', () => {});
     };
   }, []);
@@ -144,14 +113,16 @@ const Portfolio = () => {
       <CustomCursor />
       
       {/* Background with Particle Effect */}
-      <div className="fixed inset-0 z-0" style={{
-        backgroundImage: 'linear-gradient(to right, #1A232D, #2E2531)'
-      }}>
-        {/* Particle Background */}
-        <ParticleBackground />
-        
-        {/* Optional: Keep the rain effect alongside particles */}
-        </div>
+      <div
+        className="fixed inset-0 z-0"
+        style={{
+          background: isBlackHoleFullScreen
+            ? 'black'
+            : 'linear-gradient(to right, #1A232D, #2E2531)',
+        }}
+      >
+        <ParticleBackground onBlackHoleFullScreen={setIsBlackHoleFullScreen} />
+      </div>
 
       {/* Navigation Bar */}
       <nav className="fixed top-0 w-full bg-gray-800/70 backdrop-blur-sm shadow-lg z-20">
@@ -303,14 +274,14 @@ const Portfolio = () => {
 
       {/* Skills Section */}
       <section className="max-w-4xl mx-auto mt-8 px-4 scroll-mt-12 relative z-10" id="skills">
-  <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-on-scroll opacity-0">
-    <h2 className="text-2xl font-bold text-gray-100 mb-4">
-      {language === 'fr' ? 'Expertise Technique' : 'Technical Expertise'}
-    </h2>
-    
-    <TechnologiesShowcase language={language} />
-  </div>
-</section>
+        <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-on-scroll opacity-0">
+          <h2 className="text-2xl font-bold text-gray-100 mb-4">
+            {language === 'fr' ? 'Expertise Technique' : 'Technical Expertise'}
+          </h2>
+          
+          <TechnologiesShowcase language={language} />
+        </div>
+      </section>
 
       {/* Projects Section */}
       <section className="max-w-4xl mx-auto mt-8 px-4 relative z-10" id="projects">
