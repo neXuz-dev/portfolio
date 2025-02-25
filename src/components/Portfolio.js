@@ -112,14 +112,17 @@ const Portfolio = () => {
 
   return (
     <div className="min-h-screen text-gray-100 relative overflow-x-hidden">
-      {/* Background with Rain Effect */}
-      <div className="fixed inset-0 z-0 bg-gray-900">
+      {/* Multi-Step Gradient Background with Rain Effect */}
+      <div className="fixed inset-0 z-0" style={{
+        backgroundImage: '-webkit-linear-gradient(to right, #1A232D, #2E2531)', 
+        backgroundImage: 'linear-gradient(to right, #1A232D, #2E2531)'
+      }}>
         {/* Rain Effect */}
-        <div className="absolute inset-0 opacity-70">
+        <div className="absolute inset-0 opacity-40">
           {RAINDROP_STYLES.map((style, i) => (
             <div
               key={i}
-              className="absolute bg-blue-300 w-0.5 animate-rain"
+              className="absolute bg-blue-400/30 w-0.5 animate-rain"
               style={{
                 left: style.left,
                 height: style.height,
@@ -132,7 +135,7 @@ const Portfolio = () => {
       </div>
 
       {/* Navigation Bar */}
-      <nav className="fixed top-0 w-full bg-gray-800/30 shadow-lg z-20">
+      <nav className="fixed top-0 w-full bg-gray-800/70 shadow-lg z-20">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3 animate-fade-in">
             <img 
@@ -151,20 +154,20 @@ const Portfolio = () => {
             <div className="flex gap-3">
               <a 
                 href="#skills" 
-                className="bg-gray-700/30 text-gray-200 font-medium px-4 py-1.5 rounded-full border border-gray-600 hover:bg-blue-600/70 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-md animate-slide-up"
+                className="bg-gray-700/60 text-gray-200 font-medium px-4 py-1.5 rounded-full border border-gray-600 hover:bg-blue-600/70 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-md animate-slide-up"
               >
                 {language === 'fr' ? 'Compétences' : 'Skills'}
               </a>
               <a 
                 href="#projects" 
-                className="bg-gray-700/30 text-gray-200 font-medium px-4 py-1.5 rounded-full border border-gray-600 hover:bg-blue-600/70 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-md animate-slide-up"
+                className="bg-gray-700/60 text-gray-200 font-medium px-4 py-1.5 rounded-full border border-gray-600 hover:bg-blue-600/70 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-md animate-slide-up"
                 style={{ animationDelay: '0.1s' }}
               >
                 {language === 'fr' ? 'Projets' : 'Projects'}
               </a>
               <a 
                 href="#about" 
-                className="bg-gray-700/30 text-gray-200 font-medium px-4 py-1.5 rounded-full border border-gray-600 hover:bg-blue-600/70 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-md animate-slide-up"
+                className="bg-gray-700/60 text-gray-200 font-medium px-4 py-1.5 rounded-full border border-gray-600 hover:bg-blue-600/70 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-md animate-slide-up"
                 style={{ animationDelay: '0.2s' }}
               >
                 {language === 'fr' ? 'À propos' : 'About'}
@@ -174,7 +177,7 @@ const Portfolio = () => {
           <select
             value={language}
             onChange={(e) => setLanguage(e.target.value)}
-            className="bg-gray-600/30 text-gray-200 rounded-full px-3 py-2 border border-gray-500/50 hover:bg-gray-500/70 transition-all duration-300 animate-fade-in"
+            className="bg-gray-600/60 text-gray-200 rounded-full px-3 py-2 border border-gray-500/50 hover:bg-gray-500/70 transition-all duration-300 animate-fade-in"
           >
             {languages.map(lang => (
               <option key={lang.code} value={lang.code}>
@@ -187,7 +190,7 @@ const Portfolio = () => {
 
       {/* Header */}
       <header className="max-w-4xl mx-auto px-4 pt-32 pb-12 relative z-10">
-        <div className="bg-gray-800/30 rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-fade-in-up">
+        <div className="bg-gray-800/60 rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-fade-in-up">
           <h1 className="text-4xl font-bold text-gray-100 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Rémi Job-Dorge</h1>
           <p className="text-xl text-gray-300 mt-2 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             {language === 'fr' ? 'Expert en Développement Logiciel & Analyste Technique' : 'Expert Software Developer & Technical Analyst'}
@@ -225,7 +228,7 @@ const Portfolio = () => {
 
       {/* At a Glance Section */}
       <section className="max-w-4xl mx-auto mt-8 px-4 relative z-10">
-        <div className="bg-gray-800/30 rounded-lg shadow-2xl p-6 border border-gray-700/50 animate-fade-in-up">
+        <div className="bg-gray-800/60 rounded-lg shadow-2xl p-6 border border-gray-700/50 animate-fade-in-up">
           <h2 className="text-2xl font-bold text-gray-100 mb-4">
             {language === 'fr' ? 'En bref' : 'At a Glance'}
           </h2>
@@ -278,7 +281,7 @@ const Portfolio = () => {
 
       {/* Skills Section */}
       <section className="max-w-4xl mx-auto mt-8 px-4 scroll-mt-12 relative z-10" id="skills">
-        <div className="bg-gray-800/30 rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-fade-in-up">
+        <div className="bg-gray-800/60 rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-fade-in-up">
           <h2 className="text-2xl font-bold text-gray-100 mb-4">
             {language === 'fr' ? 'Expertise Technique' : 'Technical Expertise'}
           </h2>
@@ -337,7 +340,7 @@ const Portfolio = () => {
 
       {/* Projects Section */}
       <section className="max-w-4xl mx-auto mt-8 px-4 relative z-10" id="projects">
-        <div className="bg-gray-800/30 rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-fade-in-up">
+        <div className="bg-gray-800/60 rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-fade-in-up">
           <h2 className="text-2xl font-bold text-gray-100 mb-6">
             {language === 'fr' ? 'Projets' : 'Projects'}
           </h2>
@@ -347,7 +350,7 @@ const Portfolio = () => {
 
       {/* About Section */}
       <section className="max-w-4xl mx-auto mt-8 px-4 relative z-10" id="about">
-        <div className="bg-gray-800/30 rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-fade-in-up">
+        <div className="bg-gray-800/60 rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-fade-in-up">
           <h2 className="text-2xl font-bold text-gray-100 mb-4">
             {language === 'fr' ? 'À propos de moi' : 'About Me'}
           </h2>
@@ -405,7 +408,7 @@ const Portfolio = () => {
       </section>
 
       {/* Footer */}
-      <footer className="max-w-4xl mx-auto mt-8 px-4 py-6 text-center text-gray-400 bg-gray-800/30 rounded-lg shadow-2xl border border-gray-700/50 relative z-10 animate-fade-in-up">
+      <footer className="max-w-4xl mx-auto mt-8 px-4 py-6 text-center text-gray-400 bg-gray-800/60 rounded-lg shadow-2xl border border-gray-700/50 relative z-10 animate-fade-in-up">
         <p>© neXuz-dev, {new Date().getFullYear()}. {language === 'fr' ? 'Tous droits réservés.' : 'All rights reserved.'}</p>
       </footer>
     </div>
