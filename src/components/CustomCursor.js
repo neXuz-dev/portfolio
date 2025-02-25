@@ -135,7 +135,7 @@ const CustomCursor = () => {
   return (
     <div
       ref={cursorRef}
-      className={`fixed top-0 left-0 z-50 ${hidden ? 'opacity-0' : 'opacity-100'} transition-opacity duration-200`}
+      className={`fixed top-0 left-0 z-[9999] ${hidden ? 'opacity-0' : 'opacity-100'} transition-opacity duration-200`}
       style={{ 
         willChange: 'transform', 
         transformOrigin: 'center',

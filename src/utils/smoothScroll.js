@@ -46,7 +46,7 @@ export const initSmoothScroll = () => {
   let startPosition = 0;
   let startTime = 0;
   let rafId = null;
-  const scrollDuration = 800; // ms
+  const scrollDuration = 600; // ms - reduced from 800 for faster scrolling
 
   // Use requestAnimationFrame for smooth scroll
   const smoothScrollTo = (target, duration = scrollDuration) => {
@@ -98,7 +98,7 @@ export const initSmoothScroll = () => {
       const delta = e.deltaY;
       
       // Add to the accumulated delta
-      accumulatedDelta += delta * 0.5; // Reduce sensitivity
+      accumulatedDelta += delta * 0.7; // Increased sensitivity from 0.5 to 0.7
       
       // Clear existing timeout
       if (wheelTimeout) {
@@ -108,7 +108,7 @@ export const initSmoothScroll = () => {
       // Apply the smooth scroll with a debounce
       if (!isScrolling) {
         const scrollTo = window.pageYOffset + accumulatedDelta;
-        smoothScrollTo(scrollTo, 300); // Shorter duration for wheel scrolling
+        smoothScrollTo(scrollTo, 200); // Shorter duration for wheel scrolling - reduced from 300
       }
       
       // Reset accumulated delta after a short delay
