@@ -66,7 +66,6 @@ const TOTAL_LOC = Object.values(LOC_ESTIMATES).reduce((sum, loc) => sum + loc, 0
 
 const Portfolio = () => {
   const [language, setLanguage] = useState('en');
-  const [isBlackHoleFullScreen, setIsBlackHoleFullScreen] = useState(false);
   
   const languages = [
     { code: 'en', name: 'English', flag: '🇬🇧' },
@@ -113,15 +112,8 @@ const Portfolio = () => {
       <CustomCursor />
       
       {/* Background with Particle Effect */}
-      <div
-        className="fixed inset-0 z-0"
-        style={{
-          background: isBlackHoleFullScreen
-            ? 'black'
-            : 'linear-gradient(to right, #1A232D, #2E2531)',
-        }}
-      >
-        <ParticleBackground onBlackHoleFullScreen={setIsBlackHoleFullScreen} />
+      <div className="fixed inset-0 z-0">
+        <ParticleBackground />
       </div>
 
       {/* Navigation Bar */}

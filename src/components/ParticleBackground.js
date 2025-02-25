@@ -61,6 +61,7 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
           this.speedY = orbitalSpeed * Math.cos(angle) + (Math.random() - 0.5) * 4;
           this.color = this.getRandomColor();
           this.isCentral = false;
+          this.opacity = 1;
         }
       }
       
@@ -179,7 +180,8 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
       }
       
       draw() {
-        ctx.fillStyle = this.color;
+        const actualColor = this.color.replace(/[\d.]+\)$/, `${this.opacity || 1})`);
+        ctx.fillStyle = actualColor;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
@@ -193,28 +195,136 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
         this.size = 20;
         this.mass = BLACK_HOLE_MASS;
         this.growthRate = 0.005;
+        this.maxSize = Math.sqrt(canvas.width * canvas.width + canvas.height * canvas.height);
+        this.darknessRatio = 0; // 0 to 1, controlling darkness level
       }
       
       update() {
         this.size += this.growthRate;
         this.growthRate *= 1.0001;
         this.mass += this.growthRate * 2;
+        
+        // Calculate darkness ratio - increases as the black hole grows
+        const sizeRatio = this.size / this.maxSize;
+        // Apply a non-linear curve for more dramatic darkening as the hole gets bigger
+        this.darknessRatio = Math.min(1, Math.pow(sizeRatio * 3, 1.5));
+        
+        // Always notify parent about the current darkness ratio
+        if (onBlackHoleFullScreen) {
+          onBlackHoleFullScreen(this.darknessRatio);
+        }
       }
       
       draw() {
+        // Draw the bright accretion disk with Interstellar movie style
+        ctx.save();
+        
+        // 1. First draw the outer glow/halo of the black hole - bright blue-white
+        const outerGlowGradient = ctx.createRadialGradient(
+          this.x, this.y, this.size * 1.2,
+          this.x, this.y, this.size * 2.2
+        );
+        
+        outerGlowGradient.addColorStop(0, 'rgba(220, 240, 255, 0.9)');
+        outerGlowGradient.addColorStop(0.3, 'rgba(180, 220, 255, 0.6)');
+        outerGlowGradient.addColorStop(0.7, 'rgba(120, 180, 255, 0.3)');
+        outerGlowGradient.addColorStop(1, 'rgba(80, 120, 220, 0)');
+        
+        ctx.fillStyle = outerGlowGradient;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size * 2.2, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // 2. Draw the horizontal accretion disk (bright, thin band)
+        ctx.translate(this.x, this.y);
+        
+        // Bright disk with blue-white gradient
+        const diskGradient = ctx.createLinearGradient(
+          -this.size * 3, 0,
+          this.size * 3, 0
+        );
+        
+        // Bright white/blue in center, fading at edges
+        diskGradient.addColorStop(0, 'rgba(100, 150, 255, 0)');
+        diskGradient.addColorStop(0.2, 'rgba(150, 200, 255, 0.6)');
+        diskGradient.addColorStop(0.35, 'rgba(200, 230, 255, 0.8)');
+        diskGradient.addColorStop(0.5, 'rgba(250, 250, 255, 1)');  
+        diskGradient.addColorStop(0.65, 'rgba(200, 230, 255, 0.8)');
+        diskGradient.addColorStop(0.8, 'rgba(150, 200, 255, 0.6)');
+        diskGradient.addColorStop(1, 'rgba(100, 150, 255, 0)');
+        
+        // Draw a thin disk
+        const diskThickness = this.size * 0.15; // Thin disk (15% of black hole)
+        
+        ctx.fillStyle = diskGradient;
+        ctx.beginPath();
+        ctx.ellipse(0, 0, this.size * 3, diskThickness, 0, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // 3. Add some lens flare effects for the bright accretion disk
+        // Top and bottom "light leaks"
+        const flareGradient = ctx.createRadialGradient(
+          0, 0, this.size,
+          0, 0, this.size * 4
+        );
+        
+        flareGradient.addColorStop(0, 'rgba(220, 240, 255, 0.7)');
+        flareGradient.addColorStop(0.3, 'rgba(180, 220, 255, 0.4)');
+        flareGradient.addColorStop(0.7, 'rgba(120, 180, 255, 0.1)');
+        flareGradient.addColorStop(1, 'rgba(80, 150, 250, 0)');
+        
+        ctx.fillStyle = flareGradient;
+        ctx.globalCompositeOperation = 'lighter';
+        
+        // Draw light "halos" above and below 
+        ctx.beginPath();
+        ctx.ellipse(0, -this.size * 1.2, this.size * 0.8, this.size * 0.3, 0, 0, Math.PI * 2);
+        ctx.fill();
+        
+        ctx.beginPath();
+        ctx.ellipse(0, this.size * 1.2, this.size * 0.8, this.size * 0.3, 0, 0, Math.PI * 2);
+        ctx.fill();
+        
+        ctx.restore();
+        
+        // 4. Then draw the black hole's shadow (completely black circle)
         ctx.fillStyle = 'rgb(0, 0, 0)';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
-        ctx.lineWidth = 4;
+        
+        // 5. Draw the photon ring (bright ring around the black hole)
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size + 5, 0, Math.PI * 2);
+        ctx.arc(this.x, this.y, this.size * 1.05, 0, Math.PI * 2);
+        ctx.lineWidth = this.size * 0.05;
+        ctx.strokeStyle = 'rgba(250, 250, 255, 0.9)';
         ctx.stroke();
+      }
+      
+      // Method to get the current background alpha based on black hole size
+      getBackgroundAlpha() {
+        return this.darknessRatio;
       }
     }
     
     let particles = [];
+    let stars = [];
+    
+    // Create some background stars for the gravitational lensing effect
+    const createStars = () => {
+      const numStars = 100;
+      for (let i = 0; i < numStars; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: Math.random() * 1.5 + 0.5,
+          brightness: Math.random() * 0.5 + 0.5
+        });
+      }
+    };
+    
+    createStars();
+    
     particles.push(new Particle(true)); // Sun
     for (let i = 0; i < INITIAL_PARTICLE_COUNT; i++) {
       particles.push(new Particle());
@@ -229,7 +339,10 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
           const distance = Math.sqrt(dx * dx + dy * dy);
           if (distance < maxDistance) {
             const opacity = 1 - (distance / maxDistance);
-            ctx.strokeStyle = `rgba(99, 102, 241, ${opacity * 0.15})`;
+            const blackHoleFactor = blackHoleRef.current ? 
+              (1 - blackHoleRef.current.getBackgroundAlpha()) : 1;
+            
+            ctx.strokeStyle = `rgba(99, 102, 241, ${opacity * 0.15 * blackHoleFactor})`;
             ctx.lineWidth = 0.3;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
@@ -244,11 +357,9 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
       if (blackHoleActiveRef.current) return;
       
       const key = e.code;
-      console.log(`Key pressed: ${key}, Expected: ${konamiCode[konamiProgress]}`);
       
       if (key === konamiCode[konamiProgress]) {
         konamiProgress++;
-        console.log(`Konami step: ${konamiProgress}/${konamiCode.length}`);
         
         if (konamiProgress === konamiCode.length) {
           const sun = particles.find(p => p.isCentral);
@@ -262,44 +373,116 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
         }
       } else {
         konamiProgress = 0;
-        console.log("Konami reset");
       }
     };
     
     document.addEventListener('keydown', handleKeyDown);
 
-    const animate = () => {
-      if (blackHoleActiveRef.current && blackHoleRef.current) {
-        const diagonal = Math.sqrt(canvas.width * canvas.width + canvas.height * canvas.height);
-        if (blackHoleRef.current.size * 2 >= diagonal) {
-          ctx.fillStyle = 'rgb(0, 0, 0)'; // Pure black when full screen
-          if (onBlackHoleFullScreen) onBlackHoleFullScreen(true); // Notify parent
-        } else {
-          ctx.fillStyle = 'rgba(10, 10, 25, 0.5)';
-          if (onBlackHoleFullScreen) onBlackHoleFullScreen(false);
+    // Drawing the background with proper layering
+    const drawBackground = () => {
+      // Drawing the main gradient background
+      const getBackgroundGradient = () => {
+        // Default starting colors for the gradient background
+        let startRed = 26, startGreen = 35, startBlue = 45; // #1A232D
+        let endRed = 46, endGreen = 37, endBlue = 49; // #2E2531
+        
+        // If black hole is active, calculate darkness effect on background
+        if (blackHoleActiveRef.current && blackHoleRef.current) {
+          const darknessLevel = blackHoleRef.current.getBackgroundAlpha();
+          
+          // Adjust background colors based on darkness level
+          startRed = Math.round(startRed * (1 - darknessLevel));
+          startGreen = Math.round(startGreen * (1 - darknessLevel));
+          startBlue = Math.round(startBlue * (1 - darknessLevel));
+          
+          endRed = Math.round(endRed * (1 - darknessLevel));
+          endGreen = Math.round(endGreen * (1 - darknessLevel));
+          endBlue = Math.round(endBlue * (1 - darknessLevel));
         }
-      } else {
-        ctx.fillStyle = 'rgba(10, 10, 25, 0.3)';
-        if (onBlackHoleFullScreen) onBlackHoleFullScreen(false);
-      }
+        
+        // Create gradient
+        const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+        gradient.addColorStop(0, `rgb(${startRed}, ${startGreen}, ${startBlue})`);
+        gradient.addColorStop(1, `rgb(${endRed}, ${endGreen}, ${endBlue})`);
+        
+        return gradient;
+      };
+      
+      // Fill the canvas with the gradient background
+      ctx.fillStyle = getBackgroundGradient();
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       
+      // Create a clipping region around the black hole if it exists
+      // This prevents the background from being drawn over the black hole
+      if (blackHoleActiveRef.current && blackHoleRef.current) {
+        // Temporarily save the context state
+        ctx.save();
+        
+        // Create a clipping path that excludes the black hole area
+        ctx.beginPath();
+        ctx.rect(0, 0, canvas.width, canvas.height); // Entire canvas
+        
+        // Cut out the black hole
+        ctx.arc(blackHoleRef.current.x, blackHoleRef.current.y, 
+                blackHoleRef.current.size * 1.05, 0, Math.PI * 2, true); // Counter-clockwise for hole
+        
+        ctx.clip(); // Apply the clipping region
+        
+        // Draw stars if no black hole is active (otherwise black hole draws them with distortion)
+        stars.forEach(star => {
+          ctx.fillStyle = `rgba(255, 255, 255, ${star.brightness})`;
+          ctx.beginPath();
+          ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        
+        // Restore the context to remove the clipping path
+        ctx.restore();
+      } else {
+        // Draw stars normally if no black hole is active
+        stars.forEach(star => {
+          ctx.fillStyle = `rgba(255, 255, 255, ${star.brightness})`;
+          ctx.beginPath();
+          ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      }
+    };
+
+    const animate = () => {
+      // Start with a clean canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw the background (will be clipped around the black hole)
+      drawBackground();
+      
+      // Update and draw particles
       particles.forEach(particle => {
         particle.update(particles, blackHoleRef.current);
+        
+        // Fade particle opacity as black hole grows
+        if (blackHoleActiveRef.current && blackHoleRef.current) {
+          const darknessLevel = blackHoleRef.current.getBackgroundAlpha();
+          particle.opacity = Math.max(0.1, 1 - darknessLevel * 0.8);
+        }
+        
         particle.draw();
       });
       
+      // Connect particles with lines
+      connectParticles();
+      
+      // If black hole is active, update and draw it
       if (blackHoleRef.current) {
         blackHoleRef.current.update();
         blackHoleRef.current.draw();
       }
       
+      // Clean up removed particles and add new ones if needed
       particles = particles.filter(p => !p.markForRemoval);
       while (particles.length < MIN_PARTICLES + (blackHoleActiveRef.current ? 0 : 1)) {
         particles.push(new Particle());
       }
-      
-      connectParticles();
       
       animationFrameId = requestAnimationFrame(animate);
     };
@@ -311,12 +494,12 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
       document.removeEventListener('keydown', handleKeyDown);
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [onBlackHoleFullScreen]);
   
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 z-0 opacity-20 pointer-events-auto"
+      className="fixed inset-0 z-0 w-full h-full"
       style={{ background: 'transparent' }}
     />
   );
