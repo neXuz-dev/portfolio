@@ -6,9 +6,12 @@ import ReactMarkdown from 'react-markdown';
 import allProjects from '../projects';
 import ProjectsSection from './ProjectsSection';
 import CustomCursor from './CustomCursor';
-
-// Import enhanced smooth scroll utility
 import { initSmoothScroll } from '../utils/smoothScroll';
+import AnimatedSkillBars from './AnimatedSkillBars';
+import ProjectShowcase from './ProjectShowcase';
+import ExperienceTimeline from './ExperienceTimeline';
+import ParticleBackground from './ParticleBackground';
+import TechnologiesShowcase from './TechnologiesShowcase';
 
 const LOC_ESTIMATES = {
   "Age of Empires Online AI Assistant": 1000,
@@ -140,12 +143,15 @@ const Portfolio = () => {
       {/* Custom Cursor */}
       <CustomCursor />
       
-      {/* Multi-Step Gradient Background with Rain Effect */}
+      {/* Background with Particle Effect */}
       <div className="fixed inset-0 z-0" style={{
         backgroundImage: 'linear-gradient(to right, #1A232D, #2E2531)'
       }}>
-        {/* Rain Effect */}
-        <div className="absolute inset-0 opacity-40">
+        {/* Particle Background */}
+        <ParticleBackground />
+        
+        {/* Optional: Keep the rain effect alongside particles */}
+        <div className="absolute inset-0 opacity-20">
           {RAINDROP_STYLES.map((style, i) => (
             <div
               key={i}
@@ -306,6 +312,9 @@ const Portfolio = () => {
         </div>
       </section>
 
+      {/* Featured Projects Showcase */}
+      <ProjectShowcase projects={allProjects} language={language} />
+
       {/* Skills Section */}
       <section className="max-w-4xl mx-auto mt-8 px-4 scroll-mt-12 relative z-10" id="skills">
         <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-on-scroll opacity-0">
@@ -313,55 +322,31 @@ const Portfolio = () => {
             {language === 'fr' ? 'Expertise Technique' : 'Technical Expertise'}
           </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <h3 className="text-lg font-semibold text-gray-200 mb-2">
-                {language === 'fr' ? 'Compétences Principales' : 'Core Skills'}
-              </h3>
-              <ul className="space-y-2">
-                <li className="flex items-center text-gray-300 animate-on-scroll opacity-0" style={{ animationDelay: '0.2s' }}>
-                  <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                  {language === 'fr' ? 'Programmation Système Bas Niveau' : 'Low-level System Programming'}
-                </li>
-                <li className="flex items-center text-gray-300 animate-on-scroll opacity-0" style={{ animationDelay: '0.3s' }}>
-                  <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                  {language === 'fr' ? 'Manipulation et Analyse de Mémoire' : 'Memory Manipulation & Analysis'}
-                </li>
-                <li className="flex items-center text-gray-300 animate-on-scroll opacity-0" style={{ animationDelay: '0.4s' }}>
-                  <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                  {language === 'fr' ? 'Rétro-Ingénierie' : 'Reverse Engineering'}
-                </li>
-                <li className="flex items-center text-gray-300 animate-on-scroll opacity-0" style={{ animationDelay: '0.5s' }}>
-                  <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                  {language === 'fr' ? 'Automatisation de Processus' : 'Process Automation'}
-                </li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="text-lg font-semibold text-gray-200 mb-2">
-                {language === 'fr' ? 'Technologies' : 'Technologies'}
-              </h3>
-              <ul className="space-y-2">
-                <li className="flex items-center text-gray-300 animate-on-scroll opacity-0" style={{ animationDelay: '0.2s' }}>
-                  <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                  C++, C#, AutoIt, Python, ASM
-                </li>
-                <li className="flex items-center text-gray-300 animate-on-scroll opacity-0" style={{ animationDelay: '0.3s' }}>
-                  <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                  JavaScript, PHP, Pine Script
-                </li>
-                <li className="flex items-center text-gray-300 animate-on-scroll opacity-0" style={{ animationDelay: '0.4s' }}>
-                  <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                  .NET, Next.js, React, Tailwind CSS
-                </li>
-                <li className="flex items-center text-gray-300 animate-on-scroll opacity-0" style={{ animationDelay: '0.5s' }}>
-                  <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                  Windows API, Unreal Engine 5
-                </li>
-              </ul>
-            </div>
-          </div>
+          <h3 className="text-lg font-semibold text-gray-200 mb-4">
+            {language === 'fr' ? 'Compétences et Expertise' : 'Skills & Expertise'}
+          </h3>
+
+          <AnimatedSkillBars language={language} />
+
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+  {[
+    { name: 'C#', color: 'bg-blue-500' },
+    { name: 'AutoIt', color: 'bg-green-500' },
+    { name: 'C++', color: 'bg-purple-500' },
+    { name: 'ASM', color: 'bg-red-500' },
+    { name: 'JavaScript', color: 'bg-yellow-500' },
+    { name: 'Pine Script', color: 'bg-teal-500' },
+  ].map((lang, index) => (
+    <div key={index} className="flex items-center bg-gray-800/60 backdrop-blur-sm rounded-lg p-3 border border-gray-700/50 animate-on-scroll opacity-0" style={{ animationDelay: `${index * 0.1}s` }}>
+      <div className={`w-3 h-3 ${lang.color} rounded-full mr-2 flex-shrink-0`}></div>
+      <div className="flex items-center">
+        <span className="text-gray-300">{lang.name}</span>
+      </div>
+    </div>
+  ))}
+</div>
+
+          <TechnologiesShowcase language={language} />
         </div>
       </section>
 
@@ -430,6 +415,102 @@ const Portfolio = () => {
                 </p>
               </>
             )}
+          </div>
+
+          <ExperienceTimeline language={language} />
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section className="max-w-4xl mx-auto mt-8 px-4 relative z-10">
+        <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-on-scroll opacity-0">
+          <h2 className="text-2xl font-bold text-gray-100 mb-4">
+            {language === 'fr' ? 'Travaillons Ensemble' : 'Let\'s Work Together'}
+          </h2>
+          
+          <p className="text-gray-300 mb-6">
+            {language === 'fr' 
+              ? "Vous avez un projet qui nécessite mon expertise ? N'hésitez pas à me contacter pour discuter de la façon dont je peux vous aider." 
+              : "Do you have a project that requires my expertise? Feel free to reach out to discuss how I can help you."}
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-200 mb-4">
+                {language === 'fr' ? 'Me Contacter' : 'Contact Me'}
+              </h3>
+              
+              <div className="space-y-4">
+                <div className="flex items-center text-gray-300">
+                  <Mail className="w-5 h-5 mr-3 text-blue-400" />
+                  <a href="mailto:jobdorge.pro@gmail.com" className="hover:text-blue-400 transition-colors">
+                    jobdorge.pro@gmail.com
+                  </a>
+                </div>
+                
+                <div className="flex items-center text-gray-300">
+                  <Linkedin className="w-5 h-5 mr-3 text-blue-400" />
+                  <a href="https://www.linkedin.com/in/r%C3%A9mi-j-977b33213/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors">
+                    LinkedIn Profile
+                  </a>
+                </div>
+                
+                <div className="flex items-center text-gray-300">
+                  <Github className="w-5 h-5 mr-3 text-blue-400" />
+                  <a href="https://github.com/neXuz-dev" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors">
+                    GitHub Profile
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-gray-900/50 p-4 rounded-lg border border-gray-700">
+              <h3 className="text-lg font-semibold text-gray-200 mb-4">
+                {language === 'fr' ? 'Envoyez-moi un message' : 'Send me a message'}
+              </h3>
+              
+              <form className="space-y-4">
+                <div>
+                  <label htmlFor="name" className="block text-gray-300 mb-1 text-sm">
+                    {language === 'fr' ? 'Nom' : 'Name'}
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    className="w-full bg-gray-800 rounded border border-gray-700 p-2 text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+                
+                <div>
+                  <label htmlFor="email" className="block text-gray-300 mb-1 text-sm">
+                    {language === 'fr' ? 'Email' : 'Email'}
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    className="w-full bg-gray-800 rounded border border-gray-700 p-2 text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+                
+                <div>
+                  <label htmlFor="message" className="block text-gray-300 mb-1 text-sm">
+                    {language === 'fr' ? 'Message' : 'Message'}
+                  </label>
+                  <textarea
+                    id="message"
+                    rows="4"
+                    className="w-full bg-gray-800 rounded border border-gray-700 p-2 text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  ></textarea>
+                </div>
+                
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors"
+                >
+                  {language === 'fr' ? 'Envoyer' : 'Send'}
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </section>

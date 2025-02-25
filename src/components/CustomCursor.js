@@ -92,21 +92,22 @@ const CustomCursor = () => {
       );
       break;
     case 'pointer':
+      // New hand cursor icon for clickable elements
       cursorElement = (
         <svg 
-          width="28" 
-          height="28" 
-          viewBox="0 0 28 28" 
+          width="32" 
+          height="32" 
+          viewBox="0 0 24 24" 
           fill="none" 
           xmlns="http://www.w3.org/2000/svg"
           className={`pointer-events-none ${clicked ? 'scale-90' : 'scale-100'} transition-transform duration-150`}
-          style={{ filter: 'drop-shadow(0 0 1px rgba(0, 0, 0, 0.7))' }}
+          style={{ filter: 'drop-shadow(0 0 2px rgba(0, 0, 0, 0.7))' }}
         >
           <path 
-            d="M7 3L21 17L14 18.5L11.5 23L7 3Z" 
+            d="M13 1.07V9h7c0 4.97-4.03 9-9 9A9 9 0 0 1 2 9C2 4.03 6.03 0 11 0a1 1 0 0 1 2 1.07z" 
             fill="white" 
             stroke="rgba(0, 0, 0, 0.5)" 
-            strokeWidth="1.2"
+            strokeWidth="1"
           />
         </svg>
       );
@@ -135,7 +136,7 @@ const CustomCursor = () => {
   return (
     <div
       ref={cursorRef}
-      className={`fixed top-0 left-0 z-[9999] ${hidden ? 'opacity-0' : 'opacity-100'} transition-opacity duration-200`}
+      className={`fixed top-0 left-0 z-[100000] ${hidden ? 'opacity-0' : 'opacity-100'} transition-opacity duration-200`}
       style={{ 
         willChange: 'transform', 
         transformOrigin: 'center',
