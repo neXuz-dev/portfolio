@@ -151,20 +151,20 @@ const Portfolio = () => {
         <ParticleBackground />
         
         {/* Optional: Keep the rain effect alongside particles */}
-        <div className="absolute inset-0 opacity-20">
-          {RAINDROP_STYLES.map((style, i) => (
-            <div
-              key={i}
-              className="absolute bg-blue-400/30 w-0.5 animate-rain"
-              style={{
-                left: style.left,
-                height: style.height,
-                animationDuration: style.animationDuration,
-                animationDelay: style.animationDelay,
-              }}
-            />
-          ))}
-        </div>
+        <div className="absolute inset-0 opacity-30"> {/* Changed from opacity-20 to opacity-30 */}
+  {RAINDROP_STYLES.map((style, i) => (
+    <div
+      key={i}
+      className="absolute bg-blue-400/30 w-0.5 animate-rain"
+      style={{
+        left: style.left,
+        height: style.height,
+        animationDuration: style.animationDuration,
+        animationDelay: style.animationDelay,
+      }}
+    />
+  ))}
+</div>
       </div>
 
       {/* Navigation Bar */}
@@ -317,38 +317,14 @@ const Portfolio = () => {
 
       {/* Skills Section */}
       <section className="max-w-4xl mx-auto mt-8 px-4 scroll-mt-12 relative z-10" id="skills">
-        <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-on-scroll opacity-0">
-          <h2 className="text-2xl font-bold text-gray-100 mb-4">
-            {language === 'fr' ? 'Expertise Technique' : 'Technical Expertise'}
-          </h2>
-          
-          <h3 className="text-lg font-semibold text-gray-200 mb-4">
-            {language === 'fr' ? 'Compétences et Expertise' : 'Skills & Expertise'}
-          </h3>
-
-          <AnimatedSkillBars language={language} />
-
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-  {[
-    { name: 'C#', color: 'bg-blue-500' },
-    { name: 'AutoIt', color: 'bg-green-500' },
-    { name: 'C++', color: 'bg-purple-500' },
-    { name: 'ASM', color: 'bg-red-500' },
-    { name: 'JavaScript', color: 'bg-yellow-500' },
-    { name: 'Pine Script', color: 'bg-teal-500' },
-  ].map((lang, index) => (
-    <div key={index} className="flex items-center bg-gray-800/60 backdrop-blur-sm rounded-lg p-3 border border-gray-700/50 animate-on-scroll opacity-0" style={{ animationDelay: `${index * 0.1}s` }}>
-      <div className={`w-3 h-3 ${lang.color} rounded-full mr-2 flex-shrink-0`}></div>
-      <div className="flex items-center">
-        <span className="text-gray-300">{lang.name}</span>
-      </div>
-    </div>
-  ))}
-</div>
-
-          <TechnologiesShowcase language={language} />
-        </div>
-      </section>
+  <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-on-scroll opacity-0">
+    <h2 className="text-2xl font-bold text-gray-100 mb-4">
+      {language === 'fr' ? 'Expertise Technique' : 'Technical Expertise'}
+    </h2>
+    
+    <TechnologiesShowcase language={language} />
+  </div>
+</section>
 
       {/* Projects Section */}
       <section className="max-w-4xl mx-auto mt-8 px-4 relative z-10" id="projects">

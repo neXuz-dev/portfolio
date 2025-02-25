@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const TechnologyCard = ({ icon, name, description, level, color }) => {
+const TechnologyCard = ({ icon, name, description, color }) => {
   const [isHovered, setIsHovered] = useState(false);
   
   return (
@@ -19,13 +19,6 @@ const TechnologyCard = ({ icon, name, description, level, color }) => {
         <div>
           <h4 className="text-lg font-medium text-gray-100">{name}</h4>
           <p className="text-gray-400 text-sm mt-1">{description}</p>
-          
-          <div className="mt-3 w-full bg-gray-700 rounded-full h-1.5">
-            <div 
-              className={`h-full rounded-full ${color.replace('bg-', 'bg-')}`}
-              style={{ width: `${level}%` }}
-            ></div>
-          </div>
         </div>
       </div>
     </div>
@@ -40,7 +33,6 @@ const TechnologiesShowcase = ({ language }) => {
       description: language === 'fr' 
         ? '.NET, WPF, Windows Forms et Entity Framework'
         : '.NET, WPF, Windows Forms and Entity Framework',
-      level: 95,
       color: 'bg-blue-500'
     },
     {
@@ -49,7 +41,6 @@ const TechnologiesShowcase = ({ language }) => {
       description: language === 'fr' 
         ? 'APIs Windows, manipulation mémoire et DirectX'
         : 'Windows APIs, memory manipulation and DirectX',
-      level: 90,
       color: 'bg-purple-500'
     },
     {
@@ -58,7 +49,6 @@ const TechnologiesShowcase = ({ language }) => {
       description: language === 'fr' 
         ? 'Automatisation, GUIs et manipulation système'
         : 'Automation, GUIs and system manipulation',
-      level: 98,
       color: 'bg-green-500'
     },
     {
@@ -67,7 +57,6 @@ const TechnologiesShowcase = ({ language }) => {
       description: language === 'fr' 
         ? 'React, Next.js et intégrations front-end'
         : 'React, Next.js and front-end integrations',
-      level: 85,
       color: 'bg-yellow-500'
     },
     {
@@ -76,7 +65,6 @@ const TechnologiesShowcase = ({ language }) => {
       description: language === 'fr' 
         ? 'Analyse de données, bots Discord et web scraping'
         : 'Data analysis, Discord bots and web scraping',
-      level: 80,
       color: 'bg-teal-500'
     },
     {
@@ -85,7 +73,6 @@ const TechnologiesShowcase = ({ language }) => {
       description: language === 'fr' 
         ? 'Rétro-ingénierie et modification de bas niveau'
         : 'Reverse engineering and low-level modification',
-      level: 75,
       color: 'bg-red-500'
     }
   ];
@@ -97,7 +84,6 @@ const TechnologiesShowcase = ({ language }) => {
       description: language === 'fr' 
         ? 'Interaction système profonde et hooks'
         : 'Deep system interaction and hooks',
-      level: 95,
       color: 'bg-blue-400'
     },
     {
@@ -106,7 +92,6 @@ const TechnologiesShowcase = ({ language }) => {
       description: language === 'fr' 
         ? 'Blueprints et développement de jeux 3D'
         : 'Blueprints and 3D game development',
-      level: 80,
       color: 'bg-purple-400'
     },
     {
@@ -115,7 +100,6 @@ const TechnologiesShowcase = ({ language }) => {
       description: language === 'fr' 
         ? 'Analyse dynamique et modification de processus'
         : 'Dynamic analysis and process modification',
-      level: 92,
       color: 'bg-green-400'
     }
   ];
@@ -134,7 +118,6 @@ const TechnologiesShowcase = ({ language }) => {
             icon={tech.icon}
             name={tech.name}
             description={tech.description}
-            level={tech.level}
             color={tech.color}
           />
         ))}
@@ -152,7 +135,6 @@ const TechnologiesShowcase = ({ language }) => {
             icon={tool.icon}
             name={tool.name}
             description={tool.description}
-            level={tool.level}
             color={tool.color}
           />
         ))}
