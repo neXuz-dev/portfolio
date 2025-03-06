@@ -13,10 +13,10 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
     const G = 3.0;
     const TIME_STEP = 0.5;
     const GRAVITY_RANGE = 300;
-    const MIN_PARTICLES = 20;
-    const INITIAL_PARTICLE_COUNT = Math.min(25, window.innerWidth / 30);
+    const MIN_PARTICLES = 18; // Slightly increased from previous reduction
+    const INITIAL_PARTICLE_COUNT = Math.min(22, window.innerWidth / 33); // Slightly increased from previous reduction
     const BLACK_HOLE_MASS = 2000;
-    const TAIL_LENGTH = 60;
+    const TAIL_LENGTH = 45; // Slightly increased from previous reduction
     const MAX_INITIAL_SPEED = 1.5;
 
     const konamiCode = [
@@ -38,8 +38,8 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
         this.y = y;
         this.color = color;
         this.radius = 2;
-        this.maxRadius = 15;
-        this.opacity = 0.7;
+        this.maxRadius = 13; // Slightly increased from previous reduction
+        this.opacity = 0.35; // Slightly increased from previous reduction
         this.life = 1.0;
       }
 
@@ -47,7 +47,7 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
         if (this.life > 0) {
           this.radius += (this.maxRadius - this.radius) * 0.1;
           this.life -= 0.05;
-          this.opacity = this.life * 0.7;
+          this.opacity = this.life * 0.35; // Adjusted to match initial opacity
           return true;
         }
         return false;
@@ -63,11 +63,11 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
         const color = this.color.match(/rgba\((\d+),\s*(\d+),\s*(\d+),\s*[\d.]+\)/);
         if (color) {
           gradient.addColorStop(0, `rgba(${color[1]}, ${color[2]}, ${color[3]}, ${this.opacity})`);
-          gradient.addColorStop(0.7, `rgba(${color[1]}, ${color[2]}, ${color[3]}, ${this.opacity * 0.5})`);
+          gradient.addColorStop(0.7, `rgba(${color[1]}, ${color[2]}, ${color[3]}, ${this.opacity * 0.35})`); 
           gradient.addColorStop(1, `rgba(${color[1]}, ${color[2]}, ${color[3]}, 0)`);
         } else {
           gradient.addColorStop(0, `rgba(255, 255, 255, ${this.opacity})`);
-          gradient.addColorStop(0.7, `rgba(255, 255, 255, ${this.opacity * 0.5})`);
+          gradient.addColorStop(0.7, `rgba(255, 255, 255, ${this.opacity * 0.35})`);
           gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
         }
         ctx.fillStyle = gradient;
@@ -86,17 +86,19 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
         if (isCentral) {
           this.x = canvas.width / 2;
           this.y = canvas.height / 2;
-          this.size = 10;
-          this.mass = 50;
+          this.size = 8; // Kept smaller size for sun
+          this.blurRadius = 12; // Added blur radius for the sun
+          this.mass = 70; // Increased mass to make it more stable
           this.speedX = 0;
           this.speedY = 0;
-          this.color = 'rgba(255, 215, 0, 0.8)';
+          this.color = 'rgba(255, 215, 0, 0.4)'; // Reduced opacity from original 0.8 to 0.4
           this.isCentral = true;
           this.fixedColor = true;
+          this.zIndex = 10; // Higher z-index to ensure it's drawn on top
         } else {
           this.x = Math.random() * canvas.width;
           this.y = Math.random() * canvas.height;
-          this.size = Math.random() * 4 + 1;
+          this.size = Math.random() * 3.2 + 1; // Slightly increased from previous reduction
           this.density = Math.random() * 0.5 + 0.5;
           this.mass = this.size * this.density;
           const dx = this.x - canvas.width / 2;
@@ -116,17 +118,17 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
           this.speedY = baseSpeedY;
           this.color = this.getRandomColor();
           this.isCentral = false;
-          this.opacity = 0.1;
+          this.opacity = 0.045; // Increased from 0.03 to 0.045
         }
       }
 
       getRandomColor() {
         const colors = [
-          'rgba(59, 130, 246, 0.1)',
-          'rgba(139, 92, 246, 0.1)',
-          'rgba(99, 102, 241, 0.1)',
-          'rgba(16, 185, 129, 0.1)',
-          'rgba(6, 182, 212, 0.1)'
+          'rgba(59, 130, 246, 0.045)',  // Slightly increased from 0.03
+          'rgba(139, 92, 246, 0.045)',  // Slightly increased from 0.03
+          'rgba(99, 102, 241, 0.045)',  // Slightly increased from 0.03
+          'rgba(16, 185, 129, 0.045)',  // Slightly increased from 0.03
+          'rgba(6, 182, 212, 0.045)'    // Slightly increased from 0.03
         ];
         return colors[Math.floor(Math.random() * colors.length)];
       }
@@ -144,7 +146,14 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
           this.positionHistory.push({ x: this.x, y: this.y });
         }
 
-        if (this.isCentral && !blackHoleActiveRef.current) return;
+        // For central sun, only allow updates when black hole is active
+        // This prevents any modifications to the sun by other particles
+        if (this.isCentral && !blackHoleActiveRef.current) {
+          // Keep the sun stable at its position
+          this.speedX = 0;
+          this.speedY = 0;
+          return;
+        }
 
         let totalForceX = 0;
         let totalForceY = 0;
@@ -222,18 +231,32 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
           y: this.y + normalY * this.size
         };
 
+        // Prevent any collision handling with the central sun
+        // This prevents the blinking effect
         if (this.isCentral || other.isCentral) {
+          // Just push the non-central particle away without affecting the sun
           const overlap = (this.size + other.size) - distance;
-          const pushFactor = overlap * 0.5;
+          const pushFactor = overlap * 0.8; // Increased from 0.5 for stronger repulsion
+          
           if (!this.isCentral) {
+            // Only move the non-central particle
             this.x -= pushFactor * normalX;
             this.y -= pushFactor * normalY;
+            // Add some opposing force to prevent particle from coming back immediately
+            this.speedX -= normalX * 0.5;
+            this.speedY -= normalY * 0.5;
           }
-          if (!other.isCentral) {
+          else if (!other.isCentral) {
+            // Only move the non-central particle
             other.x += pushFactor * normalX;
             other.y += pushFactor * normalY;
+            // Add some opposing force to prevent particle from coming back immediately
+            other.speedX += normalX * 0.5;
+            other.speedY += normalY * 0.5;
           }
-          return collisionPoint;
+          
+          // Don't return a collision point to avoid drawing collision effects
+          return null;
         }
 
         if (Math.random() < 0.5) {
@@ -262,7 +285,7 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
         const r = Math.round((rgba1[0] * mass1 + rgba2[0] * mass2) / totalMass);
         const g = Math.round((rgba1[1] * mass1 + rgba2[1] * mass2) / totalMass);
         const b = Math.round((rgba1[2] * mass1 + rgba2[2] * mass2) / totalMass);
-        const a = Math.min(0.1, ((rgba1[3] || 0.1) * mass1 + (rgba2[3] || 0.1) * mass2) / totalMass);
+        const a = Math.min(0.045, ((rgba1[3] || 0.045) * mass1 + (rgba2[3] || 0.045) * mass2) / totalMass); 
         return `rgba(${r}, ${g}, ${b}, ${a})`;
       }
 
@@ -280,7 +303,7 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
         for (let i = 0; i < this.positionHistory.length; i++) {
           const pos = this.positionHistory[i];
           const opacityFactor = i / (this.positionHistory.length - 1);
-          const fadeOpacity = 0.1 * opacityFactor;
+          const fadeOpacity = 0.045 * opacityFactor; // Slightly increased from 0.03
           ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${fadeOpacity})`;
           ctx.beginPath();
           ctx.arc(pos.x, pos.y, this.size, 0, Math.PI * 2);
@@ -289,20 +312,69 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
       }
 
       draw() {
-        this.drawTail(ctx);
+        // Only draw tails for non-central particles
+        if (!this.isCentral) {
+          this.drawTail(ctx);
+        }
+        
         let actualOpacity = this.opacity;
         if (this.fixedColor && this.isCentral) {
-          ctx.fillStyle = this.color;
+          // Special drawing for the central sun with blurred edges
+          // Apply a subtle glow effect first
+          const outerGlow = ctx.createRadialGradient(
+            this.x, this.y, 0,
+            this.x, this.y, this.size + this.blurRadius * 1.5
+          );
+          
+          outerGlow.addColorStop(0, 'rgba(255, 180, 0, 0.1)');
+          outerGlow.addColorStop(0.7, 'rgba(255, 100, 0, 0.05)');
+          outerGlow.addColorStop(1, 'rgba(255, 50, 0, 0)');
+          
+          ctx.fillStyle = outerGlow;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size + this.blurRadius * 1.5, 0, Math.PI * 2);
+          ctx.fill();
+          
+          // Then draw the main sun with blurred edges
+          const gradient = ctx.createRadialGradient(
+            this.x, this.y, 0,
+            this.x, this.y, this.size + this.blurRadius
+          );
+          
+          // Parse the color to get RGB values and opacity
+          const colorMatch = this.color.match(/rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)/);
+          if (colorMatch) {
+            const r = colorMatch[1];
+            const g = colorMatch[2];
+            const b = colorMatch[3];
+            const alpha = parseFloat(colorMatch[4]);
+            
+            gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${alpha * 0.8})`); // Slightly less opaque at center
+            gradient.addColorStop(0.4, `rgba(${r}, ${g}, ${b}, ${alpha * 0.6})`); // Mid-gradient
+            gradient.addColorStop(0.7, `rgba(${r}, ${g}, ${b}, ${alpha * 0.3})`); // Starting to blur
+            gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`); // Completely transparent at edge
+          } else {
+            // Fallback if color parsing fails
+            gradient.addColorStop(0, 'rgba(255, 215, 0, 0.3)');
+            gradient.addColorStop(0.4, 'rgba(255, 215, 0, 0.2)');
+            gradient.addColorStop(0.7, 'rgba(255, 215, 0, 0.1)');
+            gradient.addColorStop(1, 'rgba(255, 215, 0, 0)');
+          }
+          
+          ctx.fillStyle = gradient;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size + this.blurRadius, 0, Math.PI * 2);
+          ctx.fill();
         } else {
           if (blackHoleActiveRef.current && blackHoleRef.current) {
             actualOpacity = actualOpacity * (1 - blackHoleRef.current.getBackgroundAlpha() * 0.5);
           }
           const actualColor = this.color.replace(/[\d.]+\)$/, `${actualOpacity})`);
           ctx.fillStyle = actualColor;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fill();
         }
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
       }
     }
 
@@ -310,13 +382,13 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
       constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.size = 20;
+        this.size = 16; // Slightly increased from previous reduction
         this.mass = BLACK_HOLE_MASS;
-        this.growthRate = 0.005;
+        this.growthRate = 0.004; // Slightly increased from previous reduction
         this.maxSize = Math.sqrt(canvas.width * canvas.width + canvas.height * canvas.height);
         this.darknessRatio = 0;
-        this.jetLength = 100;
-        this.jetWidth = 10;
+        this.jetLength = 85; // Slightly increased from previous reduction
+        this.jetWidth = 9; // Slightly increased from previous reduction
       }
 
       update() {
@@ -339,26 +411,26 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
           const angle = Math.atan2(dy, dx);
           if (distance > MAX_LENSING_DISTANCE || distance < this.size) return;
           const distanceFactor = 1 - ((distance - this.size) / (MAX_LENSING_DISTANCE - this.size));
-          const lensingStrength = Math.pow(distanceFactor, 2) * 2.5;
+          const lensingStrength = Math.pow(distanceFactor, 2) * 2.2; // Slightly increased from previous reduction
           const lensedDistance = distance - (this.size * lensingStrength * 0.8);
           if (lensedDistance < this.size * EVENT_HORIZON_FACTOR) return;
           const lensedX = this.x + Math.cos(angle) * lensedDistance;
           const lensedY = this.y + Math.sin(angle) * lensedDistance;
-          const brightnessFactor = 1 + lensingStrength * 1.5;
-          const lensedBrightness = Math.min(1, star.brightness * brightnessFactor);
-          const sizeFactor = 1 + lensingStrength * 1.0;
+          const brightnessFactor = 1 + lensingStrength * 1.2; // Slightly increased from previous reduction 
+          const lensedBrightness = Math.min(0.75, star.brightness * brightnessFactor); // Slightly increased from previous reduction
+          const sizeFactor = 1 + lensingStrength * 0.8; // Slightly increased from previous reduction
           const lensedSize = star.size * sizeFactor;
           ctx.fillStyle = `rgba(255, 255, 255, ${lensedBrightness})`;
           ctx.beginPath();
           ctx.arc(lensedX, lensedY, lensedSize, 0, Math.PI * 2);
           ctx.fill();
           if (distance < this.size * 3) {
-            const glowRadius = lensedSize * 3;
+            const glowRadius = lensedSize * 2.2; // Slightly increased from previous reduction
             const glowGradient = ctx.createRadialGradient(
               lensedX, lensedY, 0,
               lensedX, lensedY, glowRadius
             );
-            glowGradient.addColorStop(0, `rgba(180, 220, 255, ${lensedBrightness * 0.7})`);
+            glowGradient.addColorStop(0, `rgba(180, 220, 255, ${lensedBrightness * 0.55})`); // Slightly increased from previous reduction
             glowGradient.addColorStop(1, 'rgba(180, 220, 255, 0)');
             ctx.fillStyle = glowGradient;
             ctx.beginPath();
@@ -376,9 +448,9 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
           this.x, this.y, this.size * 1.5, // Start beyond the shadow
           this.x, this.y, this.size * 2.2
         );
-        outerGlowGradient.addColorStop(0, 'rgba(220, 240, 255, 0.9)');
-        outerGlowGradient.addColorStop(0.3, 'rgba(180, 220, 255, 0.6)');
-        outerGlowGradient.addColorStop(0.7, 'rgba(120, 180, 255, 0.3)');
+        outerGlowGradient.addColorStop(0, 'rgba(220, 240, 255, 0.65)'); // Slightly increased from previous reduction
+        outerGlowGradient.addColorStop(0.3, 'rgba(180, 220, 255, 0.45)'); // Slightly increased from previous reduction
+        outerGlowGradient.addColorStop(0.7, 'rgba(120, 180, 255, 0.25)'); // Slightly increased from previous reduction
         outerGlowGradient.addColorStop(1, 'rgba(80, 120, 220, 0)');
         ctx.fillStyle = outerGlowGradient;
         ctx.beginPath();
@@ -391,9 +463,9 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
           0, 0, this.size * 1.5, // Moved further out to avoid center
           0, 0, this.size * 3
         );
-        diskGradient.addColorStop(0, 'rgba(250, 250, 255, 0.9)');
-        diskGradient.addColorStop(0.4, 'rgba(230, 210, 180, 0.7)');
-        diskGradient.addColorStop(0.8, 'rgba(250, 180, 100, 0.6)');
+        diskGradient.addColorStop(0, 'rgba(250, 250, 255, 0.65)'); // Slightly increased from previous reduction
+        diskGradient.addColorStop(0.4, 'rgba(230, 210, 180, 0.45)'); // Slightly increased from previous reduction
+        diskGradient.addColorStop(0.8, 'rgba(250, 180, 100, 0.35)'); // Slightly increased from previous reduction
         diskGradient.addColorStop(1, 'rgba(180, 60, 30, 0)');
         ctx.fillStyle = diskGradient;
         ctx.beginPath();
@@ -406,9 +478,9 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
           -this.size * 3, 0,
           this.size * 3, 0
         );
-        dopplerGradient.addColorStop(0, 'rgba(180, 220, 255, 0.9)');
+        dopplerGradient.addColorStop(0, 'rgba(180, 220, 255, 0.65)'); // Slightly increased from previous reduction
         dopplerGradient.addColorStop(0.5, 'rgba(255, 255, 255, 0)');
-        dopplerGradient.addColorStop(1, 'rgba(255, 120, 50, 0.5)');
+        dopplerGradient.addColorStop(1, 'rgba(255, 120, 50, 0.35)'); // Slightly increased from previous reduction
         ctx.fillStyle = dopplerGradient;
         ctx.fill();
         ctx.globalCompositeOperation = 'source-over';
@@ -416,14 +488,14 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
         // Photon ring
         ctx.beginPath();
         ctx.arc(0, 0, this.size * 1.6, 0, Math.PI * 2);
-        ctx.lineWidth = this.size * 0.15;
+        ctx.lineWidth = this.size * 0.13; // Slightly increased from previous reduction
         const ringGradient = ctx.createLinearGradient(
           -this.size * 2, 0,
           this.size * 2, 0
         );
-        ringGradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
-        ringGradient.addColorStop(0.5, 'rgba(230, 240, 255, 0.8)');
-        ringGradient.addColorStop(1, 'rgba(200, 220, 255, 0.7)');
+        ringGradient.addColorStop(0, 'rgba(255, 255, 255, 0.65)'); // Slightly increased from previous reduction
+        ringGradient.addColorStop(0.5, 'rgba(230, 240, 255, 0.55)'); // Slightly increased from previous reduction
+        ringGradient.addColorStop(1, 'rgba(200, 220, 255, 0.45)'); // Slightly increased from previous reduction
         ctx.strokeStyle = ringGradient;
         ctx.stroke();
 
@@ -432,14 +504,14 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
         // Einstein ring
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size * 1.1, 0, Math.PI * 2);
-        ctx.lineWidth = this.size * 0.07;
+        ctx.lineWidth = this.size * 0.06; // Slightly increased from previous reduction
         const ringGlow = ctx.createRadialGradient(
           this.x, this.y, this.size * 1.05,
           this.x, this.y, this.size * 1.2
         );
-        ringGlow.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
+        ringGlow.addColorStop(0, 'rgba(255, 255, 255, 0.65)'); // Slightly increased from previous reduction
         ringGlow.addColorStop(1, 'rgba(180, 220, 255, 0)');
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.55)'; // Slightly increased from previous reduction
         ctx.stroke();
         ctx.fillStyle = ringGlow;
         ctx.beginPath();
@@ -452,8 +524,8 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
           this.x, this.y + this.jetLength
         );
         jetGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
-        jetGradient.addColorStop(0.2, 'rgba(255, 255, 255, 0.5)');
-        jetGradient.addColorStop(0.8, 'rgba(255, 255, 255, 0.5)');
+        jetGradient.addColorStop(0.2, 'rgba(255, 255, 255, 0.35)'); // Slightly increased from previous reduction
+        jetGradient.addColorStop(0.8, 'rgba(255, 255, 255, 0.35)'); // Slightly increased from previous reduction
         jetGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
         ctx.beginPath();
         ctx.moveTo(this.x - this.jetWidth / 2, this.y);
@@ -484,13 +556,13 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
     let collisionEffects = [];
 
     const createStars = () => {
-      const numStars = 150;
+      const numStars = 120; // Slightly increased from previous reduction
       for (let i = 0; i < numStars; i++) {
         stars.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          size: Math.random() * 1.5 + 0.5,
-          brightness: Math.random() * 0.5 + 0.5
+          size: Math.random() * 1.2 + 0.4, // Slightly increased from previous reduction
+          brightness: Math.random() * 0.25 + 0.15 // Slightly increased from previous reduction
         });
       }
     };
@@ -524,8 +596,9 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
 
     const drawBackground = () => {
       const getBackgroundGradient = () => {
-        let startRed = 18, startGreen = 24, startBlue = 32;
-        let endRed = 32, endGreen = 26, endBlue = 36;
+        // Slightly adjusted background colors
+        let startRed = 14, startGreen = 19, startBlue = 26; // Slightly increased from previous reduction
+        let endRed = 24, endGreen = 21, endBlue = 28; // Slightly increased from previous reduction
         if (blackHoleActiveRef.current && blackHoleRef.current) {
           const darknessLevel = blackHoleRef.current.getBackgroundAlpha();
           startRed = Math.round(startRed * (1 - darknessLevel));
@@ -550,7 +623,7 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
         ctx.arc(blackHoleRef.current.x, blackHoleRef.current.y, blackHoleRef.current.size * 1.05, 0, Math.PI * 2, true);
         ctx.clip();
         stars.forEach(star => {
-          ctx.fillStyle = `rgba(255, 255, 255, ${star.brightness})`;
+          ctx.fillStyle = `rgba(255, 255, 255, ${star.brightness * 0.75})`; // Slightly increased from previous reduction
           ctx.beginPath();
           ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
           ctx.fill();
@@ -558,7 +631,7 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
         ctx.restore();
       } else {
         stars.forEach(star => {
-          ctx.fillStyle = `rgba(255, 255, 255, ${star.brightness})`;
+          ctx.fillStyle = `rgba(255, 255, 255, ${star.brightness * 0.75})`; // Slightly increased from previous reduction
           ctx.beginPath();
           ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
           ctx.fill();
@@ -579,15 +652,27 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
         effect.draw(ctx);
         return effect.life > 0;
       });
-
+      
+      // Find the central sun particle
+      const sunParticle = particles.find(p => p.isCentral);
+      
+      // First update and draw all non-central particles
       particles.forEach(particle => {
-        particle.update(particles, blackHoleRef.current, collisionEffects);
-        if (blackHoleActiveRef.current && blackHoleRef.current) {
-          const darknessLevel = blackHoleRef.current.getBackgroundAlpha();
-          particle.opacity = Math.max(0.05, 0.1 - darknessLevel * 0.05);
+        if (!particle.isCentral) {
+          particle.update(particles, blackHoleRef.current, collisionEffects);
+          if (blackHoleActiveRef.current && blackHoleRef.current) {
+            const darknessLevel = blackHoleRef.current.getBackgroundAlpha();
+            particle.opacity = Math.max(0.025, 0.045 - darknessLevel * 0.03);
+          }
+          particle.draw();
         }
-        particle.draw();
       });
+      
+      // Then update and draw the sun on top of everything else
+      if (sunParticle && !blackHoleActiveRef.current) {
+        sunParticle.update([sunParticle], null, []); // Only update with itself to prevent collisions
+        sunParticle.draw(); // Draw sun last so it appears on top
+      }
 
       if (blackHoleRef.current) {
         blackHoleRef.current.update();
@@ -613,7 +698,7 @@ const ParticleBackground = ({ onBlackHoleFullScreen }) => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 z-0 w-full h-full"
+      className="fixed inset-0 z-0 w-full h-full opacity-75" // Adjusted opacity from 0.6 to 0.75
       style={{ background: 'transparent' }}
     />
   );
