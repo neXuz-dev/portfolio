@@ -1,5 +1,5 @@
 export default {
-  tags: ["UiPath", "Data Manipulation", "Regex", "Database Integration"], // Tags remain language-agnostic
+  tags: ["C#", "UiPath", "Data Manipulation", "Regex", "Database Integration"], // Tags remain language-agnostic
   content: {
       en: {
           title: "Data Extraction for POS Systems",

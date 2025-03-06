@@ -1,5 +1,5 @@
 export default {
-  tags: ["Cheat Engine", "Assembly", "Reverse Engineering", "Memory Manipulation"], // Tags remain language-agnostic
+  tags: ["Cheat Engine", "ASM", "Reverse Engineering", "Memory Manipulation"], // Tags remain language-agnostic
   content: {
       en: {
           title: "Ninja Gaiden 2 Mechanics Analyzer",

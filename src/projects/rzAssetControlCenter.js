@@ -1,5 +1,5 @@
 export default {
-  tags: ["ASP.NET Core", "Entity Framework", "KuCoin API", "WebSocket", "PostgreSQL"],  // Tags remain language-agnostic
+  tags: ["C#", "ASP.NET Core", "Entity Framework", "KuCoin API", "WebSocket", "PostgreSQL"],  // Tags remain language-agnostic
   content: {
       en: {
           title: "Rz Asset Control Center",

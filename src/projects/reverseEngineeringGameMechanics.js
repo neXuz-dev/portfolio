@@ -1,5 +1,5 @@
 export default {
-  tags: ["Cheat Engine", "Reverse Engineering", "Memory Manipulation", "Assembly"], // Tags remain language-agnostic
+  tags: ["Cheat Engine", "Reverse Engineering", "Memory Manipulation", "ASM"], // Tags remain language-agnostic
   content: {
       en: {
           title: "Reverse Engineering Game Mechanics",
