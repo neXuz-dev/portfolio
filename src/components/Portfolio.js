@@ -60,6 +60,7 @@ const LOC_ESTIMATES = {
   "Automated Gameplay Assistant LostWarBot": 2000,
   "Portfolio Website": 1200,
   "RLBot Nexto/Immortal Auto-Switcher": 800,
+  "Number Recognition Game": 1600
 };
 
 const TOTAL_LOC = Object.values(LOC_ESTIMATES).reduce((sum, loc) => sum + loc, 0);
@@ -73,22 +74,22 @@ const Portfolio = () => {
   ];
   
   const stats = {
-    totalProjects: 46,
-    uniqueTechnologies: 31,
+    totalProjects: 47,
+    uniqueTechnologies: 32,
     estimatedLinesOfCode: TOTAL_LOC,
     estimatedHours: Math.round(TOTAL_LOC * 0.05),
     memoryManipulationProjects: 15,
     apiIntegrations: 8,
     realTimeProjects: 16,
-    guiDrivenProjects: 11,
+    guiDrivenProjects: 12,
     reverseEngineeringTasks: 15,
     languages: [
       { name: 'C#', percentage: 38, color: 'bg-blue-500' },
       { name: 'AutoIt', percentage: 21, color: 'bg-green-500' },
       { name: 'C++', percentage: 10, color: 'bg-purple-500' },
-      { name: 'ASM', percentage: 9, color: 'bg-red-500' },
-      { name: 'JavaScript', percentage: 8, color: 'bg-yellow-500' },
-      { name: 'Pine Script', percentage: 6, color: 'bg-teal-500' },
+      { name: 'JavaScript', percentage: 10, color: 'bg-yellow-500' },
+      { name: 'ASM', percentage: 8, color: 'bg-red-500' },
+      { name: 'Pine Script', percentage: 5, color: 'bg-teal-500' },
       { name: 'Python', percentage: 5, color: 'bg-orange-500' },
       { name: 'PHP', percentage: 3, color: 'bg-pink-500' },
     ]

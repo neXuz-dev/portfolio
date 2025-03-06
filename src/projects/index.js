@@ -44,6 +44,7 @@ import woLongCheatTableAnalyzer from './woLongCheatTableAnalyzer';
 import automatedGameplayAssistantLostWarBot from './automatedGameplayAssistantLostWarBot';
 import portfolioWebsite from './portfolioWebsite';
 import rlbotAutoSwitcher from './rlbotAutoSwitcher';
+import diceGame from './diceGame';
 
 export default [
   rzAssetControlCenter,
@@ -53,6 +54,7 @@ export default [
   windowsSystemConfigurationTool,
   systemTrayIconManager,
   portfolioWebsite,
+  diceGame,
   imageUpscalingDiscordBot,
   dalleMiniDiscordBot,
   automationAndSystemUtilitiesInAutoIt3,
