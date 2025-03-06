@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Github, Linkedin, Mail, Globe, ChevronDown, ChevronUp, Download, Filter } from 'lucide-react';
+import { Github, Linkedin, Mail, Globe, ChevronDown, ChevronUp, Download, Filter, Menu, X } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import allProjects from '../projects';
 import ProjectsSection from './ProjectsSection';
@@ -67,6 +67,7 @@ const TOTAL_LOC = Object.values(LOC_ESTIMATES).reduce((sum, loc) => sum + loc, 0
 
 const Portfolio = () => {
   const [language, setLanguage] = useState('en');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   const languages = [
     { code: 'en', name: 'English', flag: '🇬🇧' },
@@ -107,6 +108,10 @@ const Portfolio = () => {
     };
   }, []);
 
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   return (
     <div className="min-h-screen text-gray-100 relative overflow-x-hidden">
       {/* Custom Cursor */}
@@ -119,7 +124,7 @@ const Portfolio = () => {
 
       {/* Navigation Bar */}
       <nav className="fixed top-0 w-full bg-gray-800/70 backdrop-blur-sm shadow-lg z-20">
-        <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3 animate-fade-in">
             <img 
               src="/favicon.ico" 
@@ -133,7 +138,9 @@ const Portfolio = () => {
               neXuz-dev
             </a>
           </div>
-          <div className="flex items-center justify-center flex-1">
+          
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center justify-center flex-1">
             <div className="flex gap-3">
               <a 
                 href="#skills" 
@@ -157,6 +164,18 @@ const Portfolio = () => {
               </a>
             </div>
           </div>
+          
+          {/* Mobile Menu Button */}
+          <div className="md:hidden flex items-center">
+            <button 
+              onClick={toggleMobileMenu}
+              className="p-2 rounded-full bg-gray-700/60 text-gray-300 hover:bg-blue-600/70 hover:text-white transition-all"
+            >
+              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
+          
+          {/* Language Selector */}
           <select
             value={language}
             onChange={(e) => setLanguage(e.target.value)}
@@ -169,17 +188,46 @@ const Portfolio = () => {
             ))}
           </select>
         </div>
+        
+        {/* Mobile Navigation Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-gray-800/90 backdrop-blur-sm border-t border-gray-700/50 animate-fade-in">
+            <div className="px-4 py-3 space-y-2">
+              <a 
+                href="#skills"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block py-2 px-3 text-gray-200 hover:text-white hover:bg-gray-700/60 rounded transition-all"
+              >
+                {language === 'fr' ? 'Compétences' : 'Skills'}
+              </a>
+              <a 
+                href="#projects"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block py-2 px-3 text-gray-200 hover:text-white hover:bg-gray-700/60 rounded transition-all"
+              >
+                {language === 'fr' ? 'Projets' : 'Projects'}
+              </a>
+              <a 
+                href="#about"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block py-2 px-3 text-gray-200 hover:text-white hover:bg-gray-700/60 rounded transition-all"
+              >
+                {language === 'fr' ? 'À propos' : 'About'}
+              </a>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Header */}
-      <header className="max-w-4xl mx-auto px-4 pt-32 pb-12 relative z-10">
+      <header className="max-w-6xl mx-auto px-4 pt-32 pb-12 relative z-10">
         <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-fade-in-up">
           <h1 className="text-4xl font-bold text-gray-100 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Rémi Job-Dorge</h1>
           <p className="text-xl text-gray-300 mt-2 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             {language === 'fr' ? 'Expert en Développement Logiciel & Analyste Technique' : 'Expert Software Developer & Technical Analyst'}
           </p>
           
-          <div className="mt-4 flex gap-4 flex-wrap animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+          <div className="mt-4 flex flex-wrap gap-4 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
             <a href="mailto:jobdorge.pro@gmail.com" className="flex items-center text-gray-300 hover:text-blue-400 transition-colors hover:scale-105 duration-300">
               <Mail className="w-5 h-5 mr-2" />
               jobdorge.pro@gmail.com
@@ -210,7 +258,7 @@ const Portfolio = () => {
       </header>
 
       {/* At a Glance Section */}
-      <section className="max-w-4xl mx-auto mt-8 px-4 relative z-10">
+      <section className="max-w-6xl mx-auto mt-8 px-4 relative z-10">
         <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl p-6 border border-gray-700/50 animate-on-scroll opacity-0">
           <h2 className="text-2xl font-bold text-gray-100 mb-4">
             {language === 'fr' ? 'En bref' : 'At a Glance'}
@@ -266,7 +314,7 @@ const Portfolio = () => {
       <ProjectShowcase projects={allProjects} language={language} />
 
       {/* Skills Section */}
-      <section className="max-w-4xl mx-auto mt-8 px-4 scroll-mt-12 relative z-10" id="skills">
+      <section className="max-w-6xl mx-auto mt-8 px-4 scroll-mt-24 relative z-10" id="skills">
         <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-on-scroll opacity-0">
           <h2 className="text-2xl font-bold text-gray-100 mb-4">
             {language === 'fr' ? 'Expertise Technique' : 'Technical Expertise'}
@@ -277,7 +325,7 @@ const Portfolio = () => {
       </section>
 
       {/* Projects Section */}
-      <section className="max-w-4xl mx-auto mt-8 px-4 relative z-10" id="projects">
+      <section className="max-w-6xl mx-auto mt-8 px-4 scroll-mt-24 relative z-10" id="projects">
         <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-on-scroll opacity-0">
           <h2 className="text-2xl font-bold text-gray-100 mb-6">
             {language === 'fr' ? 'Projets' : 'Projects'}
@@ -287,7 +335,7 @@ const Portfolio = () => {
       </section>
 
       {/* About Section */}
-      <section className="max-w-4xl mx-auto mt-8 px-4 relative z-10" id="about">
+      <section className="max-w-6xl mx-auto mt-8 px-4 scroll-mt-24 relative z-10" id="about">
         <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-on-scroll opacity-0">
           <h2 className="text-2xl font-bold text-gray-100 mb-4">
             {language === 'fr' ? 'À propos de moi' : 'About Me'}
@@ -348,7 +396,7 @@ const Portfolio = () => {
       </section>
 
       {/* Contact Section */}
-      <section className="max-w-4xl mx-auto mt-8 px-4 relative z-10">
+      <section className="max-w-6xl mx-auto mt-8 px-4 relative z-10">
         <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-on-scroll opacity-0">
           <h2 className="text-2xl font-bold text-gray-100 mb-4">
             {language === 'fr' ? 'Travaillons Ensemble' : 'Let\'s Work Together'}
@@ -442,7 +490,7 @@ const Portfolio = () => {
       </section>
 
       {/* Footer */}
-      <footer className="max-w-4xl mx-auto mt-8 mb-8 px-4 py-6 text-center text-gray-400 bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl border border-gray-700/50 relative z-10 animate-on-scroll opacity-0">
+      <footer className="max-w-6xl mx-auto mt-8 mb-8 px-4 py-6 text-center text-gray-400 bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl border border-gray-700/50 relative z-10 animate-on-scroll opacity-0">
         <p>© neXuz-dev, {new Date().getFullYear()}. {language === 'fr' ? 'Tous droits réservés.' : 'All rights reserved.'}</p>
       </footer>
     </div>

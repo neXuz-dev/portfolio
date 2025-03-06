@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { ChevronLeft, ChevronRight, ArrowUpRight, GripHorizontal } from 'lucide-react';
 
 const ProjectShowcase = ({ projects, language }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [touchStart, setTouchStart] = useState(null);
-  const [touchEnd, setTouchEnd] = useState(null);
-  const [mouseStart, setMouseStart] = useState(null);
-  const [mouseEnd, setMouseEnd] = useState(null);
-
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [currentX, setCurrentX] = useState(0);
+  const [dragOffset, setDragOffset] = useState(0);
+  const containerRef = useRef(null);
+  const slideWidth = useRef(0);
+  
   const featuredProjects = projects.filter(project => 
     project.content.en.title === "Rz Asset Control Center" ||
     project.content.en.title === "RziRTool - iRacing Telemetry Overlay" ||
@@ -17,7 +19,28 @@ const ProjectShowcase = ({ projects, language }) => {
     project.content.en.title === "Unreal Engine 5 Bag End"
   );
 
-  const minSwipeDistance = 50;
+  // Function to check if we should allow dragging based on the target element
+  const shouldAllowDrag = (target) => {
+    // Don't initiate drag on text elements or their descendants
+    const textElements = ['P', 'H3', 'SPAN', 'A', 'BUTTON'];
+    let currentNode = target;
+    
+    // Check if the user is trying to select text
+    const selection = window.getSelection();
+    if (selection && selection.toString().length > 0) {
+      return false;
+    }
+    
+    // Walk up the DOM tree to see if we clicked on or inside a text element
+    while (currentNode && currentNode !== containerRef.current) {
+      if (textElements.includes(currentNode.tagName)) {
+        return false;
+      }
+      currentNode = currentNode.parentNode;
+    }
+    
+    return true;
+  };
 
   const nextSlide = () => {
     if (!isTransitioning) {
@@ -35,53 +58,93 @@ const ProjectShowcase = ({ projects, language }) => {
     }
   };
 
-  const onTouchStart = (e) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const onTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
-    if (isLeftSwipe) nextSlide();
-    else if (isRightSwipe) prevSlide();
-  };
-
-  const onMouseDown = (e) => {
-    setMouseEnd(null);
-    setMouseStart(e.clientX);
-  };
-
-  const onMouseMove = (e) => {
-    if (mouseStart !== null) {
-      setMouseEnd(e.clientX);
+  const handleMouseDown = (e) => {
+    // Skip if they're clicking on a text element
+    if (!shouldAllowDrag(e.target)) return;
+    
+    // Only handle left mouse button
+    if (e.button !== 0) return;
+    
+    e.preventDefault();
+    setIsDragging(true);
+    setStartX(e.clientX);
+    setCurrentX(e.clientX);
+    
+    // Measure the slide width when we start dragging
+    if (containerRef.current) {
+      slideWidth.current = containerRef.current.offsetWidth;
     }
   };
 
-  const onMouseUp = () => {
-    if (!mouseStart || !mouseEnd) return;
-    const distance = mouseStart - mouseEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
-    if (isLeftSwipe) nextSlide();
-    else if (isRightSwipe) prevSlide();
-    setMouseStart(null);
-    setMouseEnd(null);
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    
+    setCurrentX(e.clientX);
+    const delta = currentX - startX;
+    setDragOffset(delta);
+  };
+
+  const handleDragEnd = () => {
+    if (!isDragging) return;
+    
+    setIsDragging(false);
+    
+    // Calculate which slide to snap to based on drag distance
+    if (Math.abs(dragOffset) > slideWidth.current * 0.2) {
+      if (dragOffset > 0) {
+        // Dragged right - go to previous slide
+        prevSlide();
+      } else {
+        // Dragged left - go to next slide
+        nextSlide();
+      }
+    }
+    
+    // Reset drag offset
+    setDragOffset(0);
+  };
+
+  // Handle touch events
+  const handleTouchStart = (e) => {
+    // Skip if they're touching on a text element
+    if (!shouldAllowDrag(e.target)) return;
+    
+    setIsDragging(true);
+    setStartX(e.touches[0].clientX);
+    setCurrentX(e.touches[0].clientX);
+    
+    // Measure the slide width when we start dragging
+    if (containerRef.current) {
+      slideWidth.current = containerRef.current.offsetWidth;
+    }
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isDragging) return;
+    
+    setCurrentX(e.touches[0].clientX);
+    const delta = currentX - startX;
+    setDragOffset(delta);
   };
 
   useEffect(() => {
+    // Add global mouse up and touch end listeners
+    const handleGlobalMouseUp = () => handleDragEnd();
+    const handleGlobalTouchEnd = () => handleDragEnd();
+    
+    window.addEventListener('mouseup', handleGlobalMouseUp);
+    window.addEventListener('touchend', handleGlobalTouchEnd);
+    
     const timer = setTimeout(() => {
       nextSlide();
     }, 6000);
     
-    return () => clearTimeout(timer);
-  }, [activeIndex]);
+    return () => {
+      window.removeEventListener('mouseup', handleGlobalMouseUp);
+      window.removeEventListener('touchend', handleGlobalTouchEnd);
+      clearTimeout(timer);
+    };
+  }, [activeIndex, isDragging, dragOffset]);
 
   const getTagColor = (tag) => {
     const colorMap = {
@@ -102,29 +165,46 @@ const ProjectShowcase = ({ projects, language }) => {
     return colorMap[tag] || 'bg-gray-900/30 text-gray-300 border-gray-800';
   };
 
+  const calculateTransform = () => {
+    // Normal sliding plus any drag offset
+    return `translateX(calc(-${activeIndex * 100}% + ${dragOffset}px))`;
+  };
+
   if (featuredProjects.length === 0) return null;
 
   return (
-    <div className="max-w-4xl mx-auto mt-6 relative overflow-hidden">
-      <h3 className="text-xl font-semibold text-gray-100 mb-4 flex items-center">
+    <div className="max-w-6xl mx-auto mt-6 relative overflow-hidden">
+      <h3 className="text-xl font-semibold text-gray-100 mb-4 flex items-center px-4">
         <span className="w-2 h-8 bg-blue-500 rounded-md mr-3"></span>
         {language === 'fr' ? 'Projets en Vedette' : 'Featured Projects'}
       </h3>
       
       <div 
-        className="relative bg-gray-800/60 rounded-lg shadow-2xl p-5 backdrop-blur-sm border border-gray-700/50 overflow-hidden"
-        onTouchStart={onTouchStart}
-        onTouchMove={onTouchMove}
-        onTouchEnd={onTouchEnd}
-        onMouseDown={onMouseDown}
-        onMouseMove={onMouseMove}
-        onMouseUp={onMouseUp}
+        className="relative bg-gray-800/60 rounded-lg shadow-2xl p-5 backdrop-blur-sm border border-gray-700/50 overflow-hidden mx-4"
+        ref={containerRef}
       >
-        {/* Sliding container */}
-        <div className="overflow-hidden">
+        {/* Drag handle indicator */}
+        <div className="absolute top-2 right-16 md:right-20 z-10 flex items-center gap-2 text-gray-400 text-sm">
+          <GripHorizontal size={16} />
+          <span className="hidden md:inline">{language === 'fr' ? 'Glisser pour naviguer' : 'Drag to navigate'}</span>
+        </div>
+        
+        {/* Draggable container */}
+        <div 
+          className="overflow-hidden"
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+        >
           <div
             className="flex transition-transform duration-500 ease-in-out"
-            style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+            style={{ 
+              transform: isDragging 
+                ? calculateTransform() 
+                : `translateX(-${activeIndex * 100}%)`,
+              transitionProperty: isDragging ? 'none' : 'transform'
+            }}
           >
             {featuredProjects.map((project, index) => (
               <div
@@ -155,14 +235,14 @@ const ProjectShowcase = ({ projects, language }) => {
                   <h3 className="text-xl md:text-2xl font-bold text-gray-100 mb-2 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                     {project.content[language].title}
                   </h3>
-                  <p className="text-gray-300 mb-4">
+                  <p className="text-gray-300 mb-4 select-text">
                     {project.content[language].description}
                   </p>
                   <div className="space-y-2">
                     {project.content[language].highlights.slice(0, 3).map((highlight, idx) => (
                       <div key={idx} className="flex items-center text-gray-300">
                         <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>
-                        {highlight}
+                        <span className="select-text">{highlight}</span>
                       </div>
                     ))}
                   </div>
