@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, ArrowUpRight, GripHorizontal } from 'lucide-react';
+import ScreenshotGallery from './ScreenshotGallery';
 
 const ProjectShowcase = ({ projects, language }) => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -15,7 +16,7 @@ const ProjectShowcase = ({ projects, language }) => {
     project.content.en.title === "Rz Asset Control Center" ||
     project.content.en.title === "RziRTool - iRacing Telemetry Overlay" ||
     project.content.en.title === "QRCode Generator" ||
-    project.content.en.title === "Image Upscaling Discord Bot" ||
+    project.content.en.title === "Number Recognition Game" ||
     project.content.en.title === "Unreal Engine 5 Bag End"
   );
 
@@ -211,15 +212,24 @@ const ProjectShowcase = ({ projects, language }) => {
                 key={index}
                 className="flex-shrink-0 w-full flex flex-col md:flex-row md:items-center gap-6"
               >
-                <div className="w-full md:w-1/3 rounded-lg overflow-hidden bg-gradient-to-br from-gray-700/60 to-gray-900/80 h-48 md:h-64 flex items-center justify-center relative">
-                  <div className="text-6xl opacity-60 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-                    {project.tags.includes('C#') ? '🔷' :
-                     project.tags.includes('Python') ? '🐍' :
-                     project.tags.includes('C++') ? '⚙️' :
-                     project.tags.includes('Unreal Engine 5') ? '🎮' :
-                     project.tags.includes('AutoIt') ? '⚡' : '💻'}
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
+                <div className="w-full md:w-1/3 rounded-lg overflow-hidden h-48 md:h-64 relative">
+                  {project.screenshots && project.screenshots.length > 0 ? (
+                    <ScreenshotGallery 
+                      screenshots={project.screenshots} 
+                      title={project.content[language].title}
+                      compact={true}
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-gray-700/60 to-gray-900/80 flex items-center justify-center">
+                      <div className="text-6xl opacity-60 pointer-events-none">
+                        {project.tags.includes('C#') ? '🔷' :
+                         project.tags.includes('Python') ? '🐍' :
+                         project.tags.includes('C++') ? '⚙️' :
+                         project.tags.includes('Unreal Engine 5') ? '🎮' :
+                         project.tags.includes('AutoIt') ? '⚡' : '💻'}
+                      </div>
+                    </div>
+                  )}
                   <div className="absolute bottom-2 right-2 flex gap-1 z-10">
                     {project.tags.slice(0, 3).map((tag, idx) => (
                       <span

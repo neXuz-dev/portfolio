@@ -1,11 +1,13 @@
 import React, { useState, useMemo } from 'react';
-import { ChevronDown, ChevronUp, Filter } from 'lucide-react';
+import { ChevronDown, ChevronUp, Filter, Image } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import ScreenshotGallery from './ScreenshotGallery';
 
 const ProjectsSection = ({ projects, language }) => {
   const [selectedLanguage, setSelectedLanguage] = useState('All');
   const [expandedProject, setExpandedProject] = useState(null);
   const [expandedDetails, setExpandedDetails] = useState(null);
+  const [showScreenshots, setShowScreenshots] = useState(null);
 
   const languages = [
     { name: 'All', count: projects.length },
@@ -32,10 +34,15 @@ const ProjectsSection = ({ projects, language }) => {
   const toggleProject = (index) => {
     setExpandedProject(expandedProject === index ? null : index);
     if (expandedDetails === index) setExpandedDetails(null);
+    if (showScreenshots === index) setShowScreenshots(null);
   };
 
   const toggleDetails = (index) => {
     setExpandedDetails(expandedDetails === index ? null : index);
+  };
+  
+  const toggleScreenshots = (index) => {
+    setShowScreenshots(showScreenshots === index ? null : index);
   };
 
   return (
@@ -105,14 +112,39 @@ const ProjectsSection = ({ projects, language }) => {
                   ))}
                 </ul>
 
-                <button
-                  onClick={() => toggleDetails(index)}
-                  className="mt-4 px-4 py-2 bg-gray-700 text-gray-300 rounded hover:bg-gray-600 transition-colors flex items-center gap-2"
-                >
-                  {expandedDetails === index
-                    ? (language === 'fr' ? 'Cacher les Détails' : 'Hide Details')
-                    : (language === 'fr' ? 'Montrer les Détails' : 'Show Details')}
-                </button>
+                <div className="flex flex-wrap gap-3 mt-4">
+                  <button
+                    onClick={() => toggleDetails(index)}
+                    className="px-4 py-2 bg-gray-700 text-gray-300 rounded hover:bg-gray-600 transition-colors flex items-center gap-2"
+                  >
+                    {expandedDetails === index
+                      ? (language === 'fr' ? 'Cacher les Détails' : 'Hide Details')
+                      : (language === 'fr' ? 'Montrer les Détails' : 'Show Details')}
+                  </button>
+                  
+                  {/* Only show the Screenshots button if the project has screenshots */}
+                  {project.screenshots && project.screenshots.length > 0 && (
+                    <button
+                      onClick={() => toggleScreenshots(index)}
+                      className="px-4 py-2 bg-gray-700 text-gray-300 rounded hover:bg-gray-600 transition-colors flex items-center gap-2"
+                    >
+                      <Image size={18} />
+                      {showScreenshots === index
+                        ? (language === 'fr' ? 'Cacher les Captures' : 'Hide Screenshots')
+                        : (language === 'fr' ? 'Voir les Captures' : 'View Screenshots')}
+                    </button>
+                  )}
+                </div>
+                
+                {/* Screenshots gallery */}
+                {showScreenshots === index && project.screenshots && project.screenshots.length > 0 && (
+                  <div className="mt-4">
+                    <ScreenshotGallery 
+                      screenshots={project.screenshots} 
+                      title={project.content[language].title} 
+                    />
+                  </div>
+                )}
 
                 {expandedDetails === index && (
                   <div className="mt-4 p-4 bg-gray-700 rounded border border-gray-600">

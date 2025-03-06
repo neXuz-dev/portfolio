@@ -1,5 +1,11 @@
 export default {
     tags: ["React", "Tailwind CSS", "Next.js", "JavaScript", "Web Development", "UI/UX", "State Management", "Event Handling", "Web Audio API"],
+    screenshots: [
+      "/screenshots/diceGame/level1.jpg",
+      "/screenshots/diceGame/level2.jpg",
+      "/screenshots/diceGame/level3.jpg",
+      "/screenshots/diceGame/level4.jpg"
+    ],
     content: {
       en: {
         title: "Number Recognition Game",
