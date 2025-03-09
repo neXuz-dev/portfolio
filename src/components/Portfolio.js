@@ -24,7 +24,7 @@ const LOC_ESTIMATES = {
   "Path of Exile Data Monitor": 1500,
   "Rocket League Memory Analyzer": 1000,
   "RLTool Gameplay Analyzer": 1200,
-  "Rz Asset Control Center": 7000,
+  "Rz Asset Control Center": 8500,
   "RziRTool - iRacing Telemetry Overlay": 1700,
   "Sloop Auto-Sail Mechanics Study": 900,
   "Perflib Key Identifier": 200,
