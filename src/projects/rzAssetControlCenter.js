@@ -2,8 +2,8 @@ export default {
   tags: ["C#", "ASP.NET Core", "Entity Framework", "KuCoin API", "WebSocket", "PostgreSQL"],  // Tags remain language-agnostic
   screenshots: [
     "/screenshots/rzAssetControlCenter/rzassetcontrolcenter1.jpg",
-    "/screenshots/diceGame/rzassetcontrolcenter2.jpg",
-    "/screenshots/diceGame/rzassetcontrolcenter3.jpg"
+    "/screenshots/rzAssetControlCenter/rzassetcontrolcenter2.jpg",
+    "/screenshots/rzAssetControlCenter/rzassetcontrolcenter3.jpg"
   ],
   content: {
       en: {
