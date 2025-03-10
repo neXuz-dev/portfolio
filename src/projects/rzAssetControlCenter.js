@@ -1,5 +1,5 @@
 export default {
-  tags: ["C#", "ASP.NET Core", "Entity Framework", "KuCoin API", "WebSocket", "PostgreSQL"],  // Tags remain language-agnostic
+  tags: ["C#", "ASP.NET Core", "Entity Framework Core", "KuCoin API", "WebSockets", "PostgreSQL", ".NET", "JavaScript", "HTML"],
   screenshots: [
     "/screenshots/rzAssetControlCenter/rzassetcontrolcenter1.jpg",
     "/screenshots/rzAssetControlCenter/rzassetcontrolcenter2.jpg",
@@ -10,87 +10,101 @@ export default {
   content: {
       en: {
           title: "Rz Asset Control Center",
-          description: "A robust web application for cryptocurrency asset management and automated trading.",
+          description: "Cryptocurrency Trading Automation Platform (KuCoin)",
           highlights: [
-              "Secure authentication with 2FA",
-              "Real-time WebSocket data handling",
-              "Automated DCA trading bot",
-              "PostgreSQL database integration"
+              "Automated Dollar-Cost Averaging (DCA) trading bots.",
+              "Secure user authentication with Two-Factor Authentication (2FA).",
+              "Real-time price data and order updates via WebSockets.",
+              "KuCoin exchange integration for trading and portfolio management.",
+              "Persistent data storage using PostgreSQL and Entity Framework Core.",
+              "Responsive UI with dynamic data visualizations.",
+              "Robust error handling and API retry mechanisms.",
+              "Intelligent caching for optimized performance."
           ],
           detailedDescription: `
-This project showcases my ability to develop a sophisticated, secure, and scalable web application for managing cryptocurrency assets and automating trading strategies using ASP.NET Core. Rz Asset Control Center integrates with the KuCoin exchange, offering user authentication, real-time data monitoring, and automated trading bot management, highlighting strong backend development capabilities.
+RzAssetControlCenter is a robust and secure cryptocurrency trading automation platform, empowering users to implement Dollar-Cost Averaging (DCA) strategies on the KuCoin exchange. Built with a modern .NET stack, this project showcases my ability to develop complex, real-world applications that integrate with external APIs, handle sensitive data, and provide a seamless user experience.
 
-### Key Technologies & Concepts Demonstrated
+**Key Features & Capabilities:**
 
-- **ASP.NET Core:** Foundation for modern web app development.
-- **Entity Framework Core:** ORM for PostgreSQL database interactions, showcasing database design and persistence skills.
-- **KuCoin API Integration:** Uses *Kucoin.Net* SDK for REST and WebSocket APIs to fetch account info, place orders, and subscribe to real-time streams.
-- **Authentication and Authorization:** Implements ASP.NET Identity with password hashing (*BCrypt*) and two-factor authentication (2FA).
-- **Real-time Data Handling:** *WebSocketClient.cs* manages balance and order updates in real time.
-- **Asynchronous Programming:** Extensive use of *async*/*await* for scalability.
-- **Dependency Injection:** *Startup.cs* showcases modularity and testability.
-- **Logging:** Serilog integration for monitoring and debugging.
-- **Background Services:** *BotBackgroundService.cs* handles continuous bot operations.
+*   **Automated DCA Trading:** Users can create and manage custom DCA bots, defining parameters like trading pairs, investment amounts, safety order configurations, and target profit percentages. The system intelligently executes trades based on these settings, minimizing manual intervention.
+*   **KuCoin Exchange Integration:** Seamlessly connects to the KuCoin API using the KuCoin.Net library, enabling real-time price data, order placement/cancellation, and balance retrieval. I've implemented robust error handling and retry mechanisms to ensure reliable API communication, including specific handling for KuCoin's IP whitelisting requirements.
+*   **Real-Time Data & Updates:** Leverages WebSockets to provide users with live price feeds and order status updates, ensuring they have the most current information at their fingertips. This demonstrates my proficiency in working with real-time data streams.
+*   **Portfolio Management & Performance Tracking:** Users can monitor their portfolio's performance, view asset distribution, and track historical data through interactive charts and visualizations (powered by Chart.js). This feature showcases my ability to present complex data in a user-friendly manner.
+*   **Secure Authentication & Authorization:** Implements a custom identity system with robust security measures, including BCrypt password hashing and optional Two-Factor Authentication (2FA) via authenticator apps. API keys are stored securely, safeguarding user credentials.
+*   **Order Management:** Provides a comprehensive interface for managing orders, including features to add funds, close positions at market price, and edit existing orders.
+*   **Intelligent Caching:** Employs a custom caching strategy to minimize API calls and improve application performance. The system caches market data and user portfolio information, intelligently invalidating the cache when necessary.
+*   **Responsive and Intuitive UI:** The user interface, built with server-rendered HTML and enhanced with JavaScript for interactivity, is designed to be responsive and user-friendly across different devices.
 
-### Project Functionality Overview
+**Technology Stack:**
 
-1. **User Authentication:** Login with 2FA and session management via cookies.
-2. **Asset Management:** Displays holdings and USD value from KuCoin.
-3. **Order Management:** Retrieves and manages open orders.
-4. **Automated Trading Bot (DCA):** Configurable bot for base orders, safety orders, and take-profit, running in the background.
-5. **UI:** Dynamic, responsive interface with homemade HTML generation.
-6. **Time Synchronization:** Ensures accurate trading with NTP server sync.
+*   **Backend:** ASP.NET Core 9.0, C# (demonstrates proficiency in modern .NET development)
+*   **Database:** PostgreSQL with Entity Framework Core (showcases experience with relational databases and ORMs)
+*   **API Integration:** KuCoin.Net library (highlights ability to integrate with third-party APIs)
+*   **Frontend:** Server-rendered HTML, JavaScript, Chart.js (demonstrates skills in building interactive web interfaces)
+*   **Real-time Communication:** WebSockets (indicates experience with real-time data handling)
+*   **Security:** BCrypt, Custom Identity Implementation, 2FA (showcases a commitment to secure coding practices)
+* **Background Services:** The system uses background workers that run continuously to keep track of enabled bots.
 
-### File Analysis Summary
+**Project Structure & Code Quality:**
 
-- Includes *Startup.cs*, *Program.cs*, *BotLogic.cs*, and more, forming a comprehensive full-stack solution.
+The project follows a well-defined architecture with a clear separation of concerns, demonstrating my ability to write maintainable and scalable code.  Key patterns and practices employed include:
 
-### Overall Impression
-
-A substantial project demonstrating full-stack web development, API integration, and secure design, with a focus on complex financial algorithms and real-time systems, reflecting a proactive approach to impactful solutions.
-  `
+*   **Service-Oriented Architecture:** Business logic is encapsulated within dedicated service classes (e.g., \`BotLogic\`, \`SpotService\`, \`DashboardCachingService\`).
+*   **Dependency Injection:** Used extensively to promote loose coupling and testability.
+*   **Repository Pattern:** Data access is abstracted through Entity Framework Core's DbContext.
+*   **Background Services:** Long-running tasks, such as bot monitoring and cache maintenance, are handled by background services, ensuring responsiveness of the main application.
+*   **Exception Handling:** Comprehensive error handling and logging are implemented throughout the application, enhancing reliability and facilitating debugging.
+*   **Asynchronous Programming:** Extensively utilizes \`async/await\` for non-blocking operations, maximizing performance and scalability.
+`
       },
       fr: {
           title: "Rz Asset Control Center",
-          description: "Une application web robuste pour la gestion d'actifs de cryptomonnaies et le trading automatisé.",
+          description: "Plateforme d'automatisation de trading de cryptomonnaies (KuCoin)",
           highlights: [
-              "Authentification sécurisée avec 2FA",
-              "Gestion des données WebSocket en temps réel",
-              "Bot de trading DCA automatisé",
-              "Intégration de la base de données PostgreSQL"
+              "Bots de trading automatisés pour la stratégie d'investissement programmé (DCA).",
+              "Authentification utilisateur sécurisée avec authentification à deux facteurs (2FA).",
+              "Données de prix et mises à jour des ordres en temps réel via WebSockets.",
+              "Intégration de l'échange KuCoin pour le trading et la gestion de portefeuille.",
+              "Stockage persistant des données avec PostgreSQL et Entity Framework Core.",
+              "Interface utilisateur réactive avec visualisations de données dynamiques.",
+              "Gestion robuste des erreurs et mécanismes de réessai de l'API.",
+              "Mise en cache intelligente pour des performances optimisées."
           ],
           detailedDescription: `
-Ce projet met en valeur ma capacité à développer une application web sophistiquée, sécurisée et évolutive pour la gestion des actifs de cryptomonnaies et l'automatisation des stratégies de trading en utilisant ASP.NET Core. Rz Asset Control Center s'intègre à l'échange KuCoin, offrant une authentification utilisateur, une surveillance des données en temps réel et une gestion automatisée des bots de trading, soulignant de solides capacités de développement backend.
+RzAssetControlCenter est une plateforme d'automatisation de trading de cryptomonnaies robuste et sécurisée, permettant aux utilisateurs de mettre en œuvre des stratégies d'investissement programmé (DCA) sur l'échange KuCoin. Construit avec une pile .NET moderne, ce projet met en valeur ma capacité à développer des applications complexes et réelles qui s'intègrent à des API externes, gèrent des données sensibles et offrent une expérience utilisateur transparente.
 
-### Technologies et concepts clés démontrés
+**Fonctionnalités et capacités clés :**
 
-- **ASP.NET Core :** Base pour le développement d'applications web modernes.
-- **Entity Framework Core :** ORM pour les interactions avec la base de données PostgreSQL, mettant en valeur les compétences en conception de bases de données et en persistance.
-- **Intégration de l'API KuCoin :** Utilise le SDK *Kucoin.Net* pour les API REST et WebSocket afin de récupérer les informations de compte, de passer des ordres et de s'abonner aux flux en temps réel.
-- **Authentification et autorisation :** Implémente ASP.NET Identity avec hachage de mot de passe (*BCrypt*) et authentification à deux facteurs (2FA).
-- **Gestion des données en temps réel :** *WebSocketClient.cs* gère les mises à jour du solde et des ordres en temps réel.
-- **Programmation asynchrone :** Utilisation extensive de *async*/*await* pour l'évolutivité.
-- **Injection de dépendances :** *Startup.cs* met en valeur la modularité et la testabilité.
-- **Journalisation :** Intégration de Serilog pour la surveillance et le débogage.
-- **Services d'arrière-plan :** *BotBackgroundService.cs* gère les opérations continues du bot.
+*   **Trading DCA automatisé :** Les utilisateurs peuvent créer et gérer des bots DCA personnalisés, en définissant des paramètres tels que les paires de trading, les montants d'investissement, les configurations d'ordres de sécurité et les pourcentages de profit cible. Le système exécute intelligemment les transactions en fonction de ces paramètres, minimisant ainsi l'intervention manuelle.
+*   **Intégration de l'échange KuCoin :** Se connecte de manière transparente à l'API KuCoin à l'aide de la bibliothèque KuCoin.Net, permettant d'obtenir des données de prix en temps réel, de placer/annuler des ordres et de récupérer le solde. J'ai mis en œuvre une gestion robuste des erreurs et des mécanismes de réessai pour assurer une communication API fiable, y compris une gestion spécifique des exigences de liste blanche IP de KuCoin.
+*   **Données et mises à jour en temps réel :** Exploite les WebSockets pour fournir aux utilisateurs des flux de prix en direct et des mises à jour de l'état des ordres, garantissant ainsi qu'ils disposent des informations les plus récentes. Cela démontre ma maîtrise du travail avec les flux de données en temps réel.
+*   **Gestion de portefeuille et suivi des performances :** Les utilisateurs peuvent surveiller les performances de leur portefeuille, visualiser la répartition des actifs et suivre les données historiques grâce à des graphiques et des visualisations interactifs (alimentés par Chart.js). Cette fonctionnalité met en valeur ma capacité à présenter des données complexes de manière conviviale.
+*   **Authentification et autorisation sécurisées :** Met en œuvre un système d'identité personnalisé avec des mesures de sécurité robustes, notamment le hachage de mot de passe BCrypt et l'authentification à deux facteurs (2FA) facultative via des applications d'authentification. Les clés API sont stockées en toute sécurité, protégeant ainsi les informations d'identification de l'utilisateur.
+*  **Gestion des ordres:** Fournit une interface complète pour la gestion des ordres, y compris des fonctions permettant d'ajouter des fonds, de clôturer des positions au prix du marché et de modifier des ordres existants.
+*   **Mise en cache intelligente :** Utilise une stratégie de mise en cache personnalisée pour minimiser les appels API et améliorer les performances de l'application. Le système met en cache les données du marché et les informations du portefeuille de l'utilisateur, invalidant intelligemment le cache lorsque cela est nécessaire.
+*   **Interface utilisateur réactive et intuitive :** L'interface utilisateur, construite avec du HTML rendu côté serveur et améliorée avec JavaScript pour l'interactivité, est conçue pour être réactive et conviviale sur différents appareils.
 
-### Aperçu des fonctionnalités du projet
+**Pile technologique :**
 
-1. **Authentification de l'utilisateur :** Connexion avec 2FA et gestion de session via cookies.
-2. **Gestion des actifs :** Affiche les avoirs et la valeur en USD à partir de KuCoin.
-3. **Gestion des ordres :** Récupère et gère les ordres ouverts.
-4. **Bot de trading automatisé (DCA) :** Bot configurable pour les ordres de base, les ordres de sécurité et la prise de profit, s'exécutant en arrière-plan.
-5. **Interface utilisateur :** Interface dynamique et réactive avec génération HTML maison.
-6. **Synchronisation de l'heure :** Assure un trading précis avec la synchronisation du serveur NTP.
+*   **Backend :** ASP.NET Core 9.0, C# (démontre la maîtrise du développement .NET moderne)
+*   **Base de données :** PostgreSQL avec Entity Framework Core (met en valeur l'expérience avec les bases de données relationnelles et les ORM)
+*   **Intégration API :** Bibliothèque KuCoin.Net (met en évidence la capacité à s'intégrer à des API tierces)
+*   **Frontend :** HTML rendu côté serveur, JavaScript, Chart.js (démontre les compétences en matière de création d'interfaces web interactives)
+*   **Communication en temps réel :** WebSockets (indique l'expérience en matière de traitement des données en temps réel)
+*   **Sécurité :** BCrypt, implémentation d'identité personnalisée, 2FA (témoigne d'un engagement envers les pratiques de codage sécurisées)
+*   **Services d'arrière-plan :** Le système utilise des workers en arrière-plan qui fonctionnent en continu pour suivre les bots activés.
 
-### Résumé de l'analyse des fichiers
+**Structure du projet et qualité du code :**
 
-- Comprend *Startup.cs*, *Program.cs*, *BotLogic.cs*, et plus encore, formant une solution complète full-stack.
+Le projet suit une architecture bien définie avec une séparation claire des préoccupations, démontrant ma capacité à écrire du code maintenable et évolutif. Les principaux modèles et pratiques employés comprennent :
 
-### Impression générale
-
-Un projet substantiel démontrant le développement web full-stack, l'intégration d'API et une conception sécurisée, avec un accent sur les algorithmes financiers complexes et les systèmes en temps réel, reflétant une approche proactive des solutions percutantes.
-  `
+*   **Architecture orientée services :** La logique métier est encapsulée dans des classes de service dédiées (par exemple, \`BotLogic\`, \`SpotService\`, \`DashboardCachingService\`).
+*   **Injection de dépendances :** Largement utilisée pour promouvoir le couplage faible et la testabilité.
+*   **Modèle de référentiel :** L'accès aux données est abstrait via le DbContext d'Entity Framework Core.
+*   **Services d'arrière-plan :** Les tâches de longue durée, telles que la surveillance des bots et la maintenance du cache, sont gérées par des services d'arrière-plan, garantissant la réactivité de l'application principale.
+*   **Gestion des exceptions :** Une gestion complète des erreurs et une journalisation sont mises en œuvre dans toute l'application, améliorant la fiabilité et facilitant le débogage.
+*   **Programmation asynchrone :** Utilise largement \`async/await\` pour les opérations non bloquantes, maximisant les performances et l'évolutivité.
+`
       }
   }
 };
