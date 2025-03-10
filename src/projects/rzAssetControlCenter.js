@@ -3,7 +3,9 @@ export default {
   screenshots: [
     "/screenshots/rzAssetControlCenter/rzassetcontrolcenter1.jpg",
     "/screenshots/rzAssetControlCenter/rzassetcontrolcenter2.jpg",
-    "/screenshots/rzAssetControlCenter/rzassetcontrolcenter3.jpg"
+    "/screenshots/rzAssetControlCenter/rzassetcontrolcenter3.jpg",
+    "/screenshots/rzAssetControlCenter/rzassetcontrolcenter4.jpg",
+    "/screenshots/rzAssetControlCenter/rzassetcontrolcenter5.jpg"
   ],
   content: {
       en: {
