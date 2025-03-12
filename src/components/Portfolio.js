@@ -69,6 +69,20 @@ const Portfolio = () => {
   const [language, setLanguage] = useState('en');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
+  // New state for form data
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  
+  // New state for form submission status
+  const [formStatus, setFormStatus] = useState({
+    isSubmitting: false,
+    isSubmitted: false,
+    error: null
+  });
+  
   const languages = [
     { code: 'en', name: 'English', flag: '🇬🇧' },
     { code: 'fr', name: 'Français', flag: '🇫🇷' }
@@ -110,6 +124,95 @@ const Portfolio = () => {
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  // New handler for form input changes
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [id]: value
+    }));
+  };
+
+  // New handler for form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    // Simple validation
+    if (!formData.name || !formData.email || !formData.message) {
+      setFormStatus({
+        isSubmitting: false,
+        isSubmitted: false,
+        error: language === 'fr' 
+          ? 'Veuillez remplir tous les champs' 
+          : 'Please fill in all fields'
+      });
+      return;
+    }
+    
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setFormStatus({
+        isSubmitting: false,
+        isSubmitted: false,
+        error: language === 'fr'
+          ? 'Veuillez entrer une adresse e-mail valide'
+          : 'Please enter a valid email address'
+      });
+      return;
+    }
+    
+    try {
+      setFormStatus({
+        isSubmitting: true,
+        isSubmitted: false,
+        error: null
+      });
+      
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.message || 'Something went wrong');
+      }
+      
+      // Reset form on success
+      setFormData({
+        name: '',
+        email: '',
+        message: ''
+      });
+      
+      setFormStatus({
+        isSubmitting: false,
+        isSubmitted: true,
+        error: null
+      });
+      
+      // Reset success message after 5 seconds
+      setTimeout(() => {
+        setFormStatus(prev => ({
+          ...prev,
+          isSubmitted: false
+        }));
+      }, 5000);
+      
+    } catch (error) {
+      setFormStatus({
+        isSubmitting: false,
+        isSubmitted: false,
+        error: error.message
+      });
+    }
   };
 
   return (
@@ -443,7 +546,8 @@ const Portfolio = () => {
                 {language === 'fr' ? 'Envoyez-moi un message' : 'Send me a message'}
               </h3>
               
-              <form className="space-y-4">
+              {/* Updated Contact Form */}
+              <form className="space-y-4" onSubmit={handleSubmit}>
                 <div>
                   <label htmlFor="name" className="block text-gray-300 mb-1 text-sm">
                     {language === 'fr' ? 'Nom' : 'Name'}
@@ -451,6 +555,8 @@ const Portfolio = () => {
                   <input
                     type="text"
                     id="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
                     className="w-full bg-gray-800 rounded border border-gray-700 p-2 text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
@@ -462,6 +568,8 @@ const Portfolio = () => {
                   <input
                     type="email"
                     id="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                     className="w-full bg-gray-800 rounded border border-gray-700 p-2 text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
@@ -473,15 +581,39 @@ const Portfolio = () => {
                   <textarea
                     id="message"
                     rows="4"
+                    value={formData.message}
+                    onChange={handleInputChange}
                     className="w-full bg-gray-800 rounded border border-gray-700 p-2 text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   ></textarea>
                 </div>
                 
+                {/* Form status messages */}
+                {formStatus.error && (
+                  <div className="text-red-400 text-sm py-1">
+                    {formStatus.error}
+                  </div>
+                )}
+                
+                {formStatus.isSubmitted && (
+                  <div className="text-green-400 text-sm py-1">
+                    {language === 'fr' 
+                      ? 'Message envoyé avec succès!' 
+                      : 'Message sent successfully!'}
+                  </div>
+                )}
+                
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors"
+                  disabled={formStatus.isSubmitting}
+                  className={`px-4 py-2 text-white rounded transition-colors ${
+                    formStatus.isSubmitting 
+                      ? 'bg-blue-800 cursor-not-allowed' 
+                      : 'bg-blue-600 hover:bg-blue-700'
+                  }`}
                 >
-                  {language === 'fr' ? 'Envoyer' : 'Send'}
+                  {formStatus.isSubmitting 
+                    ? (language === 'fr' ? 'Envoi en cours...' : 'Sending...') 
+                    : (language === 'fr' ? 'Envoyer' : 'Send')}
                 </button>
               </form>
             </div>
