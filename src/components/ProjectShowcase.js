@@ -12,12 +12,12 @@ const ProjectShowcase = ({ projects, language }) => {
   const containerRef = useRef(null);
   const slideWidth = useRef(0);
   
-  const featuredProjects = projects.filter(project => 
+  const featuredProjects = projects.filter(project =>
+    project.content.en.title === "Qanga" ||
     project.content.en.title === "Rz Asset Control Center" ||
     project.content.en.title === "RziRTool - iRacing Telemetry Overlay" ||
-    project.content.en.title === "QRCode Generator" ||
-    project.content.en.title === "Number Recognition Game" ||
-    project.content.en.title === "Unreal Engine 5 Bag End"
+    project.content.en.title === "Qanga Server Manager" ||
+    project.content.en.title === "RzCloak"
   );
 
   // Function to check if we should allow dragging based on the target element
@@ -161,6 +161,12 @@ const ProjectShowcase = ({ projects, language }) => {
       'ESRGAN': 'bg-pink-900/30 text-pink-300 border-pink-800',
       'ImGui.NET': 'bg-teal-900/30 text-teal-300 border-teal-800',
       'Entity Framework': 'bg-rose-900/30 text-rose-300 border-rose-800',
+      'Rust': 'bg-orange-900/30 text-orange-300 border-orange-800',
+      'TypeScript': 'bg-sky-900/30 text-sky-300 border-sky-800',
+      'Dedicated Servers': 'bg-emerald-900/30 text-emerald-300 border-emerald-800',
+      'Steam SDK': 'bg-slate-900/30 text-slate-300 border-slate-800',
+      'Security': 'bg-red-900/30 text-red-300 border-red-800',
+      'Networking': 'bg-lime-900/30 text-lime-300 border-lime-800',
       'Blender': 'bg-orange-900/30 text-orange-300 border-orange-800'
     };
     return colorMap[tag] || 'bg-gray-900/30 text-gray-300 border-gray-800';

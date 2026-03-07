@@ -45,9 +45,19 @@ import automatedGameplayAssistantLostWarBot from './automatedGameplayAssistantLo
 import portfolioWebsite from './portfolioWebsite';
 import rlbotAutoSwitcher from './rlbotAutoSwitcher';
 import diceGame from './diceGame';
+import qanga from './qanga';
+import qangaServerManager from './qangaServerManager';
+import qangaSteamUploader from './qangaSteamUploader';
+import rzCloak from './rzCloak';
+import backblazeMcp from './backblazeMcp';
 
 export default [
+  qanga,
+  qangaServerManager,
+  rzCloak,
   rzAssetControlCenter,
+  backblazeMcp,
+  qangaSteamUploader,
   qrCodeGenerator,
   perflibKeyIdentifier,
   soleoTechManager,

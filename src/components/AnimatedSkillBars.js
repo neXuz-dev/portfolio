@@ -6,15 +6,24 @@ const AnimatedSkillBars = ({ language }) => {
   const [activeSkill, setActiveSkill] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const skillsRef = useRef(null);
-  
+
   const skills = [
+    {
+      id: 'ue5Development',
+      name: language === 'fr' ? 'Développement UE5 C++' : 'UE5 C++ Development',
+      percentage: 92,
+      color: 'bg-indigo-500',
+      description: language === 'fr'
+        ? 'Forks moteur custom, vertex factories, shaders, pipelines de rendu et de cook.'
+        : 'Custom engine forks, vertex factories, shaders, rendering and cook pipelines.',
+    },
     {
       id: 'systemProgramming',
       name: language === 'fr' ? 'Programmation Système' : 'System Programming',
       percentage: 95,
       color: 'bg-blue-500',
-      description: language === 'fr' 
-        ? 'Manipulation de mémoire, APIs système et optimisation bas niveau.' 
+      description: language === 'fr'
+        ? 'Manipulation de mémoire, APIs système et optimisation bas niveau.'
         : 'Memory manipulation, system APIs and low-level optimization.',
     },
     {
@@ -22,8 +31,8 @@ const AnimatedSkillBars = ({ language }) => {
       name: language === 'fr' ? 'Rétro-ingénierie' : 'Reverse Engineering',
       percentage: 90,
       color: 'bg-purple-500',
-      description: language === 'fr' 
-        ? 'Analyse de binaires, décompilation et étude des structures de données.' 
+      description: language === 'fr'
+        ? 'Analyse de binaires, décompilation et étude des structures de données.'
         : 'Binary analysis, decompilation and data structure examination.',
     },
     {
@@ -31,40 +40,30 @@ const AnimatedSkillBars = ({ language }) => {
       name: language === 'fr' ? 'Automatisation' : 'Automation',
       percentage: 88,
       color: 'bg-green-500',
-      description: language === 'fr' 
-        ? 'Création de workflows et d\'outils pour rationaliser les processus.' 
+      description: language === 'fr'
+        ? 'Création de workflows et d\'outils pour rationaliser les processus.'
         : 'Creating workflows and tools to streamline processes.',
     },
     {
-      id: 'uiDevelopment',
-      name: language === 'fr' ? 'Développement UI' : 'UI Development',
+      id: 'networkReplication',
+      name: language === 'fr' ? 'Réseau & Réplication' : 'Networking & Replication',
       percentage: 85,
-      color: 'bg-yellow-500',
-      description: language === 'fr' 
-        ? 'Interfaces intuitives avec React, WPF et Windows Forms.' 
-        : 'Intuitive interfaces with React, WPF and Windows Forms.',
-    },
-    {
-      id: 'apiIntegration',
-      name: language === 'fr' ? 'Intégration d\'API' : 'API Integration',
-      percentage: 82,
-      color: 'bg-red-500',
-      description: language === 'fr' 
-        ? 'Connecter des services et des systèmes via des API REST, WS, et plus.' 
-        : 'Connecting services and systems via REST APIs, WS, and more.',
+      color: 'bg-teal-500',
+      description: language === 'fr'
+        ? 'Serveurs dédiés UE5, réplication réseau, architecture multijoueur.'
+        : 'UE5 dedicated servers, network replication, multiplayer architecture.',
     },
     {
       id: 'gameIntegration',
       name: language === 'fr' ? 'Intégration de Jeux' : 'Game Integration',
       percentage: 92,
-      color: 'bg-teal-500',
-      description: language === 'fr' 
-        ? 'Analyse de moteurs de jeu et développement d\'outils connexes.' 
+      color: 'bg-orange-500',
+      description: language === 'fr'
+        ? 'Analyse de moteurs de jeu et développement d\'outils connexes.'
         : 'Game engine analysis and related tool development.',
     }
   ];
 
-  // Use Intersection Observer to detect when skills are visible
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
@@ -92,7 +91,7 @@ const AnimatedSkillBars = ({ language }) => {
     <div className="py-4" ref={skillsRef}>
       <div className="space-y-6 mt-8">
         {skills.map((skill) => (
-          <div 
+          <div
             key={skill.id}
             className="relative"
             onMouseEnter={() => setActiveSkill(skill.id)}
@@ -102,17 +101,17 @@ const AnimatedSkillBars = ({ language }) => {
               <span className="text-gray-200 font-medium">{skill.name}</span>
               <span className="text-gray-300">{skill.percentage}%</span>
             </div>
-            
+
             <div className="h-2.5 bg-gray-700 rounded-full overflow-hidden">
-              <div 
+              <div
                 className={`${skill.color} h-full rounded-full transform-gpu`}
-                style={{ 
+                style={{
                   width: isVisible ? `${skill.percentage}%` : '0%',
                   transition: 'width 1s ease-out'
                 }}
               ></div>
             </div>
-            
+
             {activeSkill === skill.id && (
               <div className="absolute mt-2 py-2 px-3 bg-gray-800 text-gray-300 text-sm rounded shadow-lg border border-gray-700 transform-gpu animate-fade-in-up z-10">
                 {skill.description}

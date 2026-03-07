@@ -60,7 +60,11 @@ const LOC_ESTIMATES = {
   "Automated Gameplay Assistant LostWarBot": 2000,
   "Portfolio Website": 1200,
   "RLBot Nexto/Immortal Auto-Switcher": 800,
-  "Number Recognition Game": 1600
+  "Number Recognition Game": 1600,
+  "Qanga": 300000,
+  "Qanga Steam Uploader": 500,
+  "RzCloak": 3200,
+  "Backblaze Backup MCP Server": 800
 };
 
 const TOTAL_LOC = Object.values(LOC_ESTIMATES).reduce((sum, loc) => sum + loc, 0);
@@ -89,24 +93,23 @@ const Portfolio = () => {
   ];
   
   const stats = {
-    totalProjects: 47,
-    uniqueTechnologies: 32,
+    totalProjects: 48,
+    uniqueTechnologies: 35,
     estimatedLinesOfCode: TOTAL_LOC,
     estimatedHours: Math.round(TOTAL_LOC * 0.05),
     memoryManipulationProjects: 15,
-    apiIntegrations: 8,
-    realTimeProjects: 16,
-    guiDrivenProjects: 12,
+    apiIntegrations: 10,
+    realTimeProjects: 18,
+    guiDrivenProjects: 14,
     reverseEngineeringTasks: 15,
     languages: [
-      { name: 'C#', percentage: 38, color: 'bg-blue-500' },
-      { name: 'AutoIt', percentage: 21, color: 'bg-green-500' },
-      { name: 'C++', percentage: 10, color: 'bg-purple-500' },
-      { name: 'JavaScript', percentage: 10, color: 'bg-yellow-500' },
-      { name: 'ASM', percentage: 8, color: 'bg-red-500' },
-      { name: 'Pine Script', percentage: 5, color: 'bg-teal-500' },
-      { name: 'Python', percentage: 5, color: 'bg-orange-500' },
-      { name: 'PHP', percentage: 3, color: 'bg-pink-500' },
+      { name: 'C++', percentage: 57, color: 'bg-purple-500' },
+      { name: 'AutoIt', percentage: 22, color: 'bg-green-500' },
+      { name: 'Rust', percentage: 7, color: 'bg-orange-500' },
+      { name: 'C#', percentage: 5, color: 'bg-blue-500' },
+      { name: 'C', percentage: 5, color: 'bg-red-500' },
+      { name: 'Python', percentage: 3, color: 'bg-yellow-500' },
+      { name: 'TypeScript', percentage: 1, color: 'bg-teal-500' },
     ]
   };
 
@@ -327,7 +330,7 @@ const Portfolio = () => {
         <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-fade-in-up">
           <h1 className="text-4xl font-bold text-gray-100 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Rémi Job-Dorge</h1>
           <p className="text-xl text-gray-300 mt-2 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            {language === 'fr' ? 'Expert en Développement Logiciel & Analyste Technique' : 'Expert Software Developer & Technical Analyst'}
+            {language === 'fr' ? 'Ingénieur Logiciel Systèmes & Développeur Unreal Engine 5' : 'Systems Software Engineer & Unreal Engine 5 Developer'}
           </p>
           
           <div className="mt-4 flex flex-wrap gap-4 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
@@ -351,9 +354,9 @@ const Portfolio = () => {
 
           <div className="mt-6 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
             <p className="text-gray-300">
-              {language === 'fr' 
-                ? "Expert en développement logiciel spécialisé dans l'automatisation, la rétro-ingénierie et l'optimisation système. Basé à Villeneuve-Loubet, France, avec plus de 17 ans d'expérience dans les solutions techniques."
-                : "Expert in software development with a focus on automation, reverse engineering, and system optimization. Based in Villeneuve-Loubet, France, with over 17 years of experience in technical solutions."
+              {language === 'fr'
+                ? "Ingénieur logiciel systèmes avec plus de 18 ans d'expérience, spécialisé dans le développement C++ Unreal Engine 5 avec forks moteur custom, l'optimisation de performances et la programmation bas-niveau. Basé à Villeneuve-Loubet, France."
+                : "Systems software engineer with 18+ years of experience, specialized in Unreal Engine 5 C++ development with custom engine forks, performance optimization, and low-level systems programming. Based in Villeneuve-Loubet, France."
               }
             </p>
           </div>
@@ -448,47 +451,48 @@ const Portfolio = () => {
             {language === 'fr' ? (
               <>
                 <p className="animate-on-scroll opacity-0" style={{ animationDelay: '0.2s' }}>
-                  Basé à Villeneuve-Loubet, France, j'ai 17 ans d'expérience en développement polyvalent et plus de 6 ans d'expérience 
-                  en tant que Technicien chez SARL Soleo Tech (2017-2023), où j'ai développé une expertise en développement logiciel, 
+                  Basé à Villeneuve-Loubet, France, j'ai plus de 18 ans d'expérience en développement logiciel et plus de 6 ans
+                  en tant que Technicien chez SARL Soleo Tech (2017-2023), où j'ai développé une expertise en développement logiciel,
                   optimisation système, automatisation et rétro-ingénierie.
                 </p>
                 <p className="animate-on-scroll opacity-0" style={{ animationDelay: '0.3s' }}>
-                  Ma passion pour la technologie découle de mon parcours dans le gaming compétitif, notamment en 
-                  tant qu'ancien joueur professionnel de Counter-Strike (2014-2016) et détenteur de plusieurs records 
-                  mondiaux en simulation automobile depuis 2015. Cette quête de performance et d'efficacité se reflète 
-                  dans mon travail, axé sur la recherche de solutions optimales et l'exploitation des systèmes existants.
+                  En 2025, j'ai repris 99% du développement de Qanga, un jeu multijoueur en monde ouvert sur Unreal Engine 5
+                  (projet IolaCorp). Partant de zéro en C++ UE5, j'ai accumulé plus de 2 400 commits en moins d'un an,
+                  en développant des forks moteur custom, des systèmes de vertex factory, des shaders HLSL/SM6 et des serveurs dédiés Linux.
                 </p>
                 <p className="animate-on-scroll opacity-0" style={{ animationDelay: '0.4s' }}>
-                  Je me spécialise dans le développement en C#, C++ et Python, ainsi que dans la conception 3D (Unity, 
-                  Unreal Engine 5, Blender). Mon approche analytique et logique me permet de résoudre des problèmes 
-                  en les déconstruisant méthodiquement.
+                  Ma passion pour la technologie découle de mon parcours dans le gaming compétitif, notamment en
+                  tant qu'ancien joueur professionnel de Counter-Strike (2014-2016) et détenteur de plusieurs records
+                  mondiaux en simulation automobile depuis 2015. Cette quête de performance et d'efficacité se reflète
+                  dans mon travail, axé sur les systèmes critiques en performance et l'optimisation temps réel.
                 </p>
                 <p className="animate-on-scroll opacity-0" style={{ animationDelay: '0.5s' }}>
-                  En dehors du code, je m'intéresse à l'astronomie, la science-fiction et la mythologie. 
-                  Je suis motivé par la quête de compréhension de l'univers et par la contribution à 
-                  l'émergence d'une super-intelligence dédiée à une cause supérieure et à la révélation de ses secrets.
+                  Je me spécialise en C++ (Unreal Engine 5), Rust, C# et Python. Mon approche analytique et logique
+                  me permet de résoudre des problèmes en les déconstruisant méthodiquement. En dehors du code,
+                  je m'intéresse à l'astronomie, la science-fiction et la mythologie.
                 </p>
               </>
             ) : (
               <>
                 <p className="animate-on-scroll opacity-0" style={{ animationDelay: '0.2s' }}>
-                  Based in Villeneuve-Loubet, France, I have 17 years of experience in versatile development and over six years of experience 
-                  as a Technician at SARL Soleo Tech (2017-2023), where I developed expertise in software development, 
+                  Based in Villeneuve-Loubet, France, I have 18+ years of experience in software development and over six years
+                  as a Technician at SARL Soleo Tech (2017-2023), where I developed expertise in software development,
                   system optimization, automation, and reverse engineering.
                 </p>
                 <p className="animate-on-scroll opacity-0" style={{ animationDelay: '0.3s' }}>
-                  My passion for technology stems from my background in competitive gaming, notably as a former professional Counter-Strike player 
-                  (2014-2016) and a holder of multiple world records in racing simulation since 2015. This pursuit of performance and efficiency 
-                  is reflected in my work, which focuses on finding optimal solutions and leveraging existing systems.
+                  In 2025, I took over 99% of development on Qanga, an open-world multiplayer game on Unreal Engine 5
+                  (IolaCorp project). Starting from zero UE5 C++ experience, I accumulated 2,400+ commits in under a year,
+                  building custom engine forks, vertex factory systems, HLSL/SM6 shaders, and dedicated Linux servers.
                 </p>
                 <p className="animate-on-scroll opacity-0" style={{ animationDelay: '0.4s' }}>
-                  I specialize in development with C#, C++, and Python, as well as 3D design (Unity, Unreal Engine 5, Blender). 
-                  My analytical and logical approach allows me to solve problems by methodically breaking them down.
+                  My passion for technology stems from my background in competitive gaming, notably as a former professional Counter-Strike player
+                  (2014-2016) and a holder of multiple world records in racing simulation since 2015. This pursuit of performance and efficiency
+                  is reflected in my work, which focuses on performance-critical systems and real-time optimization.
                 </p>
                 <p className="animate-on-scroll opacity-0" style={{ animationDelay: '0.5s' }}>
-                  Beyond coding, I have a strong interest in astronomy, science fiction, and mythology. 
-                  I am driven by the quest to understand the universe and to contribute to the emergence of a super-intelligence 
-                  dedicated to a greater cause and the revelation of its secrets.
+                  I specialize in C++ (Unreal Engine 5), Rust, C#, and Python. My analytical and logical approach allows me to
+                  solve problems by methodically breaking them down. Beyond coding, I have a strong interest in astronomy,
+                  science fiction, and mythology.
                 </p>
               </>
             )}
