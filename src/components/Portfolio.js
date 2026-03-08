@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Github, Linkedin, Mail, Globe, ChevronDown, ChevronUp, Download, Filter, Menu, X } from 'lucide-react';
+import { Github, Linkedin, Mail, Globe, ChevronDown, ChevronUp, Download, Filter, Menu, X, ShoppingCart, ArrowRight } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import allProjects from '../projects';
 import ProjectsSection from './ProjectsSection';
@@ -261,10 +261,17 @@ const Portfolio = () => {
               >
                 {language === 'fr' ? 'Projets' : 'Projects'}
               </a>
-              <a 
-                href="#about" 
+              <a
+                href="/store"
                 className="bg-gray-700/60 text-gray-200 font-medium px-4 py-1.5 rounded-full border border-gray-600 hover:bg-blue-600/70 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-md animate-slide-up"
                 style={{ animationDelay: '0.2s' }}
+              >
+                {language === 'fr' ? 'Boutique' : 'Store'}
+              </a>
+              <a
+                href="#about"
+                className="bg-gray-700/60 text-gray-200 font-medium px-4 py-1.5 rounded-full border border-gray-600 hover:bg-blue-600/70 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-md animate-slide-up"
+                style={{ animationDelay: '0.3s' }}
               >
                 {language === 'fr' ? 'À propos' : 'About'}
               </a>
@@ -313,7 +320,14 @@ const Portfolio = () => {
               >
                 {language === 'fr' ? 'Projets' : 'Projects'}
               </a>
-              <a 
+              <a
+                href="/store"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block py-2 px-3 text-gray-200 hover:text-white hover:bg-gray-700/60 rounded transition-all"
+              >
+                {language === 'fr' ? 'Boutique' : 'Store'}
+              </a>
+              <a
                 href="#about"
                 onClick={() => setMobileMenuOpen(false)}
                 className="block py-2 px-3 text-gray-200 hover:text-white hover:bg-gray-700/60 rounded transition-all"
@@ -362,6 +376,37 @@ const Portfolio = () => {
           </div>
         </div>
       </header>
+
+      {/* Store CTA */}
+      <section className="max-w-6xl mx-auto mt-6 px-4 relative z-10 animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
+        <a href="/store" className="block group">
+          <div className="relative overflow-hidden rounded-lg border border-blue-500/20 hover:border-blue-500/40 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/5">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-900/30 via-gray-800/80 to-purple-900/20 backdrop-blur-sm"></div>
+            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+            <div className="relative px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-4">
+                <div className="p-3 rounded-xl bg-blue-600/20">
+                  <ShoppingCart size={28} className="text-blue-400" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-gray-100">
+                    {language === 'fr' ? 'Boutique' : 'Store'}
+                  </h3>
+                  <p className="text-gray-400 text-sm">
+                    {language === 'fr'
+                      ? 'Outils MCP, logiciels de protection, analyseurs de performance et plus.'
+                      : 'MCP tools, protection software, performance analyzers, and more.'}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 px-5 py-2.5 bg-blue-600/80 group-hover:bg-blue-500 text-white rounded-lg transition-colors duration-200 font-medium whitespace-nowrap">
+                {language === 'fr' ? 'Voir la boutique' : 'Browse Store'}
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+          </div>
+        </a>
+      </section>
 
       {/* At a Glance Section */}
       <section className="max-w-6xl mx-auto mt-8 px-4 relative z-10">
@@ -503,7 +548,7 @@ const Portfolio = () => {
       </section>
 
       {/* Contact Section */}
-      <section className="max-w-6xl mx-auto mt-8 px-4 relative z-10">
+      <section className="max-w-6xl mx-auto mt-8 px-4 relative z-10 scroll-mt-24" id="contact">
         <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-on-scroll opacity-0">
           <h2 className="text-2xl font-bold text-gray-100 mb-4">
             {language === 'fr' ? 'Travaillons Ensemble' : 'Let\'s Work Together'}
