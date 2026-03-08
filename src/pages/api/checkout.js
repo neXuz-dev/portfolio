@@ -49,6 +49,10 @@ export default async function handler(req, res) {
     return res.status(503).json({ message: 'Product not yet available for purchase' });
   }
 
+  if (!process.env.STRIPE_SECRET_KEY) {
+    return res.status(500).json({ message: 'Stripe not configured' });
+  }
+
   try {
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
@@ -64,7 +68,7 @@ export default async function handler(req, res) {
 
     return res.status(200).json({ url: session.url });
   } catch (error) {
-    console.error('Stripe checkout error:', error);
-    return res.status(500).json({ message: 'Failed to create checkout session' });
+    console.error('Stripe checkout error:', error.message);
+    return res.status(500).json({ message: error.message });
   }
 }
