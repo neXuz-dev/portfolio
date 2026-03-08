@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { Shield, Cpu, Gamepad2, HardDrive, ExternalLink, Clock, ShoppingCart, MessageSquare, ArrowLeft, ChevronRight, Mail } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Shield, Cpu, Gamepad2, HardDrive, Clock, ShoppingCart, MessageSquare, ArrowLeft, ChevronRight, Mail, Loader2 } from 'lucide-react';
 import CustomCursor from '../../components/CustomCursor';
 import ParticleBackground from '../../components/ParticleBackground';
 import products from '../../store/products';
@@ -25,10 +25,11 @@ const tagColors = {
   'Rendering': 'bg-rose-900/30 text-rose-300 border-rose-800',
 };
 
-const ProductCard = ({ product, language }) => {
+const ProductCard = ({ product, language, onBuy, buying }) => {
   const content = product.content[language];
   const Icon = iconMap[product.icon] || Shield;
-  const isAvailable = !product.comingSoon && !product.isService && product.purchaseUrl;
+  const isBuyable = !product.comingSoon && !product.isService && product.price != null;
+  const isLoading = buying === product.id;
 
   return (
     <div className={`group relative bg-gray-900/60 rounded-xl border transition-all duration-300 p-7 flex flex-col ${
@@ -100,17 +101,25 @@ const ProductCard = ({ product, language }) => {
           )}
         </div>
 
-        {isAvailable ? (
-          <a
-            href={product.purchaseUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors duration-200 text-sm font-medium"
+        {isBuyable ? (
+          <button
+            onClick={() => onBuy(product.id)}
+            disabled={isLoading}
+            className={`flex items-center gap-2 px-5 py-2.5 text-white rounded-lg transition-colors duration-200 text-sm font-medium ${
+              isLoading
+                ? 'bg-blue-800 cursor-wait'
+                : 'bg-blue-600 hover:bg-blue-500'
+            }`}
           >
-            <ShoppingCart size={16} />
-            {language === 'fr' ? 'Acheter' : 'Buy Now'}
-            <ExternalLink size={14} />
-          </a>
+            {isLoading ? (
+              <Loader2 size={16} className="animate-spin" />
+            ) : (
+              <ShoppingCart size={16} />
+            )}
+            {isLoading
+              ? (language === 'fr' ? 'Chargement...' : 'Loading...')
+              : (language === 'fr' ? 'Acheter' : 'Buy Now')}
+          </button>
         ) : product.comingSoon ? (
           <span className="px-5 py-2.5 bg-gray-800/60 text-gray-500 rounded-lg text-sm cursor-default">
             {language === 'fr' ? 'Bientot disponible' : 'Coming Soon'}
@@ -121,9 +130,7 @@ const ProductCard = ({ product, language }) => {
             className="flex items-center gap-2 px-5 py-2.5 bg-blue-600/80 hover:bg-blue-500 text-white rounded-lg transition-colors duration-200 text-sm font-medium"
           >
             <MessageSquare size={16} />
-            {product.isService
-              ? (language === 'fr' ? 'Discuter' : 'Let\'s Talk')
-              : (language === 'fr' ? 'Me contacter' : 'Contact Me')}
+            {language === 'fr' ? 'Discuter' : 'Let\'s Talk'}
           </a>
         )}
       </div>
@@ -133,6 +140,8 @@ const ProductCard = ({ product, language }) => {
 
 export default function StorePage() {
   const [language, setLanguage] = useState('en');
+  const [buying, setBuying] = useState(null);
+  const [error, setError] = useState(null);
 
   const languages = [
     { code: 'en', name: 'English', flag: 'EN' },
@@ -142,6 +151,26 @@ export default function StorePage() {
   const availableProducts = products.filter(p => !p.comingSoon && !p.isService);
   const comingSoonProducts = products.filter(p => p.comingSoon);
   const serviceProducts = products.filter(p => p.isService);
+
+  const handleBuy = useCallback(async (productId) => {
+    setBuying(productId);
+    setError(null);
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || 'Checkout failed');
+      }
+      window.location.href = data.url;
+    } catch (err) {
+      setError(err.message);
+      setBuying(null);
+    }
+  }, []);
 
   useEffect(() => {
     document.body.classList.add('cursor-none');
@@ -223,10 +252,17 @@ export default function StorePage() {
 
       {/* Products */}
       <main className="relative z-10 max-w-7xl mx-auto px-4 pb-16">
+        {error && (
+          <div className="mb-6 p-4 bg-red-900/30 border border-red-800/50 rounded-lg text-red-300 text-sm flex items-center justify-between">
+            <span>{error}</span>
+            <button onClick={() => setError(null)} className="text-red-400 hover:text-red-300 ml-4">x</button>
+          </div>
+        )}
+
         {/* Available products */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-12">
           {availableProducts.map((product) => (
-            <ProductCard key={product.id} product={product} language={language} />
+            <ProductCard key={product.id} product={product} language={language} onBuy={handleBuy} buying={buying} />
           ))}
         </div>
 
@@ -239,7 +275,7 @@ export default function StorePage() {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
               {comingSoonProducts.map((product) => (
-                <ProductCard key={product.id} product={product} language={language} />
+                <ProductCard key={product.id} product={product} language={language} onBuy={handleBuy} buying={buying} />
               ))}
             </div>
           </div>

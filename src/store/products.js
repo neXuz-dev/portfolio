@@ -5,7 +5,7 @@ const products = [
     price: 499.99,
     currency: 'EUR',
     tags: ['C++', 'Unreal Engine 5', 'MCP'],
-    purchaseUrl: null,
+
     content: {
       en: {
         name: 'UE5 Editor MCP',
@@ -37,7 +37,7 @@ const products = [
     price: 599.99,
     currency: 'EUR',
     tags: ['C++', 'Unreal Engine 5', 'Gameplay'],
-    purchaseUrl: null,
+
     content: {
       en: {
         name: 'Dynamic Quest System',
@@ -69,7 +69,7 @@ const products = [
     price: 699.99,
     currency: 'EUR',
     tags: ['C++', 'Unreal Engine 5', 'Rendering'],
-    purchaseUrl: null,
+
     content: {
       en: {
         name: 'RzIndirectInstancing',
@@ -101,7 +101,7 @@ const products = [
     price: 249.99,
     currency: 'EUR',
     tags: ['TypeScript', 'MCP', 'Backup'],
-    purchaseUrl: null,
+
     content: {
       en: {
         name: 'Backblaze Computer Backup MCP',
@@ -133,7 +133,7 @@ const products = [
     price: 249.99,
     currency: 'EUR',
     tags: ['Rust', 'Security', 'Windows'],
-    purchaseUrl: null,
+
     content: {
       en: {
         name: 'RzCloak',
@@ -165,7 +165,7 @@ const products = [
     price: 99.99,
     currency: 'EUR',
     tags: ['Rust', 'Unreal Engine 5', 'Profiling'],
-    purchaseUrl: null,
+
     content: {
       en: {
         name: 'TraceFrameExporter',
@@ -197,7 +197,7 @@ const products = [
     price: 99.99,
     currency: 'EUR',
     tags: ['Rust', 'SSH', 'egui'],
-    purchaseUrl: null,
+
     content: {
       en: {
         name: 'Game Server Manager',
@@ -230,7 +230,7 @@ const products = [
     currency: 'EUR',
     tags: ['C++', 'Rust', 'MCP'],
     isService: true,
-    purchaseUrl: null,
+
     content: {
       en: {
         name: 'Custom Development',
