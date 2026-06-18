@@ -3,7 +3,7 @@ export default {
   content: {
       en: {
           title: "Backblaze Backup MCP Server",
-          description: "MCP server that drives Backblaze Computer Backup from AI assistants — built on a reverse-engineered, undocumented API.",
+          description: "MCP server that drives Backblaze Computer Backup from AI assistants - built on a reverse-engineered, undocumented API.",
           highlights: [
               "Reverse-engineered Backblaze Computer Backup's undocumented API",
               "Model Context Protocol (MCP) server implementation",
@@ -11,7 +11,7 @@ export default {
               "Built with TypeScript"
           ],
           detailedDescription: `
-An MCP (Model Context Protocol) server that integrates Backblaze's personal backup service with AI assistants like Claude — built on top of an API that had to be reverse-engineered, since Backblaze Computer Backup ships no public API.
+An MCP (Model Context Protocol) server that integrates Backblaze's personal backup service with AI assistants like Claude - built on top of an API that had to be reverse-engineered, since Backblaze Computer Backup ships no public API.
 
 **Key Features:**
 
@@ -28,7 +28,7 @@ An MCP (Model Context Protocol) server that integrates Backblaze's personal back
       },
       fr: {
           title: "Backblaze Backup MCP Server",
-          description: "Serveur MCP pilotant Backblaze Computer Backup depuis les assistants IA — bâti sur une API non documentée rétro-conçue.",
+          description: "Serveur MCP pilotant Backblaze Computer Backup depuis les assistants IA - bâti sur une API non documentée rétro-conçue.",
           highlights: [
               "Rétro-ingénierie de l'API non documentée de Backblaze Computer Backup",
               "Implémentation de serveur Model Context Protocol (MCP)",
@@ -36,7 +36,7 @@ An MCP (Model Context Protocol) server that integrates Backblaze's personal back
               "Construit en TypeScript"
           ],
           detailedDescription: `
-Un serveur MCP (Model Context Protocol) qui intègre le service de sauvegarde personnel de Backblaze avec les assistants IA comme Claude — bâti sur une API qu'il a fallu rétro-concevoir, puisque Backblaze Computer Backup ne fournit aucune API publique.
+Un serveur MCP (Model Context Protocol) qui intègre le service de sauvegarde personnel de Backblaze avec les assistants IA comme Claude - bâti sur une API qu'il a fallu rétro-concevoir, puisque Backblaze Computer Backup ne fournit aucune API publique.
 
 **Fonctionnalités principales :**
 

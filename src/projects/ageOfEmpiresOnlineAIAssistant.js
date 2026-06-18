@@ -32,7 +32,7 @@ The script interacts directly with the game's running process. Key features incl
 
 ### Why this Approach?
 
-This project demonstrates low-level process interaction in a game context, but the techniques—memory reading, DLL integration, pixel detection—are broadly applicable. The choice of AutoIt highlights rapid prototyping skills, while external libraries show adaptability. The clean, well-commented, modular code emphasizes maintainability and software design principles, making it a strong example of technical capability.
+This project demonstrates low-level process interaction in a game context, but the techniques-memory reading, DLL integration, pixel detection-are broadly applicable. The choice of AutoIt highlights rapid prototyping skills, while external libraries show adaptability. The clean, well-commented, modular code emphasizes maintainability and software design principles, making it a strong example of technical capability.
   `
       },
       fr: {

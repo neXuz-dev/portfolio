@@ -13,12 +13,12 @@ export default {
               "End-to-end RE toolchain: live-decrypts the game's .text, then Ghidra + Capstone map it"
           ],
           detailedDescription: `
-What looks like an audio "build-order coach" is the front door to a multi-language Age of Empires IV reverse-engineering and automation platform spanning C#, Rust, Python/Jython, and Lua — a shipped TTS app, a custom in-process instrumentation DLL, a hand-rolled cross-process RPC, an LLM-facing MCP server, and a full Ghidra/Capstone reverse-engineering pipeline.
+What looks like an audio "build-order coach" is the front door to a multi-language Age of Empires IV reverse-engineering and automation platform spanning C#, Rust, Python/Jython, and Lua - a shipped TTS app, a custom in-process instrumentation DLL, a hand-rolled cross-process RPC, an LLM-facing MCP server, and a full Ghidra/Capstone reverse-engineering pipeline.
 
 **The Platform (4-layer architecture):**
 
-*   **TTS Coach (C# / WPF):** Converts an AoE4 build order into timed spoken cues that auto-fire in sync with the live match clock — read straight out of the game process via SIMD-accelerated AOB scanning, no API or overlay.
-*   **SDK (C# / .NET 9):** The external client — DLL injector, cross-process memory reader, and named-pipe RPC client, with the wire protocol and SIMD scanning hand-rolled (zero NuGet dependencies).
+*   **TTS Coach (C# / WPF):** Converts an AoE4 build order into timed spoken cues that auto-fire in sync with the live match clock - read straight out of the game process via SIMD-accelerated AOB scanning, no API or overlay.
+*   **SDK (C# / .NET 9):** The external client - DLL injector, cross-process memory reader, and named-pipe RPC client, with the wire protocol and SIMD scanning hand-rolled (zero NuGet dependencies).
 *   **Rust bridge (~13k LOC):** A cdylib injected into the game that hosts the RPC server, does heap-only hooking, walks the VEH handler list and neutralizes integrity hooks, and clones/relocates functions to survive commercial anti-tamper.
 *   **SCAR control:** Re-enters the engine's SCAR Lua VM safely on the sim thread (WndProc subclassing / vtable-clone hook) to read game state and drive the engine through Lua.
 
@@ -26,7 +26,7 @@ What looks like an audio "build-order coach" is the front door to a multi-langua
 
 *   **MCP server (RzScarMcp):** A from-scratch JSON-RPC server exposing ~10 tools so an LLM can inject SCAR Lua, query live game state, and inspect memory.
 *   **Neural TTS pipeline:** sherpa-onnx running Piper VITS models via ONNX Runtime (3 bundled offline voices) plus Windows SAPI as a selectable engine; cues batch-synthesized and mixed via NAudio.
-*   **RE toolchain:** Live-decrypts the game's runtime-only-decrypted .text section to disk, then Ghidra-headless + Capstone map functions, vtables, and the cost-charge gate — feeding version-resilient AOB signatures back into the SDK.
+*   **RE toolchain:** Live-decrypts the game's runtime-only-decrypted .text section to disk, then Ghidra-headless + Capstone map functions, vtables, and the cost-charge gate - feeding version-resilient AOB signatures back into the SDK.
 
 **Technology Stack:**
 
@@ -47,12 +47,12 @@ What looks like an audio "build-order coach" is the front door to a multi-langua
               "Chaîne RE complète : déchiffre le .text du jeu à chaud, puis le cartographie via Ghidra + Capstone"
           ],
           detailedDescription: `
-Ce qui ressemble à un « coach » audio de build orders est en réalité la façade d'une plateforme multi-langages de rétro-ingénierie et d'automatisation pour Age of Empires IV, couvrant C#, Rust, Python/Jython et Lua — une app TTS livrée, une DLL d'instrumentation in-process, un RPC inter-processus fait main, un serveur MCP exposé aux LLM, et un pipeline complet de rétro-ingénierie Ghidra/Capstone.
+Ce qui ressemble à un « coach » audio de build orders est en réalité la façade d'une plateforme multi-langages de rétro-ingénierie et d'automatisation pour Age of Empires IV, couvrant C#, Rust, Python/Jython et Lua - une app TTS livrée, une DLL d'instrumentation in-process, un RPC inter-processus fait main, un serveur MCP exposé aux LLM, et un pipeline complet de rétro-ingénierie Ghidra/Capstone.
 
 **La plateforme (architecture à 4 couches) :**
 
-*   **Coach TTS (C# / WPF) :** Transforme un build order AoE4 en repères vocaux minutés qui se déclenchent en synchro avec le chrono du match — lu directement dans le processus du jeu via un scan AOB accéléré SIMD, sans API ni overlay.
-*   **SDK (C# / .NET 9) :** Le client externe — injecteur de DLL, lecteur mémoire inter-processus et client RPC named-pipe, avec protocole filaire et scan SIMD faits main (zéro dépendance NuGet).
+*   **Coach TTS (C# / WPF) :** Transforme un build order AoE4 en repères vocaux minutés qui se déclenchent en synchro avec le chrono du match - lu directement dans le processus du jeu via un scan AOB accéléré SIMD, sans API ni overlay.
+*   **SDK (C# / .NET 9) :** Le client externe - injecteur de DLL, lecteur mémoire inter-processus et client RPC named-pipe, avec protocole filaire et scan SIMD faits main (zéro dépendance NuGet).
 *   **Pont Rust (~13k LOC) :** Un cdylib injecté dans le jeu qui héberge le serveur RPC, fait du hooking heap-only, parcourt la liste des handlers VEH et neutralise les hooks d'intégrité, et clone/relocalise des fonctions pour survivre à l'anti-altération commercial.
 *   **Contrôle SCAR :** Réentre la VM Lua SCAR du moteur en sécurité sur le thread de simulation (subclassing WndProc / hook par clone de vtable) pour lire l'état du jeu et le piloter via Lua.
 
@@ -60,7 +60,7 @@ Ce qui ressemble à un « coach » audio de build orders est en réalité la fa�
 
 *   **Serveur MCP (RzScarMcp) :** Un serveur JSON-RPC fait de zéro exposant ~10 outils pour qu'un LLM puisse injecter du Lua SCAR, interroger l'état du jeu et inspecter la mémoire.
 *   **Pipeline TTS neuronal :** sherpa-onnx exécutant des modèles Piper VITS via ONNX Runtime (3 voix hors ligne intégrées) plus Windows SAPI comme moteur sélectionnable ; repères synthétisés par lots et mixés via NAudio.
-*   **Chaîne RE :** Déchiffre à chaud la section .text du jeu (déchiffrée uniquement à l'exécution) sur disque, puis Ghidra-headless + Capstone cartographient fonctions, vtables et le gate de débit de coût — réinjectant des signatures AOB résilientes aux patches dans le SDK.
+*   **Chaîne RE :** Déchiffre à chaud la section .text du jeu (déchiffrée uniquement à l'exécution) sur disque, puis Ghidra-headless + Capstone cartographient fonctions, vtables et le gate de débit de coût - réinjectant des signatures AOB résilientes aux patches dans le SDK.
 
 **Stack technique :**
 

@@ -8,7 +8,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        // Everything is monospace — even stray `font-sans` resolves to mono.
+        // Everything is monospace - even stray `font-sans` resolves to mono.
         mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
         sans: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
@@ -29,7 +29,7 @@ export default {
         widest: "0.22em",
       },
     },
-    // Kill every rounded token — any stray `rounded-*` renders sharp.
+    // Kill every rounded token - any stray `rounded-*` renders sharp.
     borderRadius: {
       none: "0",
       sm: "0",

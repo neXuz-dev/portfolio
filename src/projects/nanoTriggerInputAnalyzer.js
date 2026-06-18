@@ -29,7 +29,7 @@ The goal was to gain practical, in-depth experience with the Raw Input API, deco
 
 ### Why This Matters
 
-NanoTrigger exemplifies a commitment to understanding computer interaction fundamentals, going beyond basic usage to how inputs work at a low level. The skills—low-level programming, API interaction, data parsing—are highly transferable to game development, custom hardware integration, and system utilities.
+NanoTrigger exemplifies a commitment to understanding computer interaction fundamentals, going beyond basic usage to how inputs work at a low level. The skills-low-level programming, API interaction, data parsing-are highly transferable to game development, custom hardware integration, and system utilities.
   `
       },
       fr: {

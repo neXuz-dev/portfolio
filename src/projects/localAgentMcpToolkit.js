@@ -12,7 +12,7 @@ export default {
               "Filesystem: sandboxed file operations restricted to allowed roots"
           ],
           detailedDescription: `
-A toolkit of original MCP (Model Context Protocol) servers that extend AI assistants with local, sandboxed capabilities — search the web, run shell commands, read Discord, and operate on the filesystem.
+A toolkit of original MCP (Model Context Protocol) servers that extend AI assistants with local, sandboxed capabilities - search the web, run shell commands, read Discord, and operate on the filesystem.
 
 **The Servers:**
 
@@ -40,7 +40,7 @@ A toolkit of original MCP (Model Context Protocol) servers that extend AI assist
               "Système de fichiers : opérations sandboxées limitées à des racines autorisées"
           ],
           detailedDescription: `
-Une boîte à outils de serveurs MCP (Model Context Protocol) originaux qui étendent les assistants IA avec des capacités locales et sandboxées — recherche web, exécution de commandes shell, lecture Discord et opérations sur le système de fichiers.
+Une boîte à outils de serveurs MCP (Model Context Protocol) originaux qui étendent les assistants IA avec des capacités locales et sandboxées - recherche web, exécution de commandes shell, lecture Discord et opérations sur le système de fichiers.
 
 **Les serveurs :**
 

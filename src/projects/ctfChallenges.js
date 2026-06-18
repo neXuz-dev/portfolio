@@ -17,7 +17,7 @@ A personal Capture-the-Flag workspace of original solvers, exploits, and researc
 **Key Features:**
 
 *   **Cryptanalysis:** From-scratch AES internals (S-box, GF(2⁸) arithmetic) used to mount a SIFA fault-injection attack against AES-128.
-*   **Reverse Engineering:** Static and dynamic analysis with Ghidra and objdump — including solving a compiled Go maze binary.
+*   **Reverse Engineering:** Static and dynamic analysis with Ghidra and objdump - including solving a compiled Go maze binary.
 *   **Automated Solving:** z3 SMT solving, pycryptodome, raw sockets, and multiprocessing to drive challenge servers.
 *   **Research Logs:** Detailed per-challenge writeups documenting the full attack path.
 
@@ -44,7 +44,7 @@ Un espace de travail Capture-the-Flag composé de solveurs, d'exploits et de not
 **Fonctionnalités principales :**
 
 *   **Cryptanalyse :** Implémentation d'AES from scratch (S-box, arithmétique GF(2⁸)) servant à monter une attaque par injection de fautes SIFA contre AES-128.
-*   **Rétro-ingénierie :** Analyse statique et dynamique avec Ghidra et objdump — dont la résolution d'un binaire labyrinthe compilé en Go.
+*   **Rétro-ingénierie :** Analyse statique et dynamique avec Ghidra et objdump - dont la résolution d'un binaire labyrinthe compilé en Go.
 *   **Résolution automatisée :** Solveur SMT z3, pycryptodome, sockets bas-niveau et multiprocessing pour piloter les serveurs de challenge.
 *   **Notes de recherche :** Writeups détaillés par challenge documentant tout le chemin d'attaque.
 

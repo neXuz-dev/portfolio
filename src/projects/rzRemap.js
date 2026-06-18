@@ -19,7 +19,7 @@ RzRemap is a from-scratch Rust replacement for UCR-style input remappers, built 
 *   **Layered Architecture:** A clean four-crate workspace separating domain, runtime, Win32 platform, and the desktop app.
 *   **Deterministic Timing:** A QPC-based scheduler with a high-resolution timing bootstrap for precise, repeatable input.
 *   **Typed Remaps:** Remap definitions are strongly typed and validated rather than free-form config.
-*   **Direct Win32 Integration:** Raw Input, QPC, and XInput accessed directly through the \`windows\` crate — no abstraction layers hiding the platform.
+*   **Direct Win32 Integration:** Raw Input, QPC, and XInput accessed directly through the \`windows\` crate - no abstraction layers hiding the platform.
 
 **Technology Stack:**
 
@@ -46,7 +46,7 @@ RzRemap est un remplaçant des remappeurs d'entrées de type UCR, conçu de zér
 *   **Architecture en couches :** Un workspace propre à quatre crates séparant le domaine, le runtime, la plateforme Win32 et l'application bureau.
 *   **Timing déterministe :** Un ordonnanceur basé sur QPC avec amorçage de timing haute résolution pour des entrées précises et reproductibles.
 *   **Remaps typés :** Les définitions de remap sont fortement typées et validées plutôt qu'une configuration libre.
-*   **Intégration Win32 directe :** Raw Input, QPC et XInput accédés directement via la crate \`windows\` — aucune couche d'abstraction ne masque la plateforme.
+*   **Intégration Win32 directe :** Raw Input, QPC et XInput accédés directement via la crate \`windows\` - aucune couche d'abstraction ne masque la plateforme.
 
 **Stack technique :**
 

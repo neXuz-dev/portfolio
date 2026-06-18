@@ -17,7 +17,7 @@ const BOOT_LINES = [
   '[ OK ] spawning 59 project daemons',
   '[ OK ] indexing ~450,000 lines of code',
   '[ OK ] uplink -> qanga.io  (2,400+ commits)',
-  '[WARN] reality.exe not responding — using simulation',
+  '[WARN] reality.exe not responding - using simulation',
   '[ OK ] decrypting world records...',
   '',
   '> ACCESS GRANTED. welcome, operator.',
@@ -74,7 +74,7 @@ export default function BootSequence() {
     };
   }, [active]);
 
-  // Matrix rain (blue, not green — opt-in, runs only while active)
+  // Matrix rain (blue, not green - opt-in, runs only while active)
   useEffect(() => {
     if (!active) return;
     const canvas = canvasRef.current;

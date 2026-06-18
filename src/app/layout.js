@@ -10,7 +10,7 @@ const mono = JetBrains_Mono({
 export const metadata = {
   title: "Rémi Job-Dorge // Systems Software Engineer",
   description:
-    "Portfolio of Rémi Job-Dorge — Systems Software Engineer & Unreal Engine 5 developer. Low-level C++, Rust, reverse engineering, real-time systems.",
+    "Portfolio of Rémi Job-Dorge - Systems Software Engineer & Unreal Engine 5 developer. Low-level C++, Rust, reverse engineering, real-time systems.",
 };
 
 export default function RootLayout({ children }) {

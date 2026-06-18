@@ -16,7 +16,7 @@ This project demonstrates proficiency in C# and Windows Forms development, focus
 ### Key Features and Technologies
 
 - **Windows Forms UI:** Features a simple UI with a *CheckedListBox* for configuration profiles (e.g., Cyclone Slayer) and a *Debug* textbox for real-time feedback.
-- **Process Interaction (ghapi.cs):** Custom API wrapper using *kernel32.dll* for process opening, memory reading/writing, module enumeration, and dynamic address resolution with *FindDMAAddy*—reusable and robust.
+- **Process Interaction (ghapi.cs):** Custom API wrapper using *kernel32.dll* for process opening, memory reading/writing, module enumeration, and dynamic address resolution with *FindDMAAddy*-reusable and robust.
 - **Game Data Logic (Program.cs):** Identifies the game process, monitors health via a continuous loop, triggers experimental actions based on conditions, and uses *InputSimulatorStandard* for input simulation with *Stopwatch* timers for cooldowns.
 
 ### Overall Impression

@@ -11,7 +11,7 @@ export default {
               "Single standalone Windows binary"
           ],
           detailedDescription: `
-A native Windows desktop tool that takes a shell script and emits Windows-native equivalents — from a simple batch file to a fully compiled executable.
+A native Windows desktop tool that takes a shell script and emits Windows-native equivalents - from a simple batch file to a fully compiled executable.
 
 **Key Features:**
 
@@ -37,7 +37,7 @@ A native Windows desktop tool that takes a shell script and emits Windows-native
               "Binaire Windows autonome unique"
           ],
           detailedDescription: `
-Un outil bureau Windows natif qui prend un script shell et produit des équivalents natifs Windows — d'un simple fichier batch à un exécutable entièrement compilé.
+Un outil bureau Windows natif qui prend un script shell et produit des équivalents natifs Windows - d'un simple fichier batch à un exécutable entièrement compilé.
 
 **Fonctionnalités principales :**
 

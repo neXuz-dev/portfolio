@@ -15,16 +15,16 @@ const ExperienceTimeline = ({ language }) => {
   const experiences = [
     {
       id: 'qanga',
-      year: '2025—present',
-      title: language === 'fr' ? 'Développeur Principal — Qanga (IolaCorp)' : 'Lead Developer — Qanga (IolaCorp)',
+      year: '2025-present',
+      title: language === 'fr' ? 'Développeur Principal - Qanga (IolaCorp)' : 'Lead Developer - Qanga (IolaCorp)',
       description: language === 'fr'
-        ? "Reprise de 99% du développement d'un jeu multijoueur UE5. De zéro en C++ moteur à des forks custom, vertex factories, shaders HLSL/SM6 et serveurs dédiés — 2 400+ commits en moins d'un an."
-        : 'Took over 99% of development on a UE5 multiplayer game. From zero engine C++ to custom forks, vertex factories, HLSL/SM6 shaders, and dedicated servers — 2,400+ commits in under a year.',
+        ? "Reprise de 99% du développement d'un jeu multijoueur UE5. De zéro en C++ moteur à des forks custom, vertex factories, shaders HLSL/SM6 et serveurs dédiés - 2 400+ commits en moins d'un an."
+        : 'Took over 99% of development on a UE5 multiplayer game. From zero engine C++ to custom forks, vertex factories, HLSL/SM6 shaders, and dedicated servers - 2,400+ commits in under a year.',
       tags: ['C++', 'Unreal Engine 5', 'Rust', 'Dedicated Servers', 'Steam SDK'],
     },
     {
       id: 'soleo',
-      year: '2017—2023',
+      year: '2017-2023',
       title: language === 'fr' ? 'Technicien / Développeur chez SARL Soleo Tech' : 'Technician / Developer at SARL Soleo Tech',
       description: language === 'fr'
         ? "Développement d'outils système, automatisation et maintenance de systèmes POS, personnalisation d'ERP et intégration d'API."
@@ -33,7 +33,7 @@ const ExperienceTimeline = ({ language }) => {
     },
     {
       id: 'cs',
-      year: '2014—2016',
+      year: '2014-2016',
       title: language === 'fr' ? 'Joueur Professionnel Counter-Strike' : 'Professional Counter-Strike Player',
       description: language === 'fr'
         ? "Compétition au plus haut niveau, analyse stratégique, entraînement d'équipe et coordination."
@@ -42,7 +42,7 @@ const ExperienceTimeline = ({ language }) => {
     },
     {
       id: 'racing',
-      year: '2015—present',
+      year: '2015-present',
       title: language === 'fr' ? 'Records Mondiaux en Simulation de Course' : 'Racing Simulation World Records',
       description: language === 'fr'
         ? 'Détenteur de records mondiaux dans plusieurs simulations de course, nécessitant précision et optimisation.'
@@ -51,7 +51,7 @@ const ExperienceTimeline = ({ language }) => {
     },
     {
       id: 'dev',
-      year: '2008—present',
+      year: '2008-present',
       title: language === 'fr' ? 'Développement Logiciel Indépendant' : 'Independent Software Development',
       description: language === 'fr'
         ? "Plus de 18 ans de développement de solutions systèmes, d'automatisation et d'outils de performance à travers 59 projets."

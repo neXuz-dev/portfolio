@@ -31,7 +31,7 @@ The objective was to retrieve license information by:
 
 ### Outcome
 
-Successfully retrieves license keys, showcasing confident memory manipulation, process interaction, and data structure interpretation—valuable skills for security research, software integration, and legacy system maintenance.
+Successfully retrieves license keys, showcasing confident memory manipulation, process interaction, and data structure interpretation-valuable skills for security research, software integration, and legacy system maintenance.
   `
       },
       fr: {

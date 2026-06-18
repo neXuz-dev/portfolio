@@ -72,7 +72,7 @@ const LOC_ESTIMATES = {
 
 const TOTAL_LOC = Object.values(LOC_ESTIMATES).reduce((sum, loc) => sum + loc, 0);
 
-// Blue-dominant ramp (one amber accent) — no purple, terminal-flat.
+// Blue-dominant ramp (one amber accent) - no purple, terminal-flat.
 const LANGUAGES = [
   { name: 'C++',        percentage: 57, color: '#5b8cf5' },
   { name: 'AutoIt',     percentage: 22, color: '#3a6fd6' },
@@ -212,7 +212,7 @@ const Portfolio = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            {/* Language toggle — no emoji flags */}
+            {/* Language toggle - no emoji flags */}
             <div className="hidden items-center border border-line text-xs sm:flex">
               {['en', 'fr'].map((code) => (
                 <button

@@ -19,8 +19,8 @@
   --line-bright:  44  60 104; /* #2c3c68 emphasized divider / focus edge  */
   --fg:          197 206 222; /* #c5cede body text (blue-grey)            */
   --fg-dim:      107 119 147; /* #6b7793 muted labels / captions          */
-  --brand:        10  42 102; /* #0a2a66 THE favorite color — fills, bars */
-  --brand-bright: 74 124 240; /* #4a7cf0 same hue, bright — accent/data   */
+  --brand:        10  42 102; /* #0a2a66 THE favorite color - fills, bars */
+  --brand-bright: 74 124 240; /* #4a7cf0 same hue, bright - accent/data   */
   --amber:       224 165  59; /* #e0a53b warnings / secondary status      */
   --red:         224  72  59; /* #e0483b alerts / errors                  */
 }
@@ -33,7 +33,7 @@ body {
   background: rgb(var(--bg));
   color: rgb(var(--fg));
   font-family: var(--font-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
-  /* tabular figures + slashed zero — for data tables and stat readouts */
+  /* tabular figures + slashed zero - for data tables and stat readouts */
   font-feature-settings: "tnum" 1, "zero" 1, "ss01" 1;
   -webkit-font-smoothing: antialiased;
 }
@@ -113,7 +113,7 @@ a {
   animation: bar-fill 0.9s ease-out both;
 }
 
-/* Alert ticker marquee — duplicate content inside for a seamless loop */
+/* Alert ticker marquee - duplicate content inside for a seamless loop */
 @keyframes ticker {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
