@@ -111,7 +111,8 @@ const Portfolio = () => {
   });
 
   const stats = {
-    totalProjects: allProjects.length,
+    // Collection entries bundle several tools; count the real projects, not the cards.
+    totalProjects: allProjects.reduce((sum, p) => sum + (p.bundledCount || 1), 0),
     uniqueTechnologies: 64,
     estimatedLinesOfCode: TOTAL_LOC,
     estimatedHours: Math.round(TOTAL_LOC * 0.05),

@@ -1,71 +1,43 @@
-import ageOfEmpiresOnlineAIAssistant from './ageOfEmpiresOnlineAIAssistant';
-import aimlabPerformanceAnalyzer from './aimlabPerformanceAnalyzer';
-import assettoCorsaSmartShiftOptimizer from './assettoCorsaSmartShiftOptimizer';
-import screenMonitoringAndImageRecognitionCounter from './screenMonitoringAndImageRecognitionCounter';
-import lastWarBotGameplayAnalyzer from './lastWarBotGameplayAnalyzer';
-import nanoTriggerInputAnalyzer from './nanoTriggerInputAnalyzer';
-import orchestraLicenseDumper from './orchestraLicenseDumper';
-import pathOfExileDataMonitor from './pathOfExileDataMonitor';
-import rocketLeagueMemoryAnalyzer from './rocketLeagueMemoryAnalyzer';
-import rlToolGameplayAnalyzer from './rlToolGameplayAnalyzer';
+import qanga from './qanga';
+import qangaServerManager from './qangaServerManager';
+import rzMcpInterface from './rzMcpInterface';
+import qai from './qai';
+import dynamicQuestSystem from './dynamicQuestSystem';
+import rzIndirectInstancing from './rzIndirectInstancing';
+import qWeapon from './qWeapon';
+import flyVehicleMovement from './flyVehicleMovement';
+import qNotification from './qNotification';
+import easyCook from './easyCook';
+import qReport from './qReport';
+import rzCloak from './rzCloak';
 import rzAssetControlCenter from './rzAssetControlCenter';
+import rzAudioBuilds from './rzAudioBuilds';
+import fh6GearAI from './fh6GearAI';
+import rzMemoryScanner from './rzMemoryScanner';
 import rziRToolIRacingTelemetryOverlay from './rziRToolIRacingTelemetryOverlay';
-import sloopAutoSailMechanicsStudy from './sloopAutoSailMechanicsStudy';
+import backblazeMcp from './backblazeMcp';
+import localAgentMcpToolkit from './localAgentMcpToolkit';
+import rzRemap from './rzRemap';
+import shellToWindowsConverter from './shellToWindowsConverter';
+import ctfChallenges from './ctfChallenges';
+import gameReverseEngineering from './gameReverseEngineering';
+import pixelVisionAutomation from './pixelVisionAutomation';
+import tradingViewIndicators from './tradingViewIndicators';
+import aiImageDiscordBots from './aiImageDiscordBots';
+import orchestraLicenseDumper from './orchestraLicenseDumper';
+import qangaSteamUploader from './qangaSteamUploader';
+import qrCodeGenerator from './qrCodeGenerator';
 import perflibKeyIdentifier from './perflibKeyIdentifier';
 import soleoTechManager from './soleoTechManager';
 import windowsSystemConfigurationTool from './windowsSystemConfigurationTool';
-import testDriveUnlimitedShiftAnalyzer from './testDriveUnlimitedShiftAnalyzer';
-import woLongInteractionAnalyzer from './woLongInteractionAnalyzer';
 import systemTrayIconManager from './systemTrayIconManager';
-import imageUpscalingDiscordBot from './imageUpscalingDiscordBot';
-import dalleMiniDiscordBot from './dalleMiniDiscordBot';
-import rzOverlayGameDataVisualizer from './rzOverlayGameDataVisualizer';
-import gearAIForzaHorizon5Analyzer from './gearAIForzaHorizon5Analyzer';
-import forHonorCombatAnalyzer from './forHonorCombatAnalyzer';
-import forzaHorizon4GearAnalyzer from './forzaHorizon4GearAnalyzer';
-import genshinImpactMemoryAnalyzer from './genshinImpactMemoryAnalyzer';
-import haloMCCGameplayAnalyzer from './haloMCCGameplayAnalyzer';
-import lostArkHelper from './lostArkHelper';
-import ninjaGaiden2MechanicsAnalyzer from './ninjaGaiden2MechanicsAnalyzer';
 import automationAndSystemUtilitiesInAutoIt3 from './automationAndSystemUtilitiesInAutoIt3';
-import reverseEngineeringGameMechanics from './reverseEngineeringGameMechanics';
 import dataExtractionForPOSSystems from './dataExtractionForPOSSystems';
 import dolibarrERPCustomization from './dolibarrERPCustomization';
-import unrealEngine5BagEnd from './unrealEngine5BagEnd';
-import reverseEngineeringConstruct3GameTimer from './reverseEngineeringConstruct3GameTimer';
-import remnantESPOverlay from './remnantESPOverlay';
 import winHTTPCRMEnhancer from './winHTTPCRMEnhancer';
-import qrCodeGenerator from './qrCodeGenerator';
-import tradingViewStructureIndicator from './tradingViewStructureIndicator';
-import tradingViewMarketSessions from './tradingViewMarketSessions';
-import advancedTradingStrategy from './advancedTradingStrategy';
-import corpusPuzzleSolverStudy from './corpusPuzzleSolverStudy';
-import woLongCheatTableAnalyzer from './woLongCheatTableAnalyzer';
-import automatedGameplayAssistantLostWarBot from './automatedGameplayAssistantLostWarBot';
+import unrealEngine5BagEnd from './unrealEngine5BagEnd';
 import portfolioWebsite from './portfolioWebsite';
-import rlbotAutoSwitcher from './rlbotAutoSwitcher';
 import diceGame from './diceGame';
-import qanga from './qanga';
-import qangaServerManager from './qangaServerManager';
-import qangaSteamUploader from './qangaSteamUploader';
-import rzCloak from './rzCloak';
-import backblazeMcp from './backblazeMcp';
-import rzAudioBuilds from './rzAudioBuilds';
-import rzRemap from './rzRemap';
-import shellToWindowsConverter from './shellToWindowsConverter';
-import localAgentMcpToolkit from './localAgentMcpToolkit';
-import ctfChallenges from './ctfChallenges';
-import fh6GearAI from './fh6GearAI';
-import rzMemoryScanner from './rzMemoryScanner';
-import rzMcpInterface from './rzMcpInterface';
-import dynamicQuestSystem from './dynamicQuestSystem';
-import qai from './qai';
-import rzIndirectInstancing from './rzIndirectInstancing';
-import flyVehicleMovement from './flyVehicleMovement';
-import qWeapon from './qWeapon';
-import easyCook from './easyCook';
-import qNotification from './qNotification';
-import qReport from './qReport';
 
 export default [
   qanga,
@@ -84,56 +56,28 @@ export default [
   rzAudioBuilds,
   fh6GearAI,
   rzMemoryScanner,
+  rziRToolIRacingTelemetryOverlay,
   backblazeMcp,
   localAgentMcpToolkit,
   rzRemap,
   shellToWindowsConverter,
   ctfChallenges,
+  gameReverseEngineering,
+  pixelVisionAutomation,
+  tradingViewIndicators,
+  aiImageDiscordBots,
+  orchestraLicenseDumper,
   qangaSteamUploader,
   qrCodeGenerator,
   perflibKeyIdentifier,
   soleoTechManager,
   windowsSystemConfigurationTool,
   systemTrayIconManager,
-  portfolioWebsite,
-  diceGame,
-  imageUpscalingDiscordBot,
-  dalleMiniDiscordBot,
   automationAndSystemUtilitiesInAutoIt3,
   dataExtractionForPOSSystems,
   dolibarrERPCustomization,
   winHTTPCRMEnhancer,
-  tradingViewStructureIndicator,
-  tradingViewMarketSessions,
-  advancedTradingStrategy,
-  orchestraLicenseDumper,
   unrealEngine5BagEnd,
-  reverseEngineeringConstruct3GameTimer,
-  rziRToolIRacingTelemetryOverlay,
-  screenMonitoringAndImageRecognitionCounter,
-  sloopAutoSailMechanicsStudy,
-  corpusPuzzleSolverStudy,
-  ageOfEmpiresOnlineAIAssistant,
-  aimlabPerformanceAnalyzer,
-  assettoCorsaSmartShiftOptimizer,
-  gearAIForzaHorizon5Analyzer,
-  forzaHorizon4GearAnalyzer,
-  testDriveUnlimitedShiftAnalyzer,
-  lastWarBotGameplayAnalyzer,
-  nanoTriggerInputAnalyzer,
-  pathOfExileDataMonitor,
-  rocketLeagueMemoryAnalyzer,
-  rlToolGameplayAnalyzer,
-  woLongInteractionAnalyzer,
-  rzOverlayGameDataVisualizer,
-  forHonorCombatAnalyzer,
-  genshinImpactMemoryAnalyzer,
-  haloMCCGameplayAnalyzer,
-  lostArkHelper,
-  ninjaGaiden2MechanicsAnalyzer,
-  reverseEngineeringGameMechanics,
-  remnantESPOverlay,
-  woLongCheatTableAnalyzer,
-  automatedGameplayAssistantLostWarBot,
-  rlbotAutoSwitcher,
+  portfolioWebsite,
+  diceGame,
 ];
