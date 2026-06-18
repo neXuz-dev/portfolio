@@ -54,8 +54,8 @@ const ExperienceTimeline = ({ language }) => {
       year: '2008—present',
       title: language === 'fr' ? 'Développement Logiciel Indépendant' : 'Independent Software Development',
       description: language === 'fr'
-        ? "Plus de 18 ans de développement de solutions systèmes, d'automatisation et d'outils de performance à travers 58 projets."
-        : 'Over 18 years building systems software, automation, and performance tooling across 58 projects.',
+        ? "Plus de 18 ans de développement de solutions systèmes, d'automatisation et d'outils de performance à travers 59 projets."
+        : 'Over 18 years building systems software, automation, and performance tooling across 59 projects.',
       tags: ['C++', 'C#', 'Rust', 'Python', 'System Integration'],
     },
   ];

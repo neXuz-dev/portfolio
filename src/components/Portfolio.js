@@ -63,6 +63,7 @@ const LOC_ESTIMATES = {
   "Backblaze Backup MCP Server": 800,
   "RzAudioBuilds": 29369,
   "FH6 GearAI": 28400,
+  "RzMemoryScanner": 2888,
   "RzRemap": 3780,
   "Local Agent MCP Toolkit": 1539,
   "Shell-to-Windows Converter": 296,
@@ -102,14 +103,14 @@ const Portfolio = () => {
 
   const stats = {
     totalProjects: allProjects.length,
-    uniqueTechnologies: 58,
+    uniqueTechnologies: 59,
     estimatedLinesOfCode: TOTAL_LOC,
     estimatedHours: Math.round(TOTAL_LOC * 0.05),
-    memoryManipulationProjects: 18,
+    memoryManipulationProjects: 19,
     apiIntegrations: 9,
     realTimeProjects: 21,
-    guiDrivenProjects: 20,
-    reverseEngineeringTasks: 18,
+    guiDrivenProjects: 21,
+    reverseEngineeringTasks: 19,
   };
 
   const statCells = [

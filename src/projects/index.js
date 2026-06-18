@@ -56,6 +56,7 @@ import shellToWindowsConverter from './shellToWindowsConverter';
 import localAgentMcpToolkit from './localAgentMcpToolkit';
 import ctfChallenges from './ctfChallenges';
 import fh6GearAI from './fh6GearAI';
+import rzMemoryScanner from './rzMemoryScanner';
 
 export default [
   qanga,
@@ -64,6 +65,7 @@ export default [
   rzAssetControlCenter,
   rzAudioBuilds,
   fh6GearAI,
+  rzMemoryScanner,
   backblazeMcp,
   localAgentMcpToolkit,
   rzRemap,

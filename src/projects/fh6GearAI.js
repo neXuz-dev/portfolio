@@ -10,7 +10,8 @@ export default {
               "Reverse-engineered the physics LCP constraint solver to locate per-wheel brake authority",
               "Hand-assembled an x64 code cave (emitted from C#) that runs every physics substep for in-engine ABS",
               "Defeated the anti-tamper stack — 7 integrity checks + self-terminate guard — via signature byte patches",
-              "Kernel-level write tracing via a custom pre-OS UEFI DBVM bootloader (AMD SVM/NPT)"
+              "Kernel-level write tracing via a custom pre-OS UEFI DBVM bootloader (AMD SVM/NPT)",
+              "PSS VA-clone safe-scan layer (atop a Cheat Engine fork) to mass-read anti-tamper memory without crashing the game"
           ],
           detailedDescription: `
 A real-time driving-assist suite for Forza Horizon 6, built by reverse-engineering the game's live process — memory layout, physics engine, and anti-tamper protection. It is the next iteration of the FH4/FH5 GearAI lineage, but a major step up: from reading memory to injecting custom machine code into the game's physics solver.
@@ -21,6 +22,7 @@ A real-time driving-assist suite for Forza Horizon 6, built by reverse-engineeri
 *   **Control-block mapping:** The full vehicle struct mapped offset by offset — per-gear ratio/shift tables, engine torque curve, final-drive variants, throttle/brake/steer inputs, four wheel angular-velocity blocks, and tire radii.
 *   **Physics solver:** Reverse-engineered the LCP (linear-complementarity) constraint solver and identified per-wheel brake authority as the longitudinal impulse bound consumed inside the per-wheel substep loop.
 *   **Anti-tamper:** Located and neutralized the game's protection stack — a CRC pointer table, a value-encryption routine, seven integrity checks, and a self-terminate guard — with signature-matched byte patches.
+*   **Safe-scan tooling:** A PSS VA-clone snapshot scanner — an original subsystem built atop a Cheat Engine fork — reads the game's memory in bulk without tripping its anti-tamper, surfacing the offsets the suite depends on.
 
 **Advanced Logic:**
 
@@ -45,7 +47,8 @@ A real-time driving-assist suite for Forza Horizon 6, built by reverse-engineeri
               "Rétro-ingénierie du solveur de contraintes LCP pour localiser l'autorité de freinage par roue",
               "Code cave x64 assemblé à la main (émis depuis C#) exécuté à chaque sous-pas physique pour un ABS in-engine",
               "Contournement de l'anti-altération — 7 contrôles d'intégrité + garde d'auto-terminaison — par patches de signature",
-              "Traçage des écritures au niveau noyau via un bootloader UEFI DBVM pré-OS sur mesure (AMD SVM/NPT)"
+              "Traçage des écritures au niveau noyau via un bootloader UEFI DBVM pré-OS sur mesure (AMD SVM/NPT)",
+              "Couche de safe-scan par clone VA PSS (sur un fork de Cheat Engine) pour lire en masse la mémoire anti-altération sans crash"
           ],
           detailedDescription: `
 Une suite d'aides à la conduite temps réel pour Forza Horizon 6, bâtie en rétro-concevant le processus vivant du jeu — disposition mémoire, moteur physique et protection anti-altération. C'est l'itération suivante de la lignée GearAI FH4/FH5, mais un saut majeur : passer de la lecture de la mémoire à l'injection de code machine dans le solveur physique du jeu.
@@ -56,6 +59,7 @@ Une suite d'aides à la conduite temps réel pour Forza Horizon 6, bâtie en ré
 *   **Cartographie du bloc de contrôle :** La structure complète du véhicule cartographiée offset par offset — tables de rapports/passages par vitesse, courbe de couple moteur, variantes de pont, entrées accélérateur/frein/direction, quatre blocs de vitesse angulaire des roues et rayons de pneus.
 *   **Solveur physique :** Rétro-ingénierie du solveur de contraintes LCP (linear-complementarity) et identification de l'autorité de freinage par roue comme la borne d'impulsion longitudinale consommée dans la boucle de sous-pas par roue.
 *   **Anti-altération :** Localisation et neutralisation de la pile de protection du jeu — table de pointeurs CRC, routine de chiffrement de valeurs, sept contrôles d'intégrité et garde d'auto-terminaison — par patches d'octets de signature.
+*   **Outillage safe-scan :** Un scanner par snapshot clone VA PSS — un sous-système original bâti sur un fork de Cheat Engine — lit la mémoire du jeu en masse sans déclencher son anti-altération, révélant les offsets dont dépend la suite.
 
 **Logique avancée :**
 
