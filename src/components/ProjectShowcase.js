@@ -14,6 +14,8 @@ const ProjectShowcase = ({ projects, language }) => {
 
   const featuredProjects = projects.filter(project =>
     project.content.en.title === "Qanga" ||
+    project.content.en.title === "FH6 GearAI" ||
+    project.content.en.title === "RzAudioBuilds" ||
     project.content.en.title === "Rz Asset Control Center" ||
     project.content.en.title === "RziRTool - iRacing Telemetry Overlay" ||
     project.content.en.title === "Qanga Server Manager" ||
