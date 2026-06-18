@@ -50,13 +50,25 @@ import qangaServerManager from './qangaServerManager';
 import qangaSteamUploader from './qangaSteamUploader';
 import rzCloak from './rzCloak';
 import backblazeMcp from './backblazeMcp';
+import rzAudioBuilds from './rzAudioBuilds';
+import rzRemap from './rzRemap';
+import shellToWindowsConverter from './shellToWindowsConverter';
+import localAgentMcpToolkit from './localAgentMcpToolkit';
+import ctfChallenges from './ctfChallenges';
+import fh6GearAI from './fh6GearAI';
 
 export default [
   qanga,
   qangaServerManager,
   rzCloak,
   rzAssetControlCenter,
+  rzAudioBuilds,
+  fh6GearAI,
   backblazeMcp,
+  localAgentMcpToolkit,
+  rzRemap,
+  shellToWindowsConverter,
+  ctfChallenges,
   qangaSteamUploader,
   qrCodeGenerator,
   perflibKeyIdentifier,

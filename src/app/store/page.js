@@ -1,29 +1,10 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Shield, Cpu, Gamepad2, HardDrive, Clock, ShoppingCart, MessageSquare, ArrowLeft, ChevronRight, Mail, Loader2 } from 'lucide-react';
-import CustomCursor from '../../components/CustomCursor';
-import ParticleBackground from '../../components/ParticleBackground';
 import products from '../../store/products';
 
 const iconMap = { Shield, Cpu, Gamepad2, HardDrive };
-
-const tagColors = {
-  'Rust': 'bg-orange-900/30 text-orange-300 border-orange-800',
-  'Security': 'bg-red-900/30 text-red-300 border-red-800',
-  'Windows': 'bg-blue-900/30 text-blue-300 border-blue-800',
-  'TypeScript': 'bg-sky-900/30 text-sky-300 border-sky-800',
-  'MCP': 'bg-emerald-900/30 text-emerald-300 border-emerald-800',
-  'AI Tooling': 'bg-violet-900/30 text-violet-300 border-violet-800',
-  'C++': 'bg-purple-900/30 text-purple-300 border-purple-800',
-  'Unreal Engine 5': 'bg-indigo-900/30 text-indigo-300 border-indigo-800',
-  'Profiling': 'bg-cyan-900/30 text-cyan-300 border-cyan-800',
-  'SSH': 'bg-lime-900/30 text-lime-300 border-lime-800',
-  'egui': 'bg-amber-900/30 text-amber-300 border-amber-800',
-  'Backup': 'bg-teal-900/30 text-teal-300 border-teal-800',
-  'Gameplay': 'bg-green-900/30 text-green-300 border-green-800',
-  'Rendering': 'bg-rose-900/30 text-rose-300 border-rose-800',
-};
 
 const ProductCard = ({ product, language, onBuy, buying }) => {
   const content = product.content[language];
@@ -32,105 +13,78 @@ const ProductCard = ({ product, language, onBuy, buying }) => {
   const isLoading = buying === product.id;
 
   return (
-    <div className={`group relative bg-gray-900/60 rounded-xl border transition-all duration-300 p-7 flex flex-col ${
-      product.comingSoon
-        ? 'border-gray-700/40 opacity-60'
-        : 'border-gray-700/50 hover:border-blue-500/40 hover:shadow-xl hover:shadow-blue-500/5 hover:-translate-y-1'
-    }`}>
+    <div
+      className={`group relative flex flex-col border bg-panel p-6 transition-colors ${
+        product.comingSoon ? 'border-line opacity-60' : 'border-line hover:border-edge hover:bg-raised'
+      }`}
+    >
       {product.comingSoon && (
-        <div className="absolute top-4 right-4 flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full bg-amber-900/30 text-amber-300 border border-amber-800">
-          <Clock size={12} />
-          {language === 'fr' ? 'Bientot' : 'Coming Soon'}
+        <div className="absolute right-3 top-3 flex items-center gap-1.5 border border-warn/50 px-2 py-0.5 text-[10px] uppercase tracking-wider text-warn">
+          <Clock size={11} />
+          {language === 'fr' ? 'Bientôt' : 'Coming Soon'}
         </div>
       )}
-
       {product.isService && (
-        <div className="absolute top-4 right-4 flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full bg-blue-900/30 text-blue-300 border border-blue-800">
+        <div className="absolute right-3 top-3 border border-accent/50 px-2 py-0.5 text-[10px] uppercase tracking-wider text-accent">
           {language === 'fr' ? 'Service' : 'Service'}
         </div>
       )}
 
-      <div className="flex items-start gap-4 mb-5">
-        <div className="p-3.5 rounded-xl bg-gray-800/80 text-gray-400 group-hover:bg-blue-600/20 group-hover:text-blue-400 transition-colors duration-300 flex-shrink-0">
-          <Icon size={30} />
+      <div className="mb-5 flex items-start gap-4">
+        <div className="flex-shrink-0 border border-edge p-3 text-accent">
+          <Icon size={26} />
         </div>
-        <div className="flex-1 min-w-0">
-          <h3 className="text-xl font-bold text-gray-100">{content.name}</h3>
-          <p className="text-sm text-gray-400 mt-0.5">{content.subtitle}</p>
+        <div className="min-w-0 flex-1">
+          <h3 className="text-lg font-bold text-fg">{content.name}</h3>
+          <p className="mt-0.5 text-xs uppercase tracking-wider text-dim">{content.subtitle}</p>
         </div>
       </div>
 
-      <p className="text-gray-300 text-sm leading-relaxed mb-5 flex-grow">{content.description}</p>
+      <p className="mb-5 flex-grow text-sm leading-relaxed text-dim">{content.description}</p>
 
-      <ul className="space-y-2.5 mb-6">
+      <ul className="mb-5 space-y-2">
         {content.features.map((feature, idx) => (
-          <li key={idx} className="flex items-start text-sm text-gray-400">
-            <ChevronRight size={14} className="text-blue-500 mr-2 mt-0.5 flex-shrink-0" />
+          <li key={idx} className="flex items-start gap-2 text-sm text-fg/90">
+            <ChevronRight size={14} className="mt-0.5 flex-shrink-0 text-accent" />
             {feature}
           </li>
         ))}
       </ul>
 
-      <div className="flex flex-wrap gap-2 mb-6">
+      <div className="mb-5 flex flex-wrap gap-1.5">
         {product.tags.map((tag, idx) => (
-          <span
-            key={idx}
-            className={`text-xs px-2.5 py-0.5 rounded-full border ${tagColors[tag] || 'bg-gray-900/30 text-gray-300 border-gray-800'}`}
-          >
-            {tag}
-          </span>
+          <span key={idx} className="chip">{tag}</span>
         ))}
       </div>
 
-      <div className="mt-auto flex items-center justify-between pt-5 border-t border-gray-700/40">
+      <div className="mt-auto flex items-center justify-between border-t border-line pt-5">
         <div>
           {product.price != null ? (
-            <div>
-              <span className="text-3xl font-bold text-gray-100">{Math.floor(product.price)}</span>
-              <span className="text-lg text-gray-400">.{(product.price % 1).toFixed(2).slice(2)}</span>
-              <span className="text-sm text-gray-500 ml-1">{product.currency}</span>
+            <div className="tabular-nums">
+              <span className="text-2xl font-bold text-accent">{Math.floor(product.price)}</span>
+              <span className="text-base text-dim">.{(product.price % 1).toFixed(2).slice(2)}</span>
+              <span className="ml-1 text-xs text-dim">{product.currency}</span>
             </div>
           ) : product.isService ? (
-            <span className="text-sm text-blue-400 font-medium">
-              {language === 'fr' ? 'Sur devis' : 'Get a quote'}
-            </span>
+            <span className="text-sm text-accent">{language === 'fr' ? 'sur devis' : 'get a quote'}</span>
           ) : (
-            <span className="text-sm text-gray-500">
-              {language === 'fr' ? 'Prix a annoncer' : 'Price TBA'}
-            </span>
+            <span className="text-sm text-dim">{language === 'fr' ? 'prix à annoncer' : 'price TBA'}</span>
           )}
         </div>
 
         {isBuyable ? (
-          <button
-            onClick={() => onBuy(product.id)}
-            disabled={isLoading}
-            className={`flex items-center gap-2 px-5 py-2.5 text-white rounded-lg transition-colors duration-200 text-sm font-medium ${
-              isLoading
-                ? 'bg-blue-800 cursor-wait'
-                : 'bg-blue-600 hover:bg-blue-500'
-            }`}
-          >
-            {isLoading ? (
-              <Loader2 size={16} className="animate-spin" />
-            ) : (
-              <ShoppingCart size={16} />
-            )}
-            {isLoading
-              ? (language === 'fr' ? 'Chargement...' : 'Loading...')
-              : (language === 'fr' ? 'Acheter' : 'Buy Now')}
+          <button onClick={() => onBuy(product.id)} disabled={isLoading} className="btn btn-accent disabled:cursor-wait">
+            {isLoading ? <Loader2 size={15} className="animate-spin" /> : <ShoppingCart size={15} />}
+            {isLoading ? (language === 'fr' ? 'chargement' : 'loading') : language === 'fr' ? 'acheter' : 'buy now'}
           </button>
         ) : product.comingSoon ? (
-          <span className="px-5 py-2.5 bg-gray-800/60 text-gray-500 rounded-lg text-sm cursor-default">
-            {language === 'fr' ? 'Bientot disponible' : 'Coming Soon'}
+          <span className="border border-line px-3 py-1.5 text-sm uppercase tracking-wider text-dim">
+            {language === 'fr' ? 'bientôt' : 'soon'}
           </span>
         ) : (
-          <a
-            href="/#contact"
-            className="flex items-center gap-2 px-5 py-2.5 bg-blue-600/80 hover:bg-blue-500 text-white rounded-lg transition-colors duration-200 text-sm font-medium"
-          >
-            <MessageSquare size={16} />
-            {language === 'fr' ? 'Discuter' : 'Let\'s Talk'}
+          <a href="/#contact" className="btn btn-accent">
+            <MessageSquare size={15} />
+            {language === 'fr' ? 'discuter' : "let's talk"}
           </a>
         )}
       </div>
@@ -143,14 +97,9 @@ export default function StorePage() {
   const [buying, setBuying] = useState(null);
   const [error, setError] = useState(null);
 
-  const languages = [
-    { code: 'en', name: 'English', flag: 'EN' },
-    { code: 'fr', name: 'Francais', flag: 'FR' },
-  ];
-
-  const availableProducts = products.filter(p => !p.comingSoon && !p.isService);
-  const comingSoonProducts = products.filter(p => p.comingSoon);
-  const serviceProducts = products.filter(p => p.isService);
+  const availableProducts = products.filter((p) => !p.comingSoon && !p.isService);
+  const comingSoonProducts = products.filter((p) => p.comingSoon);
+  const serviceProducts = products.filter((p) => p.isService);
 
   const handleBuy = useCallback(async (productId) => {
     setBuying(productId);
@@ -172,108 +121,89 @@ export default function StorePage() {
     }
   }, []);
 
-  useEffect(() => {
-    document.body.classList.add('cursor-none');
-    return () => document.body.classList.remove('cursor-none');
-  }, []);
-
   return (
-    <div className="min-h-screen text-gray-100 relative overflow-x-hidden">
-      <CustomCursor />
-
-      <div className="fixed inset-0 z-0">
-        <ParticleBackground />
-      </div>
-
+    <div className="scanlines min-h-screen bg-void text-fg">
       {/* Nav */}
-      <nav className="fixed top-0 w-full bg-gray-800/70 backdrop-blur-sm shadow-lg z-20">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <nav className="fixed top-0 z-30 w-full border-b border-line bg-void/95">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
           <div className="flex items-center gap-4">
-            <a
-              href="/"
-              className="flex items-center gap-2 text-gray-400 hover:text-gray-200 transition-colors"
-            >
-              <ArrowLeft size={18} />
-              <span className="text-sm hidden sm:inline">{language === 'fr' ? 'Portfolio' : 'Portfolio'}</span>
+            <a href="/" className="flex items-center gap-2 text-sm uppercase tracking-wider text-dim transition-colors hover:text-accent">
+              <ArrowLeft size={16} />
+              <span className="hidden sm:inline">portfolio</span>
             </a>
-            <div className="w-px h-6 bg-gray-700"></div>
-            <div className="flex items-center gap-2">
-              <ShoppingCart size={20} className="text-blue-400" />
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-                {language === 'fr' ? 'Boutique' : 'Store'}
-              </span>
-            </div>
+            <div className="h-5 w-px bg-line" />
+            <span className="flex items-center gap-2 text-lg font-bold">
+              <img src="/favicon.ico" alt="Rz Software logo" className="h-7 w-7 border border-edge" /> store
+            </span>
           </div>
 
-          <select
-            value={language}
-            onChange={(e) => setLanguage(e.target.value)}
-            className="bg-gray-600/60 text-gray-200 rounded-full px-3 py-2 border border-gray-500/50 hover:bg-gray-500/70 transition-all duration-300 text-sm"
-          >
-            {languages.map(lang => (
-              <option key={lang.code} value={lang.code}>
-                {lang.flag} {lang.name}
-              </option>
+          <div className="flex items-center border border-line text-xs">
+            {['en', 'fr'].map((code) => (
+              <button
+                key={code}
+                onClick={() => setLanguage(code)}
+                className={`px-2.5 py-1 uppercase tracking-wider transition-colors ${
+                  language === code ? 'bg-brand text-white' : 'text-dim hover:text-accent'
+                }`}
+              >
+                {code}
+              </button>
             ))}
-          </select>
+          </div>
         </div>
       </nav>
 
       {/* Hero */}
-      <header className="relative z-10 pt-28 pb-12">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="relative overflow-hidden rounded-2xl border border-blue-500/20">
-            <div className="absolute inset-0 bg-gradient-to-br from-gray-800/90 via-blue-900/20 to-purple-900/20 backdrop-blur-sm"></div>
-            <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
-            <div className="absolute bottom-0 left-0 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/3"></div>
-
-            <div className="relative px-8 py-12 md:py-16 text-center">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-900/30 border border-blue-800/40 text-blue-300 text-sm mb-6">
-                <ShoppingCart size={14} />
-                {language === 'fr'
-                  ? `${availableProducts.length} produit${availableProducts.length > 1 ? 's' : ''} disponible${availableProducts.length > 1 ? 's' : ''}`
-                  : `${availableProducts.length} product${availableProducts.length > 1 ? 's' : ''} available`}
-              </div>
-
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                <span className="bg-gradient-to-r from-blue-400 via-blue-300 to-purple-400 bg-clip-text text-transparent">
-                  {language === 'fr' ? 'Outils & Logiciels' : 'Tools & Software'}
-                </span>
-              </h1>
-              <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-                {language === 'fr'
-                  ? 'Outils de qualite production issus de mon expertise en programmation systeme, reverse engineering et developpement Unreal Engine 5.'
-                  : 'Production-grade tools built from my expertise in systems programming, reverse engineering, and Unreal Engine 5 development.'}
-              </p>
+      <header className="mx-auto max-w-7xl px-4 pt-24 pb-10">
+        <div className="panel">
+          <div className="panel-head">
+            <span><span className="text-accent">##</span> {language === 'fr' ? 'Boutique' : 'Store'}</span>
+            <span className="text-dim">apt list --installed</span>
+          </div>
+          <div className="px-6 py-10 sm:px-8">
+            <div className="mb-4 inline-flex items-center gap-2 border border-edge px-2.5 py-1 text-xs uppercase tracking-wider text-accent">
+              <ShoppingCart size={13} />
+              {language === 'fr'
+                ? `${availableProducts.length} produit${availableProducts.length > 1 ? 's' : ''} disponible${availableProducts.length > 1 ? 's' : ''}`
+                : `${availableProducts.length} product${availableProducts.length > 1 ? 's' : ''} available`}
             </div>
+            <h1 className="text-3xl font-bold text-fg md:text-4xl">
+              {language === 'fr' ? 'Outils & Logiciels' : 'Tools & Software'}
+            </h1>
+            <p className="mt-3 max-w-2xl text-sm text-dim">
+              <span className="text-dim"># </span>
+              {language === 'fr'
+                ? 'Outils de qualité production issus de mon expertise en programmation système, reverse engineering et développement Unreal Engine 5.'
+                : 'Production-grade tools built from my expertise in systems programming, reverse engineering, and Unreal Engine 5 development.'}
+            </p>
           </div>
         </div>
       </header>
 
       {/* Products */}
-      <main className="relative z-10 max-w-7xl mx-auto px-4 pb-16">
+      <main className="mx-auto max-w-7xl px-4 pb-16">
         {error && (
-          <div className="mb-6 p-4 bg-red-900/30 border border-red-800/50 rounded-lg text-red-300 text-sm flex items-center justify-between">
-            <span>{error}</span>
-            <button onClick={() => setError(null)} className="text-red-400 hover:text-red-300 ml-4">x</button>
+          <div className="mb-6 flex items-center justify-between border border-alert/50 px-4 py-3 text-sm text-alert">
+            <span><span className="text-alert">! </span>{error}</span>
+            <button onClick={() => setError(null)} className="ml-4 border border-alert/40 px-2 text-alert hover:bg-alert hover:text-void">
+              x
+            </button>
           </div>
         )}
 
-        {/* Available products */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           {availableProducts.map((product) => (
             <ProductCard key={product.id} product={product} language={language} onBuy={handleBuy} buying={buying} />
           ))}
         </div>
 
-        {/* Coming soon */}
         {comingSoonProducts.length > 0 && (
-          <div className="mb-12">
-            <h2 className="text-lg font-semibold text-gray-400 mb-4 flex items-center gap-2">
-              <Clock size={18} />
-              {language === 'fr' ? 'Bientot disponible' : 'Coming Soon'}
+          <div className="mt-10">
+            <h2 className="mb-4 flex items-center gap-2 text-xs uppercase tracking-widest text-dim">
+              <Clock size={15} />
+              {language === 'fr' ? 'Bientôt disponible' : 'Coming Soon'}
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
               {comingSoonProducts.map((product) => (
                 <ProductCard key={product.id} product={product} language={language} onBuy={handleBuy} buying={buying} />
               ))}
@@ -281,37 +211,25 @@ export default function StorePage() {
           </div>
         )}
 
-        {/* Service */}
         {serviceProducts.length > 0 && (
-          <div className="mb-12">
+          <div className="mt-10">
             {serviceProducts.map((product) => (
-              <div
-                key={product.id}
-                className="relative overflow-hidden rounded-xl border border-blue-500/15"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 to-blue-900/20 backdrop-blur-sm"></div>
-                <div className="relative p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+              <div key={product.id} className="panel">
+                <div className="flex flex-col items-start justify-between gap-6 p-6 md:flex-row md:items-center md:p-8">
                   <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-gray-100 mb-2">
-                      {product.content[language].name}
+                    <h3 className="mb-2 text-xl font-bold text-fg">
+                      <span className="text-accent">›</span> {product.content[language].name}
                     </h3>
-                    <p className="text-gray-400 mb-4 max-w-xl">
-                      {product.content[language].description}
-                    </p>
-                    <div className="flex flex-wrap gap-3">
+                    <p className="mb-4 max-w-xl text-sm text-dim">{product.content[language].description}</p>
+                    <div className="flex flex-wrap gap-1.5">
                       {product.content[language].features.map((f, i) => (
-                        <span key={i} className="text-xs px-3 py-1 rounded-full bg-gray-800/60 text-gray-300 border border-gray-700/50">
-                          {f}
-                        </span>
+                        <span key={i} className="chip">{f}</span>
                       ))}
                     </div>
                   </div>
-                  <a
-                    href="/#contact"
-                    className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors duration-200 font-medium whitespace-nowrap"
-                  >
-                    <Mail size={18} />
-                    {language === 'fr' ? 'Discutons' : 'Let\'s Talk'}
+                  <a href="/#contact" className="btn btn-accent shrink-0">
+                    <Mail size={16} />
+                    {language === 'fr' ? 'discutons' : "let's talk"}
                   </a>
                 </div>
               </div>
@@ -319,17 +237,13 @@ export default function StorePage() {
           </div>
         )}
 
-        {/* Footer */}
-        <footer className="text-center text-gray-500 text-sm pt-8 border-t border-gray-800/50">
+        <footer className="mt-12 border-t border-line pt-6 text-xs text-dim">
           <p>
-            {language === 'fr' ? 'Des questions ? ' : 'Questions? '}
-            <a href="mailto:jobdorge.pro@gmail.com" className="text-blue-400 hover:text-blue-300 transition-colors">
-              jobdorge.pro@gmail.com
-            </a>
+            <span className="text-accent">$</span>{' '}
+            {language === 'fr' ? 'des questions ? mail' : 'questions? mail'}{' '}
+            <a href="mailto:jobdorge.pro@gmail.com" className="text-accent hover:text-fg">jobdorge.pro@gmail.com</a>
           </p>
-          <p className="mt-2">
-            neXuz-dev, {new Date().getFullYear()}.
-          </p>
+          <p className="mt-1">© neXuz-dev, {new Date().getFullYear()}.</p>
         </footer>
       </main>
     </div>

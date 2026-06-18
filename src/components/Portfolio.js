@@ -1,17 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { Github, Linkedin, Mail, Globe, ChevronDown, ChevronUp, Download, Filter, Menu, X, ShoppingCart, ArrowRight } from 'lucide-react';
-import ReactMarkdown from 'react-markdown';
+import React, { useState } from 'react';
+import { Github, Linkedin, Mail, Download, Menu, X, ArrowRight } from 'lucide-react';
 import allProjects from '../projects';
 import ProjectsSection from './ProjectsSection';
-import CustomCursor from './CustomCursor';
-import { initSmoothScroll } from '../utils/smoothScroll';
-import AnimatedSkillBars from './AnimatedSkillBars';
 import ProjectShowcase from './ProjectShowcase';
 import ExperienceTimeline from './ExperienceTimeline';
-import ParticleBackground from './ParticleBackground';
 import TechnologiesShowcase from './TechnologiesShowcase';
+import BootSequence from './BootSequence';
 
 const LOC_ESTIMATES = {
   "Age of Empires Online AI Assistant": 1000,
@@ -64,615 +60,524 @@ const LOC_ESTIMATES = {
   "Qanga": 300000,
   "Qanga Steam Uploader": 500,
   "RzCloak": 3200,
-  "Backblaze Backup MCP Server": 800
+  "Backblaze Backup MCP Server": 800,
+  "RzAudioBuilds": 29369,
+  "FH6 GearAI": 28400,
+  "RzRemap": 3780,
+  "Local Agent MCP Toolkit": 1539,
+  "Shell-to-Windows Converter": 296,
+  "CTF Challenge Solvers & Research": 2170
 };
 
 const TOTAL_LOC = Object.values(LOC_ESTIMATES).reduce((sum, loc) => sum + loc, 0);
 
+// Blue-dominant ramp (one amber accent) — no purple, terminal-flat.
+const LANGUAGES = [
+  { name: 'C++',        percentage: 57, color: '#5b8cf5' },
+  { name: 'AutoIt',     percentage: 22, color: '#3a6fd6' },
+  { name: 'Rust',       percentage: 7,  color: '#e0a53b' },
+  { name: 'C#',         percentage: 5,  color: '#2f5fb0' },
+  { name: 'C',          percentage: 5,  color: '#24477f' },
+  { name: 'Python',     percentage: 3,  color: '#7c8bb0' },
+  { name: 'TypeScript', percentage: 1,  color: '#4a567a' },
+];
+
+const NAV_LINKS = [
+  { href: '#skills',   en: 'skills',   fr: 'skills' },
+  { href: '#projects', en: 'projects', fr: 'projects' },
+  { href: '/store',    en: 'store',    fr: 'store' },
+  { href: '#about',    en: 'about',    fr: 'about' },
+];
+
 const Portfolio = () => {
   const [language, setLanguage] = useState('en');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  
-  // New state for form data
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
-  
-  // New state for form submission status
+
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [formStatus, setFormStatus] = useState({
     isSubmitting: false,
     isSubmitted: false,
-    error: null
+    error: null,
   });
-  
-  const languages = [
-    { code: 'en', name: 'English', flag: '🇬🇧' },
-    { code: 'fr', name: 'Français', flag: '🇫🇷' }
-  ];
-  
+
   const stats = {
-    totalProjects: 48,
-    uniqueTechnologies: 35,
+    totalProjects: allProjects.length,
+    uniqueTechnologies: 58,
     estimatedLinesOfCode: TOTAL_LOC,
     estimatedHours: Math.round(TOTAL_LOC * 0.05),
-    memoryManipulationProjects: 15,
-    apiIntegrations: 10,
-    realTimeProjects: 18,
-    guiDrivenProjects: 14,
-    reverseEngineeringTasks: 15,
-    languages: [
-      { name: 'C++', percentage: 57, color: 'bg-purple-500' },
-      { name: 'AutoIt', percentage: 22, color: 'bg-green-500' },
-      { name: 'Rust', percentage: 7, color: 'bg-orange-500' },
-      { name: 'C#', percentage: 5, color: 'bg-blue-500' },
-      { name: 'C', percentage: 5, color: 'bg-red-500' },
-      { name: 'Python', percentage: 3, color: 'bg-yellow-500' },
-      { name: 'TypeScript', percentage: 1, color: 'bg-teal-500' },
-    ]
+    memoryManipulationProjects: 18,
+    apiIntegrations: 9,
+    realTimeProjects: 21,
+    guiDrivenProjects: 20,
+    reverseEngineeringTasks: 18,
   };
 
-  useEffect(() => {
-    document.body.classList.add('cursor-none');
-    const cleanupScrollListeners = initSmoothScroll();
-    return () => {
-      document.body.classList.remove('cursor-none');
-      if (typeof cleanupScrollListeners === 'function') {
-        cleanupScrollListeners();
-      }
-      window.removeEventListener('scroll', () => {});
-    };
-  }, []);
+  const statCells = [
+    { value: stats.totalProjects, label: language === 'fr' ? 'Projets' : 'Projects' },
+    { value: stats.uniqueTechnologies, label: language === 'fr' ? 'Technologies' : 'Technologies' },
+    { value: stats.estimatedLinesOfCode.toLocaleString(), label: language === 'fr' ? 'Lignes (est.)' : 'Lines of Code (est.)' },
+    { value: stats.estimatedHours.toLocaleString(), label: language === 'fr' ? 'Heures (est.)' : 'Hours Coding (est.)' },
+    { value: stats.memoryManipulationProjects, label: language === 'fr' ? 'Projets Mémoire' : 'Memory Projects' },
+    { value: stats.apiIntegrations, label: language === 'fr' ? 'Intégrations API' : 'API Integrations' },
+    { value: stats.realTimeProjects, label: language === 'fr' ? 'Temps Réel' : 'Real-Time Projects' },
+    { value: stats.guiDrivenProjects, label: language === 'fr' ? 'Projets GUI' : 'GUI Projects' },
+    { value: stats.reverseEngineeringTasks, label: language === 'fr' ? 'Rétro-Ing.' : 'Reverse Eng. Tasks' },
+  ];
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-  };
+  const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
 
-  // New handler for form input changes
   const handleInputChange = (e) => {
     const { id, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [id]: value
-    }));
+    setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  // New handler for form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Simple validation
+
     if (!formData.name || !formData.email || !formData.message) {
       setFormStatus({
         isSubmitting: false,
         isSubmitted: false,
-        error: language === 'fr' 
-          ? 'Veuillez remplir tous les champs' 
-          : 'Please fill in all fields'
+        error: language === 'fr' ? 'Veuillez remplir tous les champs' : 'Please fill in all fields',
       });
       return;
     }
-    
-    // Email validation
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       setFormStatus({
         isSubmitting: false,
         isSubmitted: false,
-        error: language === 'fr'
-          ? 'Veuillez entrer une adresse e-mail valide'
-          : 'Please enter a valid email address'
+        error: language === 'fr' ? 'Veuillez entrer une adresse e-mail valide' : 'Please enter a valid email address',
       });
       return;
     }
-    
+
     try {
-      setFormStatus({
-        isSubmitting: true,
-        isSubmitted: false,
-        error: null
-      });
-      
+      setFormStatus({ isSubmitting: true, isSubmitted: false, error: null });
+
       const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
-      
+
       const data = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(data.message || 'Something went wrong');
       }
-      
-      // Reset form on success
-      setFormData({
-        name: '',
-        email: '',
-        message: ''
-      });
-      
-      setFormStatus({
-        isSubmitting: false,
-        isSubmitted: true,
-        error: null
-      });
-      
-      // Reset success message after 5 seconds
+
+      setFormData({ name: '', email: '', message: '' });
+      setFormStatus({ isSubmitting: false, isSubmitted: true, error: null });
+
       setTimeout(() => {
-        setFormStatus(prev => ({
-          ...prev,
-          isSubmitted: false
-        }));
+        setFormStatus((prev) => ({ ...prev, isSubmitted: false }));
       }, 5000);
-      
     } catch (error) {
-      setFormStatus({
-        isSubmitting: false,
-        isSubmitted: false,
-        error: error.message
-      });
+      setFormStatus({ isSubmitting: false, isSubmitted: false, error: error.message });
     }
   };
 
   return (
-    <div className="min-h-screen text-gray-100 relative overflow-x-hidden">
-      {/* Custom Cursor */}
-      <CustomCursor />
-      
-      {/* Background with Particle Effect */}
-      <div className="fixed inset-0 z-0">
-        <ParticleBackground />
-      </div>
+    <div className="scanlines min-h-screen bg-void text-fg">
+      <BootSequence />
 
-      {/* Navigation Bar */}
-      <nav className="fixed top-0 w-full bg-gray-800/70 backdrop-blur-sm shadow-lg z-20">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3 animate-fade-in">
-            <img 
-              src="/favicon.ico" 
-              alt="neXuz-dev logo" 
-              className="h-8 w-8 transition-transform hover:scale-110"
-            />
-            <a 
-              href="/" 
-              className="text-2xl font-extrabold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent tracking-tight hover:from-blue-300 hover:to-purple-400 transition-all duration-300"
-            >
-              neXuz-dev
-            </a>
+      {/* ── Nav ─────────────────────────────────────────────── */}
+      <nav className="fixed top-0 z-30 w-full border-b border-line bg-void/95">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+          <a href="/" className="flex items-center gap-2.5">
+            <img src="/favicon.ico" alt="Rz Software logo" className="h-7 w-7 border border-edge" />
+            <span className="text-lg font-bold tracking-tight">
+              <span className="text-fg">neXuz</span>
+              <span className="text-dim">-dev</span>
+            </span>
+            <span className="hidden border border-line px-1.5 py-0.5 text-[10px] uppercase tracking-widest text-dim sm:inline-block">
+              Rz Software
+            </span>
+          </a>
+
+          {/* Desktop nav */}
+          <div className="hidden items-center gap-2 md:flex">
+            {NAV_LINKS.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="border border-line px-3 py-1.5 text-xs font-medium uppercase tracking-wider text-fg transition-colors hover:border-accent hover:bg-brand hover:text-white"
+              >
+                <span className="text-accent">/</span>{language === 'fr' ? link.fr : link.en}
+              </a>
+            ))}
           </div>
-          
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center justify-center flex-1">
-            <div className="flex gap-3">
-              <a 
-                href="#skills" 
-                className="bg-gray-700/60 text-gray-200 font-medium px-4 py-1.5 rounded-full border border-gray-600 hover:bg-blue-600/70 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-md animate-slide-up"
-              >
-                {language === 'fr' ? 'Compétences' : 'Skills'}
-              </a>
-              <a 
-                href="#projects" 
-                className="bg-gray-700/60 text-gray-200 font-medium px-4 py-1.5 rounded-full border border-gray-600 hover:bg-blue-600/70 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-md animate-slide-up"
-                style={{ animationDelay: '0.1s' }}
-              >
-                {language === 'fr' ? 'Projets' : 'Projects'}
-              </a>
-              <a
-                href="/store"
-                className="bg-gray-700/60 text-gray-200 font-medium px-4 py-1.5 rounded-full border border-gray-600 hover:bg-blue-600/70 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-md animate-slide-up"
-                style={{ animationDelay: '0.2s' }}
-              >
-                {language === 'fr' ? 'Boutique' : 'Store'}
-              </a>
-              <a
-                href="#about"
-                className="bg-gray-700/60 text-gray-200 font-medium px-4 py-1.5 rounded-full border border-gray-600 hover:bg-blue-600/70 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-md animate-slide-up"
-                style={{ animationDelay: '0.3s' }}
-              >
-                {language === 'fr' ? 'À propos' : 'About'}
-              </a>
+
+          <div className="flex items-center gap-3">
+            {/* Language toggle — no emoji flags */}
+            <div className="hidden items-center border border-line text-xs sm:flex">
+              {['en', 'fr'].map((code) => (
+                <button
+                  key={code}
+                  onClick={() => setLanguage(code)}
+                  className={`px-2.5 py-1 uppercase tracking-wider transition-colors ${
+                    language === code ? 'bg-brand text-white' : 'text-dim hover:text-accent'
+                  }`}
+                >
+                  {code}
+                </button>
+              ))}
             </div>
-          </div>
-          
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center">
-            <button 
+
+            {/* Mobile menu button */}
+            <button
               onClick={toggleMobileMenu}
-              className="p-2 rounded-full bg-gray-700/60 text-gray-300 hover:bg-blue-600/70 hover:text-white transition-all"
+              className="border border-line p-1.5 text-dim transition-colors hover:text-accent md:hidden"
+              aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
           </div>
-          
-          {/* Language Selector */}
-          <select
-            value={language}
-            onChange={(e) => setLanguage(e.target.value)}
-            className="bg-gray-600/60 text-gray-200 rounded-full px-3 py-2 border border-gray-500/50 hover:bg-gray-500/70 transition-all duration-300 animate-fade-in"
-          >
-            {languages.map(lang => (
-              <option key={lang.code} value={lang.code}>
-                {lang.flag} {lang.name}
-              </option>
-            ))}
-          </select>
         </div>
-        
-        {/* Mobile Navigation Menu */}
+
+        {/* Mobile menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-gray-800/90 backdrop-blur-sm border-t border-gray-700/50 animate-fade-in">
-            <div className="px-4 py-3 space-y-2">
-              <a 
-                href="#skills"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block py-2 px-3 text-gray-200 hover:text-white hover:bg-gray-700/60 rounded transition-all"
-              >
-                {language === 'fr' ? 'Compétences' : 'Skills'}
-              </a>
-              <a 
-                href="#projects"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block py-2 px-3 text-gray-200 hover:text-white hover:bg-gray-700/60 rounded transition-all"
-              >
-                {language === 'fr' ? 'Projets' : 'Projects'}
-              </a>
-              <a
-                href="/store"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block py-2 px-3 text-gray-200 hover:text-white hover:bg-gray-700/60 rounded transition-all"
-              >
-                {language === 'fr' ? 'Boutique' : 'Store'}
-              </a>
-              <a
-                href="#about"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block py-2 px-3 text-gray-200 hover:text-white hover:bg-gray-700/60 rounded transition-all"
-              >
-                {language === 'fr' ? 'À propos' : 'About'}
-              </a>
+          <div className="border-t border-line bg-void md:hidden">
+            <div className="space-y-1 px-4 py-3">
+              {NAV_LINKS.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block border border-line px-3 py-2 text-sm uppercase tracking-wider text-fg transition-colors hover:border-accent hover:bg-brand hover:text-white"
+                >
+                  <span className="text-accent">/</span>{language === 'fr' ? link.fr : link.en}
+                </a>
+              ))}
+              <div className="flex gap-2 pt-2">
+                {['en', 'fr'].map((code) => (
+                  <button
+                    key={code}
+                    onClick={() => setLanguage(code)}
+                    className={`border border-line px-3 py-1 text-xs uppercase ${
+                      language === code ? 'bg-brand text-white' : 'text-dim'
+                    }`}
+                  >
+                    {code}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         )}
       </nav>
 
-      {/* Header */}
-      <header className="max-w-6xl mx-auto px-4 pt-32 pb-12 relative z-10">
-        <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-fade-in-up">
-          <h1 className="text-4xl font-bold text-gray-100 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Rémi Job-Dorge</h1>
-          <p className="text-xl text-gray-300 mt-2 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            {language === 'fr' ? 'Ingénieur Logiciel Systèmes & Développeur Unreal Engine 5' : 'Systems Software Engineer & Unreal Engine 5 Developer'}
-          </p>
-          
-          <div className="mt-4 flex flex-wrap gap-4 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-            <a href="mailto:jobdorge.pro@gmail.com" className="flex items-center text-gray-300 hover:text-blue-400 transition-colors hover:scale-105 duration-300">
-              <Mail className="w-5 h-5 mr-2" />
-              jobdorge.pro@gmail.com
-            </a>
-            <a href="https://github.com/neXuz-dev" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-300 hover:text-blue-400 transition-colors hover:scale-105 duration-300">
-              <Github className="w-5 h-5 mr-2" />
-              GitHub
-            </a>
-            <a href="https://www.linkedin.com/in/r%C3%A9mi-j-977b33213/" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-300 hover:text-blue-400 transition-colors hover:scale-105 duration-300">
-              <Linkedin className="w-5 h-5 mr-2" />
-              LinkedIn
-            </a>
-            <a href="/CV_Job-Dorge_2025.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-300 hover:text-blue-400 transition-colors hover:scale-105 duration-300">
-              <Download className="w-5 h-5 mr-2" />
-              Download CV
-            </a>
+      {/* ── Header / whoami ─────────────────────────────────── */}
+      <header className="mx-auto max-w-6xl px-4 pt-24 pb-8">
+        <div className="panel term-in">
+          <div className="panel-head">
+            <span><span className="text-accent">rémi@rz-software</span>:~/portfolio$</span>
+            <span className="hidden text-dim sm:inline">villeneuve-loubet · fr</span>
           </div>
-
-          <div className="mt-6 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
-            <p className="text-gray-300">
-              {language === 'fr'
-                ? "Ingénieur logiciel systèmes avec plus de 18 ans d'expérience, spécialisé dans le développement C++ Unreal Engine 5 avec forks moteur custom, l'optimisation de performances et la programmation bas-niveau. Basé à Villeneuve-Loubet, France."
-                : "Systems software engineer with 18+ years of experience, specialized in Unreal Engine 5 C++ development with custom engine forks, performance optimization, and low-level systems programming. Based in Villeneuve-Loubet, France."
-              }
+          <div className="px-5 py-6 sm:px-8 sm:py-8">
+            <p className="text-sm text-dim">
+              <span className="text-accent">$</span> whoami
             </p>
+            <h1 className="mt-2 text-3xl font-bold tracking-tight text-fg sm:text-4xl">
+              Rémi Job-Dorge
+            </h1>
+            <p className="mt-1 text-base text-accent sm:text-lg">
+              {language === 'fr'
+                ? 'Ingénieur Logiciel Systèmes · Développeur Unreal Engine 5'
+                : 'Systems Software Engineer · Unreal Engine 5 Developer'}
+            </p>
+
+            <p className="mt-5 max-w-3xl text-sm leading-relaxed text-fg/90">
+              <span className="text-dim"># </span>
+              {language === 'fr'
+                ? "Ingénieur logiciel systèmes avec plus de 18 ans d'expérience, spécialisé dans le développement C++ Unreal Engine 5 avec forks moteur custom, l'optimisation de performances et la programmation bas-niveau."
+                : 'Systems software engineer with 18+ years of experience, specialized in Unreal Engine 5 C++ development with custom engine forks, performance optimization, and low-level systems programming.'}
+            </p>
+
+            <div className="mt-6 flex flex-wrap gap-2">
+              <a href="mailto:jobdorge.pro@gmail.com" className="btn btn-accent">
+                <Mail size={15} /> email
+              </a>
+              <a href="https://github.com/neXuz-dev" target="_blank" rel="noopener noreferrer" className="btn">
+                <Github size={15} /> github
+              </a>
+              <a href="https://www.linkedin.com/in/r%C3%A9mi-j-977b33213/" target="_blank" rel="noopener noreferrer" className="btn">
+                <Linkedin size={15} /> linkedin
+              </a>
+              <a href="/CV_Job-Dorge_2025.pdf" target="_blank" rel="noopener noreferrer" className="btn">
+                <Download size={15} /> cv.pdf
+              </a>
+            </div>
           </div>
         </div>
       </header>
 
-      {/* Store CTA */}
-      <section className="max-w-6xl mx-auto mt-6 px-4 relative z-10 animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
-        <a href="/store" className="block group">
-          <div className="relative overflow-hidden rounded-lg border border-blue-500/20 hover:border-blue-500/40 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/5">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-900/30 via-gray-800/80 to-purple-900/20 backdrop-blur-sm"></div>
-            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
-            <div className="relative px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="flex items-center gap-4">
-                <div className="p-3 rounded-xl bg-blue-600/20">
-                  <ShoppingCart size={28} className="text-blue-400" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-100">
-                    {language === 'fr' ? 'Boutique' : 'Store'}
-                  </h3>
-                  <p className="text-gray-400 text-sm">
-                    {language === 'fr'
-                      ? 'Outils MCP, logiciels de protection, analyseurs de performance et plus.'
-                      : 'MCP tools, protection software, performance analyzers, and more.'}
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 px-5 py-2.5 bg-blue-600/80 group-hover:bg-blue-500 text-white rounded-lg transition-colors duration-200 font-medium whitespace-nowrap">
-                {language === 'fr' ? 'Voir la boutique' : 'Browse Store'}
-                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-              </div>
+      {/* ── Store CTA ───────────────────────────────────────── */}
+      <section className="mx-auto max-w-6xl px-4">
+        <a href="/store" className="group block panel transition-colors hover:border-edge">
+          <div className="flex flex-col items-start justify-between gap-4 px-5 py-4 sm:flex-row sm:items-center">
+            <div className="flex items-center gap-4">
+              <span className="border border-edge px-2 py-1 text-xs uppercase tracking-widest text-accent">
+                store
+              </span>
+              <p className="text-sm text-dim">
+                {language === 'fr'
+                  ? 'Outils MCP, logiciels de protection, analyseurs de performance, et plus.'
+                  : 'MCP tools, protection software, performance analyzers, and more.'}
+              </p>
             </div>
+            <span className="btn btn-accent shrink-0">
+              {language === 'fr' ? 'voir la boutique' : 'browse store'}
+              <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
+            </span>
           </div>
         </a>
       </section>
 
-      {/* At a Glance Section */}
-      <section className="max-w-6xl mx-auto mt-8 px-4 relative z-10">
-        <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl p-6 border border-gray-700/50 animate-on-scroll opacity-0">
-          <h2 className="text-2xl font-bold text-gray-100 mb-4">
-            {language === 'fr' ? 'En bref' : 'At a Glance'}
-          </h2>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-6 mb-6">
-            {[
-              { value: stats.totalProjects, text: language === 'fr' ? 'Projets Réalisés' : 'Projects Completed' },
-              { value: stats.uniqueTechnologies, text: language === 'fr' ? 'Technologies Uniques' : 'Unique Technologies' },
-              { value: stats.estimatedLinesOfCode.toLocaleString(), text: language === 'fr' ? 'Lignes de Code (Est.)' : 'Lines of Code (Est.)' },
-              { value: stats.estimatedHours.toLocaleString(), text: language === 'fr' ? 'Heures de Codage (Est.)' : 'Hours Coding (Est.)' },
-              { value: stats.memoryManipulationProjects, text: language === 'fr' ? 'Projets Mémoire' : 'Memory Projects' },
-              { value: stats.apiIntegrations, text: language === 'fr' ? 'Intégrations API' : 'API Integrations' },
-              { value: stats.realTimeProjects, text: language === 'fr' ? 'Projets Temps Réel' : 'Real-Time Projects' },
-              { value: stats.guiDrivenProjects, text: language === 'fr' ? 'Projets GUI' : 'GUI Projects' },
-              { value: stats.reverseEngineeringTasks, text: language === 'fr' ? 'Tâches Rétro-Ingénierie' : 'Reverse Eng. Tasks' }
-            ].map((item, index) => (
-              <div key={index} className="text-center animate-on-scroll opacity-0" style={{ animationDelay: `${index * 0.1}s` }}>
-                <p className="text-3xl font-semibold text-blue-300 transform hover:scale-110 transition-transform duration-300">{item.value}</p>
-                <p className="text-gray-300">{item.text}</p>
+      {/* ── At a Glance ─────────────────────────────────────── */}
+      <section className="mx-auto mt-8 max-w-6xl px-4">
+        <div className="panel">
+          <div className="panel-head">
+            <span>
+              <span className="text-accent">##</span> {language === 'fr' ? 'En bref' : 'At a Glance'}
+            </span>
+            <span className="text-dim">stat --summary</span>
+          </div>
+
+          <div className="grid grid-cols-2 border-t border-line sm:grid-cols-3">
+            {statCells.map((item, index) => (
+              <div key={index} className="border-b border-r border-line px-4 py-4">
+                <div className="text-2xl font-bold tabular-nums text-accent sm:text-3xl">
+                  {item.value}
+                </div>
+                <div className="mt-1 text-[11px] uppercase tracking-wider text-dim">
+                  {item.label}
+                </div>
               </div>
             ))}
           </div>
 
-          <div className="mt-6 animate-on-scroll opacity-0">
-            <h3 className="text-lg font-semibold text-gray-200 mb-4">
+          {/* Language distribution */}
+          <div className="border-t border-line px-4 py-5">
+            <h3 className="mb-3 text-xs uppercase tracking-widest text-dim">
               {language === 'fr' ? 'Distribution des langages' : 'Language Distribution'}
             </h3>
-            <div className="space-y-4">
-              <div className="flex w-full h-8 rounded-lg overflow-hidden bg-gray-700">
-                {stats.languages.map((lang, index) => (
-                  <div
-                    key={index}
-                    className={`${lang.color} h-full`}
-                    style={{ width: `${lang.percentage}%` }}
-                  />
-                ))}
-              </div>
-              <div className="flex flex-wrap gap-4">
-                {stats.languages.map((lang, index) => (
-                  <div key={index} className="flex items-center animate-on-scroll opacity-0" style={{ animationDelay: `${index * 0.1 + 0.5}s` }}>
-                    <span className={`w-3 h-3 ${lang.color} rounded-full mr-2 transform hover:scale-125 transition-transform duration-300`}></span>
-                    <span className="text-gray-300">{lang.name}</span>
-                  </div>
-                ))}
-              </div>
+            <div className="flex h-7 w-full overflow-hidden border border-line">
+              {LANGUAGES.map((lang) => (
+                <div
+                  key={lang.name}
+                  className="h-full"
+                  style={{ width: `${lang.percentage}%`, backgroundColor: lang.color }}
+                  title={`${lang.name} ${lang.percentage}%`}
+                />
+              ))}
+            </div>
+            <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
+              {LANGUAGES.map((lang) => (
+                <div key={lang.name} className="flex items-center gap-2 text-xs">
+                  <span className="h-2.5 w-2.5 shrink-0" style={{ backgroundColor: lang.color }} />
+                  <span className="text-fg">{lang.name}</span>
+                  <span className="tabular-nums text-dim">{lang.percentage}%</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Featured Projects Showcase */}
+      {/* ── Featured Projects ───────────────────────────────── */}
       <ProjectShowcase projects={allProjects} language={language} />
 
-      {/* Skills Section */}
-      <section className="max-w-6xl mx-auto mt-8 px-4 scroll-mt-24 relative z-10" id="skills">
-        <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-on-scroll opacity-0">
-          <h2 className="text-2xl font-bold text-gray-100 mb-4">
-            {language === 'fr' ? 'Expertise Technique' : 'Technical Expertise'}
-          </h2>
-          
-          <TechnologiesShowcase language={language} />
-        </div>
-      </section>
-
-      {/* Projects Section */}
-      <section className="max-w-6xl mx-auto mt-8 px-4 scroll-mt-24 relative z-10" id="projects">
-        <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-on-scroll opacity-0">
-          <h2 className="text-2xl font-bold text-gray-100 mb-6">
-            {language === 'fr' ? 'Projets' : 'Projects'}
-          </h2>
-          <ProjectsSection projects={allProjects} language={language} />
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section className="max-w-6xl mx-auto mt-8 px-4 scroll-mt-24 relative z-10" id="about">
-        <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-on-scroll opacity-0">
-          <h2 className="text-2xl font-bold text-gray-100 mb-4">
-            {language === 'fr' ? 'À propos de moi' : 'About Me'}
-          </h2>
-          
-          <div className="text-gray-300 space-y-4">
-            {language === 'fr' ? (
-              <>
-                <p className="animate-on-scroll opacity-0" style={{ animationDelay: '0.2s' }}>
-                  Basé à Villeneuve-Loubet, France, j'ai plus de 18 ans d'expérience en développement logiciel et plus de 6 ans
-                  en tant que Technicien chez SARL Soleo Tech (2017-2023), où j'ai développé une expertise en développement logiciel,
-                  optimisation système, automatisation et rétro-ingénierie.
-                </p>
-                <p className="animate-on-scroll opacity-0" style={{ animationDelay: '0.3s' }}>
-                  En 2025, j'ai repris 99% du développement de Qanga, un jeu multijoueur en monde ouvert sur Unreal Engine 5
-                  (projet IolaCorp). Partant de zéro en C++ UE5, j'ai accumulé plus de 2 400 commits en moins d'un an,
-                  en développant des forks moteur custom, des systèmes de vertex factory, des shaders HLSL/SM6 et des serveurs dédiés Linux.
-                </p>
-                <p className="animate-on-scroll opacity-0" style={{ animationDelay: '0.4s' }}>
-                  Ma passion pour la technologie découle de mon parcours dans le gaming compétitif, notamment en
-                  tant qu'ancien joueur professionnel de Counter-Strike (2014-2016) et détenteur de plusieurs records
-                  mondiaux en simulation automobile depuis 2015. Cette quête de performance et d'efficacité se reflète
-                  dans mon travail, axé sur les systèmes critiques en performance et l'optimisation temps réel.
-                </p>
-                <p className="animate-on-scroll opacity-0" style={{ animationDelay: '0.5s' }}>
-                  Je me spécialise en C++ (Unreal Engine 5), Rust, C# et Python. Mon approche analytique et logique
-                  me permet de résoudre des problèmes en les déconstruisant méthodiquement. En dehors du code,
-                  je m'intéresse à l'astronomie, la science-fiction et la mythologie.
-                </p>
-              </>
-            ) : (
-              <>
-                <p className="animate-on-scroll opacity-0" style={{ animationDelay: '0.2s' }}>
-                  Based in Villeneuve-Loubet, France, I have 18+ years of experience in software development and over six years
-                  as a Technician at SARL Soleo Tech (2017-2023), where I developed expertise in software development,
-                  system optimization, automation, and reverse engineering.
-                </p>
-                <p className="animate-on-scroll opacity-0" style={{ animationDelay: '0.3s' }}>
-                  In 2025, I took over 99% of development on Qanga, an open-world multiplayer game on Unreal Engine 5
-                  (IolaCorp project). Starting from zero UE5 C++ experience, I accumulated 2,400+ commits in under a year,
-                  building custom engine forks, vertex factory systems, HLSL/SM6 shaders, and dedicated Linux servers.
-                </p>
-                <p className="animate-on-scroll opacity-0" style={{ animationDelay: '0.4s' }}>
-                  My passion for technology stems from my background in competitive gaming, notably as a former professional Counter-Strike player
-                  (2014-2016) and a holder of multiple world records in racing simulation since 2015. This pursuit of performance and efficiency
-                  is reflected in my work, which focuses on performance-critical systems and real-time optimization.
-                </p>
-                <p className="animate-on-scroll opacity-0" style={{ animationDelay: '0.5s' }}>
-                  I specialize in C++ (Unreal Engine 5), Rust, C#, and Python. My analytical and logical approach allows me to
-                  solve problems by methodically breaking them down. Beyond coding, I have a strong interest in astronomy,
-                  science fiction, and mythology.
-                </p>
-              </>
-            )}
+      {/* ── Skills ──────────────────────────────────────────── */}
+      <section id="skills" className="mx-auto mt-8 max-w-6xl scroll-mt-24 px-4">
+        <div className="panel">
+          <div className="panel-head">
+            <span>
+              <span className="text-accent">##</span> {language === 'fr' ? 'Expertise Technique' : 'Technical Expertise'}
+            </span>
+            <span className="text-dim">cat skills.txt</span>
           </div>
-
-          <ExperienceTimeline language={language} />
+          <div className="p-5 sm:p-6">
+            <TechnologiesShowcase language={language} />
+          </div>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section className="max-w-6xl mx-auto mt-8 px-4 relative z-10 scroll-mt-24" id="contact">
-        <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl p-8 border border-gray-700/50 animate-on-scroll opacity-0">
-          <h2 className="text-2xl font-bold text-gray-100 mb-4">
-            {language === 'fr' ? 'Travaillons Ensemble' : 'Let\'s Work Together'}
-          </h2>
-          
-          <p className="text-gray-300 mb-6">
-            {language === 'fr' 
-              ? "Vous avez un projet qui nécessite mon expertise ? N'hésitez pas à me contacter pour discuter de la façon dont je peux vous aider." 
-              : "Do you have a project that requires my expertise? Feel free to reach out to discuss how I can help you."}
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-              <h3 className="text-lg font-semibold text-gray-200 mb-4">
-                {language === 'fr' ? 'Me Contacter' : 'Contact Me'}
-              </h3>
-              
-              <div className="space-y-4">
-                <div className="flex items-center text-gray-300">
-                  <Mail className="w-5 h-5 mr-3 text-blue-400" />
-                  <a href="mailto:jobdorge.pro@gmail.com" className="hover:text-blue-400 transition-colors">
-                    jobdorge.pro@gmail.com
+      {/* ── Projects ────────────────────────────────────────── */}
+      <section id="projects" className="mx-auto mt-8 max-w-6xl scroll-mt-24 px-4">
+        <div className="panel">
+          <div className="panel-head">
+            <span>
+              <span className="text-accent">##</span> {language === 'fr' ? 'Projets' : 'Projects'}
+            </span>
+            <span className="text-dim">ls -la ./projects</span>
+          </div>
+          <div className="p-5 sm:p-6">
+            <ProjectsSection projects={allProjects} language={language} />
+          </div>
+        </div>
+      </section>
+
+      {/* ── About ───────────────────────────────────────────── */}
+      <section id="about" className="mx-auto mt-8 max-w-6xl scroll-mt-24 px-4">
+        <div className="panel">
+          <div className="panel-head">
+            <span>
+              <span className="text-accent">##</span> {language === 'fr' ? 'À propos' : 'About Me'}
+            </span>
+            <span className="text-dim">man rémi</span>
+          </div>
+          <div className="p-5 sm:p-6">
+            <div className="max-w-3xl space-y-4 text-sm leading-relaxed text-fg/90">
+              {language === 'fr' ? (
+                <>
+                  <p>
+                    Basé à Villeneuve-Loubet, France, j'ai plus de 18 ans d'expérience en développement logiciel et plus de 6 ans
+                    en tant que Technicien chez SARL Soleo Tech (2017-2023), où j'ai développé une expertise en développement logiciel,
+                    optimisation système, automatisation et rétro-ingénierie.
+                  </p>
+                  <p>
+                    En 2025, j'ai repris 99% du développement de Qanga, un jeu multijoueur en monde ouvert sur Unreal Engine 5
+                    (projet IolaCorp). Partant de zéro en C++ UE5, j'ai accumulé plus de 2 400 commits en moins d'un an,
+                    en développant des forks moteur custom, des systèmes de vertex factory, des shaders HLSL/SM6 et des serveurs dédiés Linux.
+                  </p>
+                  <p>
+                    Ma passion pour la technologie découle de mon parcours dans le gaming compétitif, notamment en
+                    tant qu'ancien joueur professionnel de Counter-Strike (2014-2016) et détenteur de plusieurs records
+                    mondiaux en simulation automobile depuis 2015. Cette quête de performance et d'efficacité se reflète
+                    dans mon travail, axé sur les systèmes critiques en performance et l'optimisation temps réel.
+                  </p>
+                  <p>
+                    Je me spécialise en C++ (Unreal Engine 5), Rust, C# et Python. Mon approche analytique et logique
+                    me permet de résoudre des problèmes en les déconstruisant méthodiquement. En dehors du code,
+                    je m'intéresse à l'astronomie, la science-fiction et la mythologie.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p>
+                    Based in Villeneuve-Loubet, France, I have 18+ years of experience in software development and over six years
+                    as a Technician at SARL Soleo Tech (2017-2023), where I developed expertise in software development,
+                    system optimization, automation, and reverse engineering.
+                  </p>
+                  <p>
+                    In 2025, I took over 99% of development on Qanga, an open-world multiplayer game on Unreal Engine 5
+                    (IolaCorp project). Starting from zero UE5 C++ experience, I accumulated 2,400+ commits in under a year,
+                    building custom engine forks, vertex factory systems, HLSL/SM6 shaders, and dedicated Linux servers.
+                  </p>
+                  <p>
+                    My passion for technology stems from my background in competitive gaming, notably as a former professional Counter-Strike player
+                    (2014-2016) and a holder of multiple world records in racing simulation since 2015. This pursuit of performance and efficiency
+                    is reflected in my work, which focuses on performance-critical systems and real-time optimization.
+                  </p>
+                  <p>
+                    I specialize in C++ (Unreal Engine 5), Rust, C#, and Python. My analytical and logical approach allows me to
+                    solve problems by methodically breaking them down. Beyond coding, I have a strong interest in astronomy,
+                    science fiction, and mythology.
+                  </p>
+                </>
+              )}
+            </div>
+
+            <ExperienceTimeline language={language} />
+          </div>
+        </div>
+      </section>
+
+      {/* ── Contact ─────────────────────────────────────────── */}
+      <section id="contact" className="mx-auto mt-8 max-w-6xl scroll-mt-24 px-4">
+        <div className="panel">
+          <div className="panel-head">
+            <span>
+              <span className="text-accent">##</span> {language === 'fr' ? 'Travaillons Ensemble' : "Let's Work Together"}
+            </span>
+            <span className="text-dim">./contact.sh</span>
+          </div>
+          <div className="p-5 sm:p-6">
+            <p className="mb-6 max-w-2xl text-sm text-dim">
+              {language === 'fr'
+                ? "Vous avez un projet qui nécessite mon expertise ? N'hésitez pas à me contacter pour discuter de la façon dont je peux vous aider."
+                : 'Do you have a project that requires my expertise? Feel free to reach out to discuss how I can help you.'}
+            </p>
+
+            <div className="grid grid-cols-1 gap-px border border-line bg-line md:grid-cols-2">
+              {/* Contact channels */}
+              <div className="bg-panel p-5">
+                <h3 className="mb-4 text-xs uppercase tracking-widest text-dim">
+                  {language === 'fr' ? 'Me Contacter' : 'Contact'}
+                </h3>
+                <div className="space-y-3 text-sm">
+                  <a href="mailto:jobdorge.pro@gmail.com" className="flex items-center gap-3 link">
+                    <Mail size={16} className="text-accent" /> jobdorge.pro@gmail.com
                   </a>
-                </div>
-                
-                <div className="flex items-center text-gray-300">
-                  <Linkedin className="w-5 h-5 mr-3 text-blue-400" />
-                  <a href="https://www.linkedin.com/in/r%C3%A9mi-j-977b33213/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors">
-                    LinkedIn Profile
+                  <a href="https://www.linkedin.com/in/r%C3%A9mi-j-977b33213/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 link">
+                    <Linkedin size={16} className="text-accent" /> LinkedIn Profile
                   </a>
-                </div>
-                
-                <div className="flex items-center text-gray-300">
-                  <Github className="w-5 h-5 mr-3 text-blue-400" />
-                  <a href="https://github.com/neXuz-dev" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors">
-                    GitHub Profile
+                  <a href="https://github.com/neXuz-dev" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 link">
+                    <Github size={16} className="text-accent" /> GitHub Profile
                   </a>
                 </div>
               </div>
-            </div>
-            
-            <div className="bg-gray-900/50 p-4 rounded-lg border border-gray-700">
-              <h3 className="text-lg font-semibold text-gray-200 mb-4">
-                {language === 'fr' ? 'Envoyez-moi un message' : 'Send me a message'}
-              </h3>
-              
-              {/* Updated Contact Form */}
-              <form className="space-y-4" onSubmit={handleSubmit}>
-                <div>
-                  <label htmlFor="name" className="block text-gray-300 mb-1 text-sm">
-                    {language === 'fr' ? 'Nom' : 'Name'}
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className="w-full bg-gray-800 rounded border border-gray-700 p-2 text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="email" className="block text-gray-300 mb-1 text-sm">
-                    {language === 'fr' ? 'Email' : 'Email'}
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="w-full bg-gray-800 rounded border border-gray-700 p-2 text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="message" className="block text-gray-300 mb-1 text-sm">
-                    {language === 'fr' ? 'Message' : 'Message'}
-                  </label>
-                  <textarea
-                    id="message"
-                    rows="4"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    className="w-full bg-gray-800 rounded border border-gray-700 p-2 text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  ></textarea>
-                </div>
-                
-                {/* Form status messages */}
-                {formStatus.error && (
-                  <div className="text-red-400 text-sm py-1">
-                    {formStatus.error}
+
+              {/* Form */}
+              <div className="bg-panel p-5">
+                <h3 className="mb-4 text-xs uppercase tracking-widest text-dim">
+                  {language === 'fr' ? 'Envoyez un message' : 'Send a message'}
+                </h3>
+                <form className="space-y-3" onSubmit={handleSubmit}>
+                  <div>
+                    <label htmlFor="name" className="mb-1 block text-xs uppercase tracking-wider text-dim">
+                      {language === 'fr' ? 'Nom' : 'Name'}
+                    </label>
+                    <input type="text" id="name" value={formData.name} onChange={handleInputChange} className="field" />
                   </div>
-                )}
-                
-                {formStatus.isSubmitted && (
-                  <div className="text-green-400 text-sm py-1">
-                    {language === 'fr' 
-                      ? 'Message envoyé avec succès!' 
-                      : 'Message sent successfully!'}
+                  <div>
+                    <label htmlFor="email" className="mb-1 block text-xs uppercase tracking-wider text-dim">
+                      Email
+                    </label>
+                    <input type="email" id="email" value={formData.email} onChange={handleInputChange} className="field" />
                   </div>
-                )}
-                
-                <button
-                  type="submit"
-                  disabled={formStatus.isSubmitting}
-                  className={`px-4 py-2 text-white rounded transition-colors ${
-                    formStatus.isSubmitting 
-                      ? 'bg-blue-800 cursor-not-allowed' 
-                      : 'bg-blue-600 hover:bg-blue-700'
-                  }`}
-                >
-                  {formStatus.isSubmitting 
-                    ? (language === 'fr' ? 'Envoi en cours...' : 'Sending...') 
-                    : (language === 'fr' ? 'Envoyer' : 'Send')}
-                </button>
-              </form>
+                  <div>
+                    <label htmlFor="message" className="mb-1 block text-xs uppercase tracking-wider text-dim">
+                      Message
+                    </label>
+                    <textarea id="message" rows="4" value={formData.message} onChange={handleInputChange} className="field resize-y" />
+                  </div>
+
+                  {formStatus.error && (
+                    <div className="border border-alert/40 px-3 py-2 text-xs text-alert">
+                      <span className="text-alert">! </span>{formStatus.error}
+                    </div>
+                  )}
+                  {formStatus.isSubmitted && (
+                    <div className="border border-accent/40 px-3 py-2 text-xs text-accent">
+                      <span>✓ </span>
+                      {language === 'fr' ? 'Message envoyé avec succès.' : 'Message sent successfully.'}
+                    </div>
+                  )}
+
+                  <button type="submit" disabled={formStatus.isSubmitting} className="btn btn-accent disabled:cursor-not-allowed disabled:opacity-50">
+                    {formStatus.isSubmitting
+                      ? language === 'fr' ? 'envoi…' : 'sending…'
+                      : language === 'fr' ? 'envoyer' : 'send'}
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="max-w-6xl mx-auto mt-8 mb-8 px-4 py-6 text-center text-gray-400 bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-2xl border border-gray-700/50 relative z-10 animate-on-scroll opacity-0">
-        <p>© neXuz-dev, {new Date().getFullYear()}. {language === 'fr' ? 'Tous droits réservés.' : 'All rights reserved.'}</p>
+      {/* ── Footer ──────────────────────────────────────────── */}
+      <footer className="mx-auto mb-10 mt-8 max-w-6xl px-4">
+        <div className="flex flex-col items-start justify-between gap-2 border-t border-line pt-5 text-xs text-dim sm:flex-row sm:items-center">
+          <p>
+            <span className="text-accent">$</span> echo &quot;© Rz Software · neXuz-dev {new Date().getFullYear()}&quot;
+          </p>
+          <p>{language === 'fr' ? 'Tous droits réservés.' : 'All rights reserved.'}</p>
+        </div>
       </footer>
     </div>
   );

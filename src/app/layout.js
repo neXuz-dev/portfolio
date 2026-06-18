@@ -1,29 +1,22 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const mono = JetBrains_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata = {
-  title: 'Rémi Job-Dorge - Software Developer',
-  description: 'Portfolio of Rémi Job-Dorge, Expert Software Developer & Technical Analyst',
-}
+  title: "Rémi Job-Dorge // Systems Software Engineer",
+  description:
+    "Portfolio of Rémi Job-Dorge — Systems Software Engineer & Unreal Engine 5 developer. Low-level C++, Rust, reverse engineering, real-time systems.",
+};
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <body className={`${mono.variable} antialiased`}>{children}</body>
     </html>
   );
 }
