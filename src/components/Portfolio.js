@@ -64,6 +64,15 @@ const LOC_ESTIMATES = {
   "RzAudioBuilds": 29369,
   "FH6 GearAI": 28400,
   "RzMemoryScanner": 2888,
+  "RzMCPInterface": 152751,
+  "Dynamic Quest System": 115583,
+  "QAI": 47341,
+  "RzIndirectInstancing": 15030,
+  "FlyVehicleMovement": 9762,
+  "QWeapon": 5066,
+  "EasyCook": 4139,
+  "QNotification": 6057,
+  "QReport": 928,
   "RzRemap": 3780,
   "Local Agent MCP Toolkit": 1539,
   "Shell-to-Windows Converter": 296,
@@ -74,12 +83,12 @@ const TOTAL_LOC = Object.values(LOC_ESTIMATES).reduce((sum, loc) => sum + loc, 0
 
 // Blue-dominant ramp (one amber accent) - no purple, terminal-flat.
 const LANGUAGES = [
-  { name: 'C++',        percentage: 57, color: '#5b8cf5' },
-  { name: 'AutoIt',     percentage: 22, color: '#3a6fd6' },
-  { name: 'Rust',       percentage: 7,  color: '#e0a53b' },
-  { name: 'C#',         percentage: 5,  color: '#2f5fb0' },
-  { name: 'C',          percentage: 5,  color: '#24477f' },
+  { name: 'C++',        percentage: 68, color: '#5b8cf5' },
+  { name: 'C#',         percentage: 13, color: '#2f5fb0' },
+  { name: 'Rust',       percentage: 9,  color: '#e0a53b' },
+  { name: 'AutoIt',     percentage: 4,  color: '#3a6fd6' },
   { name: 'Python',     percentage: 3,  color: '#7c8bb0' },
+  { name: 'C',          percentage: 2,  color: '#24477f' },
   { name: 'TypeScript', percentage: 1,  color: '#4a567a' },
 ];
 
@@ -103,13 +112,13 @@ const Portfolio = () => {
 
   const stats = {
     totalProjects: allProjects.length,
-    uniqueTechnologies: 59,
+    uniqueTechnologies: 64,
     estimatedLinesOfCode: TOTAL_LOC,
     estimatedHours: Math.round(TOTAL_LOC * 0.05),
     memoryManipulationProjects: 19,
-    apiIntegrations: 9,
-    realTimeProjects: 21,
-    guiDrivenProjects: 21,
+    apiIntegrations: 11,
+    realTimeProjects: 25,
+    guiDrivenProjects: 24,
     reverseEngineeringTasks: 19,
   };
 

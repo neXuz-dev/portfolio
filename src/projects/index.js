@@ -57,10 +57,28 @@ import localAgentMcpToolkit from './localAgentMcpToolkit';
 import ctfChallenges from './ctfChallenges';
 import fh6GearAI from './fh6GearAI';
 import rzMemoryScanner from './rzMemoryScanner';
+import rzMcpInterface from './rzMcpInterface';
+import dynamicQuestSystem from './dynamicQuestSystem';
+import qai from './qai';
+import rzIndirectInstancing from './rzIndirectInstancing';
+import flyVehicleMovement from './flyVehicleMovement';
+import qWeapon from './qWeapon';
+import easyCook from './easyCook';
+import qNotification from './qNotification';
+import qReport from './qReport';
 
 export default [
   qanga,
   qangaServerManager,
+  rzMcpInterface,
+  qai,
+  dynamicQuestSystem,
+  rzIndirectInstancing,
+  qWeapon,
+  flyVehicleMovement,
+  qNotification,
+  easyCook,
+  qReport,
   rzCloak,
   rzAssetControlCenter,
   rzAudioBuilds,
